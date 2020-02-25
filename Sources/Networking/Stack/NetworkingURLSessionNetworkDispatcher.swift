@@ -21,17 +21,6 @@ class NetworkingURLSessionNetworkDispatcher: NSObject, URLSessionDataDelegate {
         }
     }
     
-    // MARK: - DebugInfo
-    
-    struct DebugInfo {
-        let sessionConfiguration: URLSessionConfiguration
-        let request: URLRequest
-        let dataResponse: Data?
-        let urlResponse: HTTPURLResponse?
-        let errorResponse: Error?
-        let requestDuration: TimeInterval
-    }
-    
     // MARK: - Properties(Public)
     
     let requestFactory: NetworkingRequestFactory
@@ -55,7 +44,7 @@ class NetworkingURLSessionNetworkDispatcher: NSObject, URLSessionDataDelegate {
         onSuccess       : ((Data?, Int) -> Void)? = nil, 
         onError         : ((Error) -> Void)? = nil,
         onProgress      : ((Double) -> Void)? = nil,
-        onDebug         : ((DebugInfo) -> Void)? = nil) throws 
+        onDebug         : ((NetworkingDebugInfo) -> Void)? = nil) throws 
         
         -> NetworkingRequestOperation 
     {
@@ -68,7 +57,7 @@ class NetworkingURLSessionNetworkDispatcher: NSObject, URLSessionDataDelegate {
                 return
             }
             
-            let debugInfo = DebugInfo(
+            let debugInfo = NetworkingDebugInfo(
                 sessionConfiguration: self.session.configuration, 
                 request             : request, 
                 dataResponse        : data, 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MimeType {
+public enum MimeType {
     case applicationJson
     case applicationXml
     case applicationZip
@@ -19,7 +19,7 @@ enum MimeType {
     
     case custom(_ string: String)
     
-    var value: String {
+    public var value: String {
         switch self {
         case .applicationJson: return "application/json"
         case .applicationXml: return "application/xml"

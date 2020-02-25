@@ -9,7 +9,7 @@
 import Foundation
 
 extension String: NetworkingResponseObject {
-    static func object(from json: Any) -> String? {
+    public static func object(from json: Any) -> String? {
         guard let data = try? JSONSerialization.data(withJSONObject: json, options: []) else {
             return nil
         }
@@ -17,7 +17,7 @@ extension String: NetworkingResponseObject {
         return String(data: data, encoding: .utf8)
     } 
     
-    static func object(from data: Data) -> String? {
+    public static func object(from data: Data) -> String? {
         return String(data: data, encoding: .utf8)
     }
 }

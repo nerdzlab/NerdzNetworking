@@ -8,7 +8,7 @@
 
 import Foundation
 
-class KeyPathNetworkingResponseConverter: NetworkingResponseJsonConverter {
+public class KeyPathNetworkingResponseConverter: NetworkingResponseJsonConverter {
     enum InternalError: Error {
         case invalidPath(_ path: String)
         
@@ -21,11 +21,11 @@ class KeyPathNetworkingResponseConverter: NetworkingResponseJsonConverter {
     
     private let path: String
     
-    init(path: String) {
+    public init(path: String) {
         self.path = path
     }
     
-    func convertedJson(from json: Any) throws -> Any {
+    public func convertedJson(from json: Any) throws -> Any {
         let components = path.split(separator: "/").map({ String($0) })
         
         var result = json

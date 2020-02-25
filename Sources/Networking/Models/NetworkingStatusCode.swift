@@ -8,24 +8,24 @@
 
 import Foundation
 
-struct NetworkingStatusCode {
-    static let unknown = NetworkingStatusCode(-1)
+public struct NetworkingStatusCode {
+    public static let unknown = NetworkingStatusCode(-1)
 
-    let code: Int
+    public let code: Int
 
     init(_ code: Int) {
         self.code = code
     }
 
-    var isSuccessful: Bool {
+    public var isSuccessful: Bool {
         return isInRange(200...299)
     }
 
-    var isNotFound: Bool {
+    public var isNotFound: Bool {
         return code == 404
     }
 
-    var isUnauthorize: Bool {
+    public var isUnauthorize: Bool {
         return code == 401
     }
     

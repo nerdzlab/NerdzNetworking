@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol NetworkingHeader {
+public protocol NetworkingHeader {
     var key: String { get }
     var value: String { get }
 }

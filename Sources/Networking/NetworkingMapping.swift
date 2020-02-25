@@ -9,18 +9,18 @@
 import Foundation
 import ObjectMapper
 
-protocol NetworkingResponseObject {
+public protocol NetworkingResponseObject {
     static func object(from json: Any) -> Self?
     static func object(from data: Data) -> Self? 
 }
 
-protocol MappableNetworkingResponseObject: Mappable, NetworkingResponseObject { }
+public protocol MappableNetworkingResponseObject: Mappable, NetworkingResponseObject { }
 
-protocol CodableNetworkingResponseObject: Codable, NetworkingResponseObject {
+public protocol CodableNetworkingResponseObject: Codable, NetworkingResponseObject {
     static var decoder: JSONDecoder { get }
 }
 
-extension NetworkingResponseObject {
+public extension NetworkingResponseObject {
     static func object(from json: Any) -> Self? {
         return nil
     }
@@ -44,7 +44,7 @@ extension NetworkingResponseObject {
     }
 }
 
-extension MappableNetworkingResponseObject {
+public extension MappableNetworkingResponseObject {
     static func object(from json: Any) -> Self? {
         guard let singleObjectJson = json as? [String: Any] else {
             return nil
@@ -54,7 +54,7 @@ extension MappableNetworkingResponseObject {
     }
 }
 
-extension CodableNetworkingResponseObject {
+public extension CodableNetworkingResponseObject {
     static var decoder: JSONDecoder { 
         return JSONDecoder()
     }

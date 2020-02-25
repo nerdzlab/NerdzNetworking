@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol NetworkingResponseJsonConverter {
+public protocol NetworkingResponseJsonConverter {
     func convertedJson(from json: Any) throws -> Any
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Status: CodableNetworkingResponseObject {
+public struct Status: CodableNetworkingResponseObject {
     enum InternalError: Error {
         case unableToMap
         
@@ -31,7 +31,7 @@ struct Status: CodableNetworkingResponseObject {
         self.statusCode = statusCode
     }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         let code = try container.decodeIfPresent(Int.self, forKey: .code) ?? 
@@ -46,7 +46,7 @@ struct Status: CodableNetworkingResponseObject {
         }
     }
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(statusCode.code, forKey: .code)
     }

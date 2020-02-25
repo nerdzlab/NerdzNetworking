@@ -8,12 +8,12 @@
 
 import Foundation
 
-enum ContentHeader: NetworkingHeader {
+public enum ContentHeader: NetworkingHeader {
     case contenType(_ mime: MimeType, boundary: String? = nil)
     case accept(_ mime: MimeType)
     case length(_ length: Int)
 
-    var key: String {
+    public var key: String {
         switch self {
         case .contenType: return "Content-Type"
         case .accept: return "Accept"
@@ -21,7 +21,7 @@ enum ContentHeader: NetworkingHeader {
         }
     }
     
-    var value: String {
+    public var value: String {
         switch self {
         case .length(let value): 
             return "\(value)"

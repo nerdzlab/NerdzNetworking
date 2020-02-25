@@ -8,18 +8,18 @@
 
 import Foundation
 
-protocol NetworkingServerError: NetworkingResponseObject {
+public protocol NetworkingServerError: NetworkingResponseObject {
     var message: String { get }
 }
 
 extension String: NetworkingServerError {
-    var message: String {
+    public var message: String {
         return self
     }
 }
 
 extension Dictionary: NetworkingServerError where Key == String {
-    var message: String {
+    public var message: String {
         return description
     }
 }

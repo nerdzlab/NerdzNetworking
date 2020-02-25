@@ -8,18 +8,18 @@
 
 import Foundation
 
-struct NetworkingDefaultRequestType<Response: NetworkingResponseObject, Error: NetworkingServerError>: NetworkingRequestType {
-    typealias ResponseObjectType = Response
-    typealias ErrorType = Error
+public struct NetworkingDefaultRequestType<Response: NetworkingResponseObject, Error: NetworkingServerError>: NetworkingRequestType {
+    public typealias ResponseObjectType = Response
+    public typealias ErrorType = Error
     
-    var path: String
-    var method: NetworkingHTTPMethod
-    var queryParams: [(String, String)] = []
-    var bodyParams: [String: Any] = [:]
-    var headers: [NetworkingHeader] = []
-    var timeout: TimeInterval?
+    public var path: String
+    public var method: NetworkingHTTPMethod
+    public var queryParams: [(String, String)] = []
+    public var bodyParams: [String: Any] = [:]
+    public var headers: [NetworkingHeader] = []
+    public var timeout: TimeInterval?
     
-    init(
+    public init(
         path: String, 
         method: NetworkingHTTPMethod, 
         queryParams: [(String, String)] = [], 

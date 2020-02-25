@@ -36,7 +36,7 @@ class NetworkingRequestExecuter {
         onSuccess       : ((T.ResponseObjectType) -> Void)? = nil, 
         onError         : ((NetworkingError<T.ErrorType>) -> Void)? = nil,
         onProgress      : ((Double) -> Void)? = nil,
-        onDebug         : ((NetworkingURLSessionNetworkDispatcher.DebugInfo) -> Void)? = nil) throws 
+        onDebug         : ((NetworkingDebugInfo) -> Void)? = nil) throws 
         
         -> NetworkingRequestOperation 
     {

@@ -18,7 +18,7 @@ enum RequestTypeInternalError: Error {
     }
 }
 
-protocol NetworkingRequestType: NetworkingRequestData {
+public protocol NetworkingRequestType: NetworkingRequestData {
     associatedtype ResponseObjectType: NetworkingResponseObject
     associatedtype ErrorType: NetworkingServerError
     
@@ -26,7 +26,7 @@ protocol NetworkingRequestType: NetworkingRequestData {
     var errorConverter: NetworkingResponseJsonConverter? { get } 
 }
 
-extension NetworkingRequestType {
+public extension NetworkingRequestType {
     var responseConverter: NetworkingResponseJsonConverter? { 
         return nil
     }
@@ -36,11 +36,11 @@ extension NetworkingRequestType {
     } 
 }
 
-protocol MultipartFormDataRequestType: NetworkingRequestType, NetworkingMultipartRequestData { }
+public protocol MultipartFormDataRequestType: NetworkingRequestType, NetworkingMultipartRequestData { }
 
 extension NetworkingRequestType {
-    typealias ResponseSuccessCallback = (ResponseObjectType) -> Void
-    typealias ErrorCallback = (NetworkingError<ErrorType>) -> Void
+    public typealias ResponseSuccessCallback = (ResponseObjectType) -> Void
+    public typealias ErrorCallback = (NetworkingError<ErrorType>) -> Void
 
     typealias EmptyResponseSuccessCallback = () -> Void
     typealias EmptyErrorCallback = () -> Void
@@ -50,13 +50,13 @@ extension NetworkingRequestType {
     }
 
     @discardableResult
-    func execute(
+    public func execute(
         responseQueue   : DispatchQueue = .main, 
         retryOnFail     : Bool = true, 
         onSuccess       : ResponseSuccessCallback? = nil, 
         onError         : ErrorCallback? = nil,
         onProgress      : ((Double) -> Void)? = nil,
-        onDebug         : ((NetworkingURLSessionNetworkDispatcher.DebugInfo) -> Void)? = nil) 
+        onDebug         : ((NetworkingDebugInfo) -> Void)? = nil) 
         
         -> NetworkingRequestOperation? 
     {

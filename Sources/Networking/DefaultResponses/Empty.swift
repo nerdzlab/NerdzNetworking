@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct Empty: CodableNetworkingResponseObject {
+public struct Empty: CodableNetworkingResponseObject {
     
-    static func object(from json: Any) -> Empty? {
+    public static func object(from json: Any) -> Empty? {
         return Empty()
     }
     
-    static func object(from data: Data) -> Empty? {
+    public static func object(from data: Data) -> Empty? {
         return Empty()
     }
 }

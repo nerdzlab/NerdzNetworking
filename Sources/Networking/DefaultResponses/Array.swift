@@ -9,7 +9,7 @@
 import Foundation
 
 extension Array: NetworkingResponseObject {
-    static func object(from json: Any) -> Self? {
+    public static func object(from json: Any) -> Self? {
         guard let arrayJson = json as? [Any] else {
             return nil
         }

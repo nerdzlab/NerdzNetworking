@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum NetworkingHTTPMethod: String {
+public enum NetworkingHTTPMethod: String {
     case get = "GET"
     case post = "POST"
     case put = "PUT"

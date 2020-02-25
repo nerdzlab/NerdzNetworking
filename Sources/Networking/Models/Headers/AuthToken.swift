@@ -8,16 +8,16 @@
 
 import Foundation
 
-enum AuthToken: NetworkingHeader, Equatable {
+public enum AuthToken: NetworkingHeader, Equatable {
     case bearer(_ token: String)
     case jwt(_ token: String)
     case custom(_ token: String)
 
-    var key: String {
+    public var key: String {
         return "Authorization"
     }
 
-    var value: String {
+    public var value: String {
         switch self {
         case .bearer(let token): return "Bearer \(token)"
         case .jwt(let token): return "JWT \(token)"
@@ -31,7 +31,7 @@ enum AuthToken: NetworkingHeader, Equatable {
         }
     }
 
-    static func ==(left: AuthToken, right: AuthToken) -> Bool {
+    public static func ==(left: AuthToken, right: AuthToken) -> Bool {
         return left.value == right.value
     }
 }

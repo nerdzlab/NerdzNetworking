@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: NetworkingStack
 
-class NetworkingStack {
+public class NetworkingStack {
     // MARK: - Errors
     enum Errors: Error {
         case stackAlreadyInitialized
@@ -23,33 +23,33 @@ class NetworkingStack {
     }
     
     // MARK: - Singleton
-    static private(set) var instance: NetworkingStack?
+    public static private(set) var instance: NetworkingStack?
     
     // MARK: - Configuration
-    let baseUrl: URL
-    let sessionConfiguration: URLSessionConfiguration
+    public let baseUrl: URL
+    public let sessionConfiguration: URLSessionConfiguration
     
-    var contentType: MimeType {
+    public var contentType: MimeType {
         didSet { requestFactory.contentType = contentType }
     }
     
-    var accept: MimeType {
+    public var accept: MimeType {
         didSet { requestFactory.accept = accept }
     }
     
-    var additionalHeaders: [NetworkingHeader] {
+    public var additionalHeaders: [NetworkingHeader] {
         didSet { requestFactory.headers = additionalHeaders }
     }
     
-    var token: AuthToken? {
+    public var token: AuthToken? {
         didSet { requestFactory.tokenHeader = token }
     }
     
     // MARK: - Stack
-    private(set) var authManager: AuthManager?
+    public private(set) var authManager: AuthManager?
     private(set) var requestExecuter: NetworkingRequestExecuter
     
-    var observationManager: NetworkingObservationManager {
+    public var observationManager: NetworkingObservationManager {
         requestExecuter.observationManager
     }
     
@@ -86,7 +86,7 @@ class NetworkingStack {
             additionalHeaders   : additionalHeaders)
     }
     
-    static func initialize(
+    public static func initialize(
         baseUrl             : URL, 
         sessionConfiguration: URLSessionConfiguration = .default,
         contentType         : MimeType = .applicationJson,
@@ -109,16 +109,12 @@ class NetworkingStack {
             additionalHeaders   : additionalHeaders)
     }
     
-    func setAuthManager(_ authManager: AuthManager) {
+    public func setAuthManager(_ authManager: AuthManager) {
         guard self.authManager == nil else {
             return
         }
         
         self.authManager = authManager
-    }
-    
-    private func configure() {
-        
     }
     
     private static func createdRequestExecuter(
@@ -188,7 +184,7 @@ class NetworkingStack {
 
 // MARK: - AuthManager
 
-protocol AuthManager: class {
+public protocol AuthManager: class {
     var authToken: AuthToken? { get }
     
     var onTokenUpdated: ((_ newToken: AuthToken?) -> Void)? { get set }
@@ -202,7 +198,7 @@ protocol AuthManager: class {
 
 // MARK: - RequestRetrier
 
-protocol RequestRetrier {
+public protocol RequestRetrier {
     @discardableResult
     func handle<T: NetworkingRequestType>(_ error: NetworkingError<T.ErrorType>, for request: T, completion: @escaping (T) -> Void) -> Bool
 }

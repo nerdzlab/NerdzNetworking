@@ -9,11 +9,11 @@
 import Foundation
 
 extension Data: NetworkingResponseObject {
-    static func object(from json: Any) -> Data? {
+    public static func object(from json: Any) -> Data? {
         return try? JSONSerialization.data(withJSONObject: json, options: [])
     }
     
-    static func object(from data: Data) -> Data? {
+    public static func object(from data: Data) -> Data? {
         return data
     }
 }

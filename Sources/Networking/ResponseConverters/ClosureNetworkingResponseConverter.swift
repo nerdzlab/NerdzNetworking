@@ -8,8 +8,8 @@
 
 import Foundation
 
-class ClosureNetworkingResponseConverter: NetworkingResponseJsonConverter {
-    typealias Closure = (Any) -> Any?
+public class ClosureNetworkingResponseConverter: NetworkingResponseJsonConverter {
+    public typealias Closure = (Any) -> Any?
     
     enum InternalError: Error {
         case unableToConvert
@@ -23,11 +23,11 @@ class ClosureNetworkingResponseConverter: NetworkingResponseJsonConverter {
     
     private let closure: Closure
     
-    init(closure: @escaping Closure) {
+    public init(closure: @escaping Closure) {
         self.closure = closure
     }
     
-    func convertedJson(from json: Any) throws -> Any {
+    public func convertedJson(from json: Any) throws -> Any {
         if let result = closure(json) {
             return result
         }

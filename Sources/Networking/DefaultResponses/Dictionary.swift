@@ -9,7 +9,7 @@
 import Foundation
 
 extension Dictionary: NetworkingResponseObject where Key == String {
-    static func object(from json: Any) -> Dictionary<Key, Value>? {
+    public static func object(from json: Any) -> Dictionary<Key, Value>? {
         return json as? Dictionary<Key, Value>
     }
 }

@@ -9,8 +9,7 @@
 import Foundation
 
 extension Optional: NetworkingResponseObject where Wrapped: NetworkingResponseObject {
-    
-    static func object(from json: Any) -> Optional<Wrapped>? {
+    public static func object(from json: Any) -> Optional<Wrapped>? {
         if let result = Wrapped.object(from: json) {
             return .some(result)
         }

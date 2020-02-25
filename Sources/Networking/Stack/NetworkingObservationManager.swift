@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NetworkingObservationManager {
+public class NetworkingObservationManager {
     private var responseObservers: [Any] = []
 
     func addNetworkingResponseObserver<T>(onNotify: @escaping (T, T.ResponseObjectType?, NetworkingError<T.ErrorType>?) -> Void) where T: NetworkingRequestType {

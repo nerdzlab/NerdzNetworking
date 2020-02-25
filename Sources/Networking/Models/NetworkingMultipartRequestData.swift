@@ -8,23 +8,23 @@
 
 import Foundation
 
-protocol NetworkingMultipartRequestData: NetworkingRequestData {
+public protocol NetworkingMultipartRequestData: NetworkingRequestData {
     var files: [NetworkingMultipartFile] { get }
 }
 
-protocol NetworkingMultipartFile {
+public protocol NetworkingMultipartFile {
     var subject: NetworkingMultipartaSubject { get }
     var mime: MimeType { get }
     var fileName: String? { get }
 }
 
-extension NetworkingMultipartFile {
+public extension NetworkingMultipartFile {
     var fileName: String? {
         return nil
     }
 }
 
-enum NetworkingMultipartaSubject {
+public enum NetworkingMultipartaSubject {
     case data(_ data: Data)
     case url(_ url: URL)
     case path(_ path: String)

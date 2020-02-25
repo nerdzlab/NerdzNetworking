@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct NetworkingDefaultMultipartFile: NetworkingMultipartFile {
-    var subject: NetworkingMultipartaSubject
-    var mime: MimeType
-    var fileName: String?
+public struct NetworkingDefaultMultipartFile: NetworkingMultipartFile {
+    public var subject: NetworkingMultipartaSubject
+    public var mime: MimeType
+    public var fileName: String?
     
     init(subject: NetworkingMultipartaSubject, mime: MimeType, fileName: String? = nil) {
         self.subject = subject

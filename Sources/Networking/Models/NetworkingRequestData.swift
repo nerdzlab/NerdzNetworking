@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol NetworkingRequestData {
+public protocol NetworkingRequestData {
     var path: String { get }
     var method: NetworkingHTTPMethod { get }
     var queryParams: [(String, String)] { get }
@@ -17,7 +17,7 @@ protocol NetworkingRequestData {
     var timeout: TimeInterval? { get }
 }
 
-extension NetworkingRequestData {
+public extension NetworkingRequestData {
     var queryParams: [(String, String)] { return [] }
     var bodyParams: [String: Any] { return [:] }
     var headers: [NetworkingHeader] { return [] }

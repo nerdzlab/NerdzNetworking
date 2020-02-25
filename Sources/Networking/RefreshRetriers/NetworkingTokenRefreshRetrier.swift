@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NetworkingTokenRefreshRetrier: RequestRetrier {
+public class NetworkingTokenRefreshRetrier: RequestRetrier {
     private let authManager: AuthManager
 
     init(authManager: AuthManager) {
@@ -16,7 +16,7 @@ class NetworkingTokenRefreshRetrier: RequestRetrier {
     }
 
     @discardableResult
-    func handle<T>(_ error: NetworkingError<T.ErrorType>, for request: T, completion: @escaping (T) -> Void) -> Bool where T: NetworkingRequestType {
+    public func handle<T>(_ error: NetworkingError<T.ErrorType>, for request: T, completion: @escaping (T) -> Void) -> Bool where T: NetworkingRequestType {
         guard case .custom(_, let statusCode) = error, statusCode.isUnauthorize else {
             return false
         }

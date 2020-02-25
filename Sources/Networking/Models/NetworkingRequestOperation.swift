@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol NetworkingRequestOperation {
+public protocol NetworkingRequestOperation {
     func cancel()
 }
 
