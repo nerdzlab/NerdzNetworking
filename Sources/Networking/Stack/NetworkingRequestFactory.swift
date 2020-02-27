@@ -91,7 +91,7 @@ class NetworkingRequestFactory {
 
 private extension URLRequest {
     mutating func setHeader( _ header: NetworkingHeader) {
-        setValue(header.key, forHTTPHeaderField: header.value)
+        setValue(header.value, forHTTPHeaderField: header.key)
     }
 }
 
