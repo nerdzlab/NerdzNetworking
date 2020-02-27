@@ -60,14 +60,16 @@ extension NetworkingMultipartRequestData {
 
 private extension NetworkingMultipartFile {
     
+    
     func inputStream(with boundary: String, defaultName: String = "file") -> InputStream? {
         let name = fileName ?? defaultName
+        let resourceName = subject.resourceName ?? defaultName
         
         var prefixData = Data()
         
         let prefixInfo = [
             "--\(boundary)\r\n",
-            "Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(name)\"\r\n",
+            "Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(resourceName)\"\r\n",
             "Content-Type: \(mime.value)\r\n\r\n"]
         
         prefixData.append(values: prefixInfo)
