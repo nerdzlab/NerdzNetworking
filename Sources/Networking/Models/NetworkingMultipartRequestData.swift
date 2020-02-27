@@ -39,7 +39,7 @@ public enum NetworkingMultipartaSubject {
     
     var stream: InputStream? {
         switch self {
-        case .data(let data): return InputStream(data: data)
+        case .data(let data, _): return InputStream(data: data)
         case .url(let url): return InputStream(url: url)
         case .path(let path): return InputStream(fileAtPath: path)
         }
