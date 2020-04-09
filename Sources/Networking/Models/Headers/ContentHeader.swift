@@ -9,7 +9,7 @@
 import Foundation
 
 public enum ContentHeader: NetworkingHeader {
-    case contenType(_ mime: MimeType, boundary: String? = nil)
+    case contenType(_ mime: MimeType)
     case accept(_ mime: MimeType)
     case length(_ length: Int)
 
@@ -29,14 +29,8 @@ public enum ContentHeader: NetworkingHeader {
         case .accept(let mime): 
             return mime.value
             
-        case .contenType(let mime, let boundary):
-            var value = mime.value
-            
-            if let boundary = boundary {
-                value += "; boundary=\(boundary)" 
-            }
-            
-            return value
+        case .contenType(let mime):
+            return mime.value
         }
     }
 }
