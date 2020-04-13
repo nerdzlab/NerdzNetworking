@@ -29,32 +29,32 @@ public class ResponseInfoBuilder<T: Request> {
         return self
     }
     
-    func retryOnFail(_ retryOnFail: Bool) -> Self {
+    public func retryOnFail(_ retryOnFail: Bool) -> Self {
         self.retryOnFail = retryOnFail
         return self
     }
     
-    func onSuccess(_ closure: @escaping ResponseSuccessCallback) -> Self {
+    public func onSuccess(_ closure: @escaping ResponseSuccessCallback) -> Self {
         onSuccess = closure
         return self
     }
     
-    func onFail(_ closure: @escaping FailCallback) -> Self {
+    public func onFail(_ closure: @escaping FailCallback) -> Self {
         onFail = closure
         return self
     }
     
-    func onProgress(_ closure: @escaping ProgressCallback) -> Self {
+    public func onProgress(_ closure: @escaping ProgressCallback) -> Self {
         onProgress = closure
         return self
     }
     
-    func onDebug(_ closure: @escaping DebugCallback) -> Self {
+    public func onDebug(_ closure: @escaping DebugCallback) -> Self {
         onDebug = closure
         return self
     }
     
-    func onStart(_ closure: @escaping StartCallback) -> Self {
+    public func onStart(_ closure: @escaping StartCallback) -> Self {
         onStart = closure
         return self
     }
