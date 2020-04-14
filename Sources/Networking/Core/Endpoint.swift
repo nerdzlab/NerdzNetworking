@@ -23,7 +23,7 @@ public class Endpoint {
         didSet { requestFactory.accept = accept }
     }
     
-    public var additionalHeaders: [NetworkingHeader] {
+    public var additionalHeaders: [RequestHeader] {
         didSet { requestFactory.headers = additionalHeaders }
     }
     
@@ -67,7 +67,7 @@ public class Endpoint {
         contentType: MimeType = .application(.json),
         accept: MimeType = .application(.json),
         token: AuthToken? = nil,
-        additionalHeaders: [NetworkingHeader]) 
+        additionalHeaders: [RequestHeader] = []) 
     {
         self.baseUrl = baseUrl
         self.sessionConfiguration = sessionConfiguration
@@ -91,7 +91,7 @@ public class Endpoint {
         contentType         : MimeType,
         accept              : MimeType,
         token               : AuthToken?,
-        additionalHeaders   : [NetworkingHeader]) 
+        additionalHeaders   : [RequestHeader]) 
         
         -> RequestExecuter
     {
@@ -136,7 +136,7 @@ public class Endpoint {
         tokenHeader      : AuthToken?, 
         contentType      : MimeType, 
         accept           : MimeType,
-        additionalHeaders: [NetworkingHeader]) 
+        additionalHeaders: [RequestHeader]) 
         
         -> RequestFactory 
     {

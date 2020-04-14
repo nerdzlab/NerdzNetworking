@@ -28,7 +28,7 @@ class RequestFactory {
     var tokenHeader: AuthToken?
     var contentType: MimeType = .application(.json)
     var accept: MimeType = .application(.json)
-    var headers: [NetworkingHeader] = []
+    var headers: [RequestHeader] = []
 
     init(baseUrl: URL) {
         self.baseUrl = baseUrl
@@ -65,7 +65,7 @@ class RequestFactory {
         return urlRequest
     }
 
-    func updateHeader(_ header: NetworkingHeader) {
+    func updateHeader(_ header: RequestHeader) {
         if let index = headers.firstIndex(where: { $0.key == header.key }) {
             headers[index] = header
         }
@@ -90,7 +90,7 @@ class RequestFactory {
 }
 
 private extension URLRequest {
-    mutating func setHeader( _ header: NetworkingHeader) {
+    mutating func setHeader( _ header: RequestHeader) {
         setValue(header.value, forHTTPHeaderField: header.key)
     }
 }

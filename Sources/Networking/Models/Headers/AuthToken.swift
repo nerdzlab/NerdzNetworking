@@ -8,26 +8,30 @@
 
 import Foundation
 
-public enum AuthToken: NetworkingHeader, Equatable {
-    case bearer(_ token: String)
-    case jwt(_ token: String)
-    case custom(_ token: String)
+public enum AuthToken: RequestHeader, Equatable {
+    case bearer(_ token: String, key: String = "Authorization")
+    case jwt(_ token: String, key: String = "Authorization")
+    case custom(_ token: String, key: String = "Authorization")
 
     public var key: String {
-        return "Authorization"
+        switch self {
+        case .custom(_, let key), .jwt(_, let key), .bearer(_, let key):
+            return key
+        }
     }
 
     public var value: String {
         switch self {
-        case .bearer(let token): return "Bearer \(token)"
-        case .jwt(let token): return "JWT \(token)"
-        case .custom(let token): return token
+        case .bearer(let token, _): return "Bearer \(token)"
+        case .jwt(let token, _): return "JWT \(token)"
+        case .custom(let token, _): return token
         }
     }
 
     var token: String {
         switch self {
-        case .bearer(let token), .jwt(let token), .custom(let token): return token
+        case .bearer(let token, _), .jwt(let token, _), .custom(let token, _): 
+            return token
         }
     }
 

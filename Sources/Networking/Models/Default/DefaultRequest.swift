@@ -16,7 +16,7 @@ public struct DefaultRequest<Response: ResponseObject, Error: ServerError>: Requ
     public var method: HTTPMethod
     public var queryParams: [(String, String)] = []
     public var bodyParams: [String: Any] = [:]
-    public var headers: [NetworkingHeader] = []
+    public var headers: [RequestHeader] = []
     public var timeout: TimeInterval?
     
     public init(
@@ -24,7 +24,7 @@ public struct DefaultRequest<Response: ResponseObject, Error: ServerError>: Requ
         method: HTTPMethod, 
         queryParams: [(String, String)] = [], 
         bodyParams: [String: Any] = [:], 
-        headers: [NetworkingHeader] = [], 
+        headers: [RequestHeader] = [], 
         timeout: TimeInterval? = nil)
     {
         self.path = path

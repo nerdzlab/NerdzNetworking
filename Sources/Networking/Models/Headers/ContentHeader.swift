@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum ContentHeader: NetworkingHeader {
+public enum ContentHeader: RequestHeader {
     case contenType(_ mime: MimeType)
     case accept(_ mime: MimeType)
     case length(_ length: Int)
