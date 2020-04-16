@@ -8,19 +8,7 @@
 
 import Foundation
 
-extension Dictionary: ResponseObject {
-    public static var mapper: BaseObjectMapper<Self> {
-        return CustomObjectMapper(
-            jsonClosure: { json -> Self? in
-                return json as? Dictionary<Key, Value>
-        }, 
-            dataClosure: { data -> Self? in
-                return (try? JSONSerialization.jsonObject(with: data, options: [])) as? Self
-        })
-    }
-}
-
-extension Dictionary where Key == String, Value: ResponseObject {
+extension Dictionary: ResponseObject where Key == String, Value: ResponseObject {
     public static var mapper: BaseObjectMapper<Self> {
         return CustomObjectMapper(
             jsonClosure: { json -> Self? in

@@ -17,9 +17,3 @@ extension String: ServerError {
         return self
     }
 }
-
-extension Dictionary: ServerError where Key == String {
-    public var message: String {
-        return description
-    }
-}

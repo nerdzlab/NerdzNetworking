@@ -8,19 +8,7 @@
 
 import Foundation
 
-extension Array: ResponseObject {
-    public static var mapper: BaseObjectMapper<Self> { 
-        return CustomObjectMapper<Self>(
-            jsonClosure: { json -> Self? in
-                return json as? Self
-        }, 
-            dataClosure: { data -> Self? in
-                return Array<UInt8>(data) as? Self
-        })
-    }
-}
-
-extension Array where Element: ResponseObject {
+extension Array: ResponseObject where Element: ResponseObject {
     public static var mapper: BaseObjectMapper<Self> { 
         return CustomObjectMapper<Self>(
             jsonClosure: { json -> Self? in
