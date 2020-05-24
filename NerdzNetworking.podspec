@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'NerdzNetworking'
-  s.version          = '0.0.11'
+  s.version          = '0.0.12'
   s.summary          = 'A wrapper on top of URLSession and URLRequest to simplify creating and managing network requests'
 
 # This description is used to generate tags and improve search results.
@@ -24,7 +24,7 @@ NerdzNetworking library allows easily create and execute requests as well as set
   s.homepage         = 'https://github.com/nerdzlab/NerdzNetworking'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'NerdzLab' => 'supernerd@nerdzlab.com' }
-  s.source           = { :git => 'https://github.com/nerdzlab/NerdzNetworking.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/nerdzlab/NerdzNetworking.git', :tag => "#{spec.version}" , :branch => 'master' }
   s.social_media_url = 'https://nerdzlab.com'
 
   s.ios.deployment_target = '8.0'
