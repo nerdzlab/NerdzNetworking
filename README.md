@@ -7,20 +7,20 @@
 The main ideology for creating `NerdzNetworking` library was to maximaly split networking into small pieces. 
 The ideal scenario would be to have a separate class/structure per each request. This should help easily navigate and search information for specific request in files structure. 
 
-![Requests example](/requests_example.png)
+![Requests example](https://raw.githubusercontent.com/nerdzlab/NerdzNetworking/master/requests_example.png)
 
 # Tutorial
 
 ## Endpoint setup
 
 First of all you need to setup your endpoint that will be used later on for executing requests. To do that - you should be using `Endpoint` class.
-`Endpoint` class will collect all general settings for performing requests.
+`Endpoint` class will collect all general settings for performing requests. You can change any parameter at any time you want.
 
 ```swift
 let myEndpoint = Endpoint(baseUrl: myBaseUrl)
-myEndpoint.contentType = .application(.json)
-myEndpoint.accept = .application(.json)
-myEndpoint.token = .jwt(myTokenString)
+myEndpoint.contentType = .application(.json) // Specifying content type header
+myEndpoint.accept = .application(.json) // Specifying access header
+myEndpoint.token = .jwt(myTokenString) // Specifying auth token if such is required. PS: you can provide in later on. 
 myEndpoint.additionalHeaders = [
     // Additional headers that will be attached to every request
 ]
@@ -45,7 +45,7 @@ class MyRequest: Request {
     typealias ErrorType = MyUnexpectedError
     
     let path = "my/path/to/backend" // Required
-    let methong = .get //Optional
+    let methong = .get // Optional
     let queryParams = [("key", "value")] // Optional
     let bodyParams = ["key", "value"] // Optional
     let headers = [DefaultRequestHeader(key: "key", value: "value")] // Optional
@@ -237,6 +237,15 @@ class MyResponseConverter: ResponseJsonConverter {
 ```
 
 # Installation
+
+## CocoaPods
+
+You can use [CocoaPods](https://cocoapods.org) dependency manager to install `NerdzNetworking`.
+In your `Podfile` spicify:
+
+```ruby
+pod 'NerdzNetworking', '~> 0.0'
+```
 
 ## Swift Package Manager
 
