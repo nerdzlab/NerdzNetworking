@@ -1,0 +1,6 @@
+framework module Pods_NerdzNetworking_Tests {
+  umbrella header "Pods-NerdzNetworking_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -54,7 +54,7 @@ class MyRequest: Request {
 }
 ```
 
-This is just an example and probably you will not have all parameters required and startic. To have dynamicaly created request - you can just use initializers that willl be taking dynamic parameters required for request. 
+This is just an example and probably you will not have all parameters required and static. To have dynamicaly created request - you can just use initializers that willl be taking dynamic parameters required for request. 
 As an example - some dynamic bodyParams or dynamic path.
 
 ### Default request

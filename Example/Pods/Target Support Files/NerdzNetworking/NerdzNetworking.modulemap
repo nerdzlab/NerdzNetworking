@@ -1,0 +1,6 @@
+framework module NerdzNetworking {
+  umbrella header "NerdzNetworking-umbrella.h"
+
+  export *
+  module * { export * }
+}
