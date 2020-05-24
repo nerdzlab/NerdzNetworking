@@ -42,8 +42,6 @@ public extension Request {
     }
 }
 
-public protocol MultipartFormDataRequest: Request, MultipartRequestData { }
-
 extension Request {
     public typealias ResponseSuccessCallback = (ResponseObjectType) -> Void
     public typealias ErrorCallback = (ErrorResponse<ErrorType>) -> Void

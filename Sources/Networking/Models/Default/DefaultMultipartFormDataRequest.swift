@@ -1,14 +1,13 @@
 //
-//  NetworkingDefaultRequestType.swift
+//  DefaultMultipartFormDataRequest.swift
 //  Networking
 //
-//  Created by new user on 16.02.2020.
-//  Copyright © 2020 Vasyl Khmil. All rights reserved.
+//  Created by new user on 24.05.2020.
 //
 
 import Foundation
 
-public struct DefaultRequest<Response: ResponseObject, Error: ServerError>: Request {
+public struct DefaultMultipartFormDataRequest<Response: ResponseObject, Error: ServerError>: MultipartFormDataRequest {
     public typealias ResponseObjectType = Response
     public typealias ErrorType = Error
     
@@ -19,6 +18,7 @@ public struct DefaultRequest<Response: ResponseObject, Error: ServerError>: Requ
     public var headers: [RequestHeader] = []
     public var timeout: TimeInterval?
     public var endpoint: Endpoint?
+    public var files: [MultipartFile] = []
     
     public init(
         path: String, 
@@ -27,7 +27,8 @@ public struct DefaultRequest<Response: ResponseObject, Error: ServerError>: Requ
         bodyParams: [String: Any] = [:], 
         headers: [RequestHeader] = [], 
         timeout: TimeInterval? = nil,
-        endpoint: Endpoint? = nil)
+        endpoint: Endpoint? = nil,
+        files: [MultipartFile] = [])
     {
         self.path = path
         self.method = method
