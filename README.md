@@ -180,7 +180,7 @@ class MyResponse: ResponseObject {
 }
 ```
 
-### ResponseJsonConverter
+### `ResponseJsonConverter`
 
 You can also provide a response converters to convert some unpropertly returned responses becore mapping into expected response starts. The responsible protocol for this is `ResponseJsonConverter`.
 
@@ -188,7 +188,7 @@ Response converter should be specified in `Request` class under `responseConvert
 
 You can have your own converters that implement `ResponseJsonConverter` protocol, or use built in implementations: `KeyPathResponseConverter`, `ClosureResponseConverter`.
 
-#### KeyPathResponseConverter
+#### `KeyPathResponseConverter`
 
 `KeyPathResponseConverter` allow you to pull a data from `JSON` by specific `path` provided. 
 
@@ -204,7 +204,7 @@ class MyRequest: Request {
 }
 ```
 
-#### ClosureResponseConverter
+#### `ClosureResponseConverter`
 
 `ClosureResponseConverter` allow you to provide custom convertation. You will need to provide a `closure` that takes `Any` and return `Any` after convertation.
 
@@ -224,7 +224,7 @@ class MyRequest: Request {
 }
 ```
 
-#### Custom ResponseJsonConverter
+#### Custom `ResponseJsonConverter`
 
 You can implement your ovn converter by implementing `ResponseJsonConverter` protocol.
 
