@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'NerdzNetworking'
-  s.version          = '0.1.0'
+  s.version          = '0.0.11'
   s.summary          = 'A wrapper on top of URLSession and URLRequest to simplify creating and managing network requests'
 
 # This description is used to generate tags and improve search results.
