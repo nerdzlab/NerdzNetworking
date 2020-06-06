@@ -41,26 +41,8 @@ public class Endpoint {
     
     private(set) var requestExecuter: RequestExecuter
     
-    // MARK: - Methods(Public)
-    
-    func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T> {
-        let data = ResponseInfoBuilder<T>()
-        
-        let queue = OperationQueue.current?.underlyingQueue ?? .main
-        
-        queue.async {
-            do {
-                try self.requestExecuter.execure(request, with: data)
-            }
-            catch {
-                data.onFail?(.system(error))
-            }
-        }
-        
-        return data
-    }
-    
     // MARK: - Initialization
+    
     public init(
         baseUrl: URL, 
         sessionConfiguration: URLSessionConfiguration = .default,
@@ -84,6 +66,27 @@ public class Endpoint {
             token               : token, 
             additionalHeaders   : additionalHeaders)
     }
+    
+    // MARK: - Methods(Public)
+    
+    public func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T> {
+        let data = ResponseInfoBuilder<T>()
+        
+        let queue = OperationQueue.current?.underlyingQueue ?? .main
+        
+        queue.async {
+            do {
+                try self.requestExecuter.execure(request, with: data)
+            }
+            catch {
+                data.onFail?(.system(error))
+            }
+        }
+        
+        return data
+    }
+    
+    // MARK: - Methods(Private)
     
     private static func createdRequestExecuter(
         baseUrl             : URL, 

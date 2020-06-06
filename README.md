@@ -2,6 +2,41 @@
 
 `NerdzNetworking` is a wrapper on top of `URLSession` and `URLRequest` to simplify creating and managing network requests written on `Swift` language.
 
+# Example
+
+You need to define request.
+
+```swift
+class LoginWithFacebookRequest: Request {
+    typealias ResponseObjectType = User
+    typealias ErrorType = AuthError
+    
+    let path = "login/facebook"
+    let methong = .post
+    let bodyParams: [String: Any]
+    
+    init(token: String) {   
+        bodyParams = ["token": token]
+    }
+}
+```
+
+And then just use it.
+
+```swift
+LoginWithFacebookRequest(token: fbToken)
+    .execute()
+    
+    .onSuccess { user in
+        ...
+    }
+    
+    onError { error in
+    
+    }
+}
+```
+
 # Ideology
 
 The main ideology for creating `NerdzNetworking` library was to maximaly split networking into small pieces. 
@@ -257,7 +292,29 @@ To add NerdzNetworking to a [Swift Package Manager](https://swift.org/package-ma
 
 # Docummentation
 
-**TBD**
+## Endpoint
+
+Represents and endpoint with all settings for requests execution. You need to create at least one instance to be able to execute requests.
+
+### Parameters
+
+Name | Type | Accessibility | Description
+------------ | ------------- | ------------- | --------------------------------------
+`default` | `Endpoint` | `static` `read-write` | An instance of endpoint that will be used for executing request
+`baseUrl` | `URL` | `readonly` | An endpoint base url
+`sessionConfiguration` | `URLSessionConfiguration` | `readonly` | A configuration that is used for inner `URLSession`
+`contentType` | `MimeType` | `read-write` | A value for `Content-Type` header
+`accept` | `MimeType` | `read-write` | A value for `Accept` header
+`additionalHeaders` | `[RequestHeader]` | `read-write` | A headers that will be used with every request
+`token` | `AuthToken` | `read-write` | A value for `Authorization` header
+`contentType` | `MimeType` | `read-write` | A value for `Content-Type` header
+
+### Methods
+
+Signature | Parameters | Return | Description
+------------ | ------------- | ------------- | --------------------------------------
+`func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T>` | `request`: Object to be executed | Response information builder | Will return object for configuring or response and execute request
+`init(\nbaseUrl: URL,\nsessionConfiguration: URLSessionConfiguration = .default,\ncontentType: MimeType = .application(.json),\naccept: MimeType = .application(.json),\ntoken: AuthToken? = nil,\nadditionalHeaders: [RequestHeader] = [])` | `baseUrl`:  An endpoint base url\n`sessionConfiguration`: A configuration that will be used for inner `URLSession`\n`contentType`: A value for `Content-Type` header\n`accept`: A value for `Accept` header\n`tolen`: A value for `Authorization` header\n`additionalHeaders`: A headers that will be used with every request
 
 # Next steps
 
