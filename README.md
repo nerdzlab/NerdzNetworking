@@ -32,7 +32,7 @@ LoginWithFacebookRequest(token: fbToken)
     }
     
     onError { error in
-    
+        ...
     }
 }
 ```
@@ -311,10 +311,22 @@ Name | Type | Accessibility | Description
 
 ### Methods
 
-Signature | Parameters | Return | Description
------------- | ------------- | ------------- | --------------------------------------
-`func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T>` | `request`: Object to be executed | Response information builder | Will return object for configuring or response and execute request
-`init(\nbaseUrl: URL,\nsessionConfiguration: URLSessionConfiguration = .default,\ncontentType: MimeType = .application(.json),\naccept: MimeType = .application(.json),\ntoken: AuthToken? = nil,\nadditionalHeaders: [RequestHeader] = [])` | `baseUrl`:  An endpoint base url\n`sessionConfiguration`: A configuration that will be used for inner `URLSession`\n`contentType`: A value for `Content-Type` header\n`accept`: A value for `Accept` header\n`tolen`: A value for `Authorization` header\n`additionalHeaders`: A headers that will be used with every request
+`func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T>` 
+
+Parameters | Return | Description
+------------ | ------------- | -------------
+`request`: Object to be executed | Response information builder | Will return object for configuring or response and execute request
+
+`init(baseUrl: URL, sessionConfiguration: URLSessionConfiguration = .default, contentType: MimeType = .application(.json), accept: MimeType = .application(.json), token: AuthToken? = nil, additionalHeaders: [RequestHeader] = [])`
+
+Parameters | Return | Description
+------------ | ------------- | -------------
+`baseUrl`:  An endpoint base url
+`sessionConfiguration`: A configuration that will be used for inner `URLSession`
+`contentType`: A value for `Content-Type` header
+`accept`: A value for `Accept` header
+`tolen`: A value for `Authorization` header
+`additionalHeaders`: A headers that will be used with every request | Initialized `Endpoint` instance | Initialize `Endpoint` instance with all parameters
 
 # Next steps
 
