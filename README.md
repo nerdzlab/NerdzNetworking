@@ -319,14 +319,14 @@ Parameters | Return | Description
 
 `init(baseUrl: URL, sessionConfiguration: URLSessionConfiguration = .default, contentType: MimeType = .application(.json), accept: MimeType = .application(.json), token: AuthToken? = nil, additionalHeaders: [RequestHeader] = [])`
 
-Parameter | Default value | Description
------------- | ------------- | -------------
-`baseUrl` | - | An endpoint base url
-`sessionConfiguration`| `URLSessionConfiguration.default` | A configuration that will be used for inner `URLSession`
-`contentType`| `.application(.json)` | A value for `Content-Type` header
-`accept` | `.application(.json)` | A value for `Accept` header
-`token` | `nil` | A value for `Authorization` header
-`additionalHeaders` | `[]` | A headers that will be used with every request | Initialized `Endpoint` instance | Initialize `Endpoint` instance with all parameters
+Parameter | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`baseUrl` | `URL` | - | An endpoint base url
+`sessionConfiguration`| `URLSessionConfiguration` | `.default` | A configuration that will be used for inner `URLSession`
+`contentType`| `MimeType` | `.application(.json)` | A value for `Content-Type` header
+`accept` | `MimeType` | `.application(.json)` | A value for `Accept` header
+`token` | `AuthToken` | `nil` | A value for `Authorization` header
+`additionalHeaders` | `[RequestHeader]` | `[]` | A headers that will be used with every request 
 
 # Next steps
 
