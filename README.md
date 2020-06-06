@@ -311,13 +311,9 @@ Name | Type | Accessibility | Description
 
 ### Methods
 
-`func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T>` 
-
-Parameters | Return | Description
------------- | ------------- | -------------
-`request`: Object to be executed | Response information builder | Will return object for configuring or response and execute request
-
-`init(baseUrl: URL, sessionConfiguration: URLSessionConfiguration = .default, contentType: MimeType = .application(.json), accept: MimeType = .application(.json), token: AuthToken? = nil, additionalHeaders: [RequestHeader] = [])`
+```swift
+init(baseUrl: URL, sessionConfiguration: URLSessionConfiguration = .default, contentType: MimeType = .application(.json), accept: MimeType = .application(.json), token: AuthToken? = nil, additionalHeaders: [RequestHeader] = [])
+```
 
 Parameter | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
@@ -327,6 +323,14 @@ Parameter | Type | Default value | Description
 `accept` | `MimeType` | `.application(.json)` | A value for `Accept` header
 `token` | `AuthToken` | `nil` | A value for `Authorization` header
 `additionalHeaders` | `[RequestHeader]` | `[]` | A headers that will be used with every request 
+
+```swift
+func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T>
+```
+
+Parameter | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`request` | `Request` | - | Request to be executed
 
 # Next steps
 
