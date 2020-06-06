@@ -292,15 +292,15 @@ To add NerdzNetworking to a [Swift Package Manager](https://swift.org/package-ma
 
 # Docummentation
 
-## Endpoint
+## `Endpoint` class
 
-Represents and endpoint with all settings for requests execution. You need to create at least one instance to be able to execute requests.
+Class that represents and endpoint with all settings for requests execution. You need to create at least one instance to be able to execute requests.
 
-### Parameters
+### Properties
 
 Name | Type | Accessibility | Description
------------- | ------------- | ------------- | --------------------------------------
-`default` | `Endpoint` | `static` `read-write` | An instance of endpoint that will be used for executing request
+------------ | ------------- | ------------- | -------------
+`Endpoint.default` | `Endpoint` | `static` `read-write` | An instance of endpoint that will be used for executing request
 `baseUrl` | `URL` | `readonly` | An endpoint base url
 `sessionConfiguration` | `URLSessionConfiguration` | `readonly` | A configuration that is used for inner `URLSession`
 `contentType` | `MimeType` | `read-write` | A value for `Content-Type` header
@@ -315,6 +315,8 @@ Name | Type | Accessibility | Description
 init(baseUrl: URL, sessionConfiguration: URLSessionConfiguration = .default, contentType: MimeType = .application(.json), accept: MimeType = .application(.json), token: AuthToken? = nil, additionalHeaders: [RequestHeader] = [])
 ```
 
+Initializing with all parameters
+
 Parameter | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `baseUrl` | `URL` | - | An endpoint base url
@@ -328,9 +330,54 @@ Parameter | Type | Default value | Description
 func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T>
 ```
 
+Executing request on current endpoint
+
 Parameter | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `request` | `Request` | - | Request to be executed
+
+## `Request` protocol
+
+Protocol that represents a single request. You can imlement this protocol and then execute it.
+
+### `associatedtype`
+
+Name | Type | Accessibility | Description
+------------ | ------------- | ------------- | -------------
+`ResponseObjectType` | `ResponseObject` | A type of expected response from server. It should implement `ResponseObject` protocol 
+`ErrorType` | `ServerError` | A type of expected error from server. It should implement `ServerError` protocol 
+
+### Properties
+
+Name | Type | Accessibility | Description
+------------ | ------------- | ------------- | -------------
+`path` | `String` | `get` `required` | A request path
+`method` | `HTTPMethod` | `get` `required` | A request method
+`queryParams` | `[(String, String)]` | `get` `optional` | A request query parameters represented as an array of touples to save order
+`bodyParams` | `[String: Any]` | `get` `optional` | A request body params
+`headers` | `[RequestHeader]` | `get` `optional` | A request specific headers. Will be used is addition to headers from `Endpoint`
+`timeout` | `TimeInterval` | `get` `optional` | A request timeout. If not specified - will be used default from `Endpoint`
+`responseConverter` | `ResponseJsonConverter?` | `get` `optional` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
+`errorConverter` | `ResponseJsonConverter?` | `get` `optional` | An error response converter. Will be converted before mapping into a `ErrorType`
+`endpoint` | `Endpoint?` | `get` `optional` | An endpoint that will be used for execution
+
+### Methods
+
+```swift
+func execute(on endpoint: Endpoint) -> ResponseInfoBuilder<Self>
+```
+
+Executing current request on provided endpoint
+
+Parameter | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`endpoint` | `Endpoint` | - | Endpoint on what current request will be executed
+
+```swift
+func execute() -> ResponseInfoBuilder<Self>
+```
+
+Executing current request on endpoint provided in property or on `Endpoint.default`
 
 # Next steps
 
