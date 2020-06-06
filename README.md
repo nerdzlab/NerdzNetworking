@@ -319,14 +319,14 @@ Parameters | Return | Description
 
 `init(baseUrl: URL, sessionConfiguration: URLSessionConfiguration = .default, contentType: MimeType = .application(.json), accept: MimeType = .application(.json), token: AuthToken? = nil, additionalHeaders: [RequestHeader] = [])`
 
-Parameters | Return | Description
+Parameter | Default value | Description
 ------------ | ------------- | -------------
-`baseUrl`:  An endpoint base url
-`sessionConfiguration`: A configuration that will be used for inner `URLSession`
-`contentType`: A value for `Content-Type` header
-`accept`: A value for `Accept` header
-`tolen`: A value for `Authorization` header
-`additionalHeaders`: A headers that will be used with every request | Initialized `Endpoint` instance | Initialize `Endpoint` instance with all parameters
+`baseUrl` | - | An endpoint base url
+`sessionConfiguration`| `URLSessionConfiguration.default` | A configuration that will be used for inner `URLSession`
+`contentType`| `.application(.json)` | A value for `Content-Type` header
+`accept` | `.application(.json)` | A value for `Accept` header
+`token` | `nil` | A value for `Authorization` header
+`additionalHeaders` | `[]` | A headers that will be used with every request | Initialized `Endpoint` instance | Initialize `Endpoint` instance with all parameters
 
 # Next steps
 
