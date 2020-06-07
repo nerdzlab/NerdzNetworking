@@ -311,10 +311,7 @@ Name | Type | Accessibility | Description
 
 ### Methods
 
-*
-```swift
-init(baseUrl: URL, sessionConfiguration: URLSessionConfiguration = .default, contentType: MimeType = .application(.json), accept: MimeType = .application(.json), token: AuthToken? = nil, additionalHeaders: [RequestHeader] = [])
-```
+* `init(baseUrl: URL, sessionConfiguration: URLSessionConfiguration = .default, contentType: MimeType = .application(.json), accept: MimeType = .application(.json), token: AuthToken? = nil, additionalHeaders: [RequestHeader] = [])`
 
 Initializing with all parameters
 
@@ -327,9 +324,7 @@ Parameter | Type | Default value | Description
 `token` | `AuthToken` | `nil` | A value for `Authorization` header
 `additionalHeaders` | `[RequestHeader]` | `[]` | A headers that will be used with every request 
 
-```swift
-func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T>
-```
+* `func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T>`
 
 Executing request on current endpoint
 
