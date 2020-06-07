@@ -311,6 +311,7 @@ Name | Type | Accessibility | Description
 
 ### Methods
 
+*
 ```swift
 init(baseUrl: URL, sessionConfiguration: URLSessionConfiguration = .default, contentType: MimeType = .application(.json), accept: MimeType = .application(.json), token: AuthToken? = nil, additionalHeaders: [RequestHeader] = [])
 ```
