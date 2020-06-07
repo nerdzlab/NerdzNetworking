@@ -273,6 +273,7 @@ class MyResponseConverter: ResponseJsonConverter {
 
 # Installation
 
+
 ## CocoaPods
 
 You can use [CocoaPods](https://cocoapods.org) dependency manager to install `NerdzNetworking`.
@@ -281,6 +282,7 @@ In your `Podfile` spicify:
 ```ruby
 pod 'NerdzNetworking', '~> 0.0'
 ```
+
 
 ## Swift Package Manager
 
@@ -291,6 +293,7 @@ To add NerdzNetworking to a [Swift Package Manager](https://swift.org/package-ma
 ```
 
 # Docummentation
+
 
 ## `Endpoint` class
 
@@ -313,7 +316,7 @@ Name | Type | Accessibility | Description
 
 * `init(baseUrl: URL, sessionConfiguration: URLSessionConfiguration = .default, contentType: MimeType = .application(.json), accept: MimeType = .application(.json), token: AuthToken? = nil, additionalHeaders: [RequestHeader] = [])`
 
-Initializing with all parameters
+*Initializing with all parameters*
 
 Parameter | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
@@ -326,15 +329,16 @@ Parameter | Type | Default value | Description
 
 * `func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T>`
 
-Executing request on current endpoint
+*Executing request on current endpoint*
 
 Parameter | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `request` | `Request` | - | Request to be executed
 
+
 ## `Request` protocol
 
-Protocol that represents a single request. You can imlement this protocol and then execute it.
+Protocol that represents a single request. You can imlement this protocol and then execute it
 
 ### `associatedtype`
 
@@ -359,21 +363,17 @@ Name | Type | Accessibility | Description
 
 ### Methods
 
-```swift
-func execute(on endpoint: Endpoint) -> ResponseInfoBuilder<Self>
-```
+* `func execute(on endpoint: Endpoint) -> ResponseInfoBuilder<Self>`
 
-Executing current request on provided endpoint
+*Executing current request on provided endpoint*
 
 Parameter | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `endpoint` | `Endpoint` | - | Endpoint on what current request will be executed
 
-```swift
-func execute() -> ResponseInfoBuilder<Self>
-```
+* `func execute() -> ResponseInfoBuilder<Self>`
 
-Executing current request on endpoint provided in property or on `Endpoint.default`
+*Executing current request on endpoint provided in property or on `Endpoint.default`*
 
 # Next steps
 
