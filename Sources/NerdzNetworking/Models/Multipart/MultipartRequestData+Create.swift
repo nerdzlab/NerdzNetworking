@@ -60,8 +60,8 @@ extension MultipartRequestData {
 
 private extension MultipartFile {
     func inputStream(with boundary: String, defaultName: String = "file") -> InputStream? {
-        let name = fileName ?? defaultName
-        let resourceName = subject.resourceName ?? defaultName
+        let name = fileName
+        let resourceName = resource.resourceName
         
         var prefixData = Data()
         
@@ -74,7 +74,7 @@ private extension MultipartFile {
         
         guard 
             let postfixData = "\r\n".data(using: .utf8),
-            let subjectStream = subject.stream else 
+            let subjectStream = resource.stream else 
         {
             return nil
         }

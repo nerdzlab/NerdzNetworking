@@ -18,6 +18,8 @@ public struct DefaultMultipartFormDataRequest<Response: ResponseObject, Error: S
     public var headers: [RequestHeader] = []
     public var timeout: TimeInterval?
     public var endpoint: Endpoint?
+    public var responseConverter: ResponseJsonConverter?
+    public var errorConverter: ResponseJsonConverter?
     public var files: [MultipartFile] = []
     
     public init(
@@ -27,6 +29,8 @@ public struct DefaultMultipartFormDataRequest<Response: ResponseObject, Error: S
         bodyParams: [String: Any] = [:], 
         headers: [RequestHeader] = [], 
         timeout: TimeInterval? = nil,
+        responseConverter: ResponseJsonConverter? = nil,
+        errorConverter: ResponseJsonConverter? = nil,
         endpoint: Endpoint? = nil,
         files: [MultipartFile] = [])
     {
@@ -36,6 +40,9 @@ public struct DefaultMultipartFormDataRequest<Response: ResponseObject, Error: S
         self.bodyParams = bodyParams
         self.headers = headers
         self.timeout = timeout
+        self.responseConverter = responseConverter
+        self.errorConverter = errorConverter
         self.endpoint = endpoint
+        self.files = files
     }
 }

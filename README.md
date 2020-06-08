@@ -103,7 +103,9 @@ let myRequest = DefaultRequest<MyExpectedResponse, MyUnexpectedError>(
     queryParams: [("key", "value")], 
     bodyParams: ["key", "value"], 
     headers: [DefaultRequestHeader(key: "key", value: "value")], 
-    timeout: 60, 
+    timeout: 60,
+    responseConverter: myResponseConverter,
+    errorConverter: myErrorConverter,
     endpoint: myEndpoint)
 ```
 
@@ -118,9 +120,9 @@ class MyMultipartRequest: MultipartFormDataRequest {
     // Same fields as in Request example
     
     let files: [MultipartFile] = [
-        DefaultMultipartFile(subject: .data(fileData), mime: .image(.png), fileName: "avatar1"),
-        DefaultMultipartFile(subject: .url(fileUrl), mime: .audio(.mp4), fileName: "song"),
-        DefaultMultipartFile(subject: .path(filePath), mime: .image(.jpeg))
+        DefaultMultipartFile(resource: fileData, mime: .image(.png), fileName: "avatar1"),
+        DefaultMultipartFile(resource: fileUrl, mime: .audio(.mp4), fileName: "song"),
+        DefaultMultipartFile(resource: filePath, mime: .image(.jpeg), fileName: "avatar2")
     ]
 }
 ```
@@ -318,7 +320,7 @@ Name | Type | Accessibility | Description
 
 *Initializing with all parameters*
 
-Parameter | Type | Default value | Description
+Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `baseUrl` | `URL` | - | An endpoint base url
 `sessionConfiguration`| `URLSessionConfiguration` | `.default` | A configuration that will be used for inner `URLSession`
@@ -331,12 +333,14 @@ Parameter | Type | Default value | Description
 
 *Executing request on current endpoint*
 
-Parameter | Type | Default value | Description
+Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `request` | `Request` | - | Request to be executed
 
 
 ## `Request` protocol
+
+**TYPE**: `protocol`
 
 Protocol that represents a single request. You can imlement this protocol and then execute it
 
@@ -367,13 +371,118 @@ Name | Type | Accessibility | Description
 
 *Executing current request on provided endpoint*
 
-Parameter | Type | Default value | Description
+Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `endpoint` | `Endpoint` | - | Endpoint on what current request will be executed
 
 * `func execute() -> ResponseInfoBuilder<Self>`
 
 *Executing current request on endpoint provided in property or on `Endpoint.default`*
+
+
+## `DefaultRequest` struct
+
+**TYPE**: `struct`
+**IMPLEMENT**: `Request`
+
+A default implementation of `Request` protocol that can be used for executing simple requests
+
+### Generics
+
+Name | Types | Description
+------------ | ------------- | -------------
+`Response` | `ResponseObject` | A type of a successful response object 
+`Error` | `ServerError` | A type of an error response object
+
+### Properties
+
+Name | Type | Accessibility | Description
+------------ | ------------- | ------------- | -------------
+`path` | `String` | `read-write` | A request path
+`method` | `HTTPMethod` | `read-write` | A request method
+`queryParams` | `[(String, String)]` | `read-write` | A request query parameters represented as an array of touples to save order
+`bodyParams` | `[String: Any]` | `read-write` | A request body params
+`headers` | `[RequestHeader]` | `read-write` | A request specific headers. Will be used is addition to headers from `Endpoint`
+`timeout` | `TimeInterval` | `read-write` | A request timeout. If not specified - will be used default from `Endpoint`
+`responseConverter` | `ResponseJsonConverter?` | `read-write` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
+`errorConverter` | `ResponseJsonConverter?` | `read-write` | An error response converter. Will be converted before mapping into a `ErrorType`
+`endpoint` | `Endpoint?` | `read-write` | An endpoint that will be used for execution
+
+### Methods
+
+* `init(path: String, method: HTTPMethod, queryParams: [(String, String)] = [], bodyParams: [String: Any] = [:], headers: [RequestHeader] = [], timeout: TimeInterval? = nil, responseConverter: ResponseJsonConverter? = nil, errorConverter: ResponseJsonConverter? = nil, endpoint: Endpoint? = nil)`
+
+Name | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`path` | `String` | - | A request path
+`method` | `HTTPMethod` | - | A request method
+`queryParams` | `[(String, String)]` | `[]` | A request query parameters represented as an array of touples to save order
+`bodyParams` | `[String: Any]` | `[:]` | A request body params
+`headers` | `[RequestHeader]` | `[]` | A request specific headers. Will be used is addition to headers from `Endpoint`
+`timeout` | `TimeInterval` | `nil` | A request timeout. If not specified - will be used default from `Endpoint`
+`responseConverter` | `ResponseJsonConverter?` | `nil` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
+`errorConverter` | `ResponseJsonConverter?` | `nil` | An error response converter. Will be converted before mapping into a `ErrorType`
+`endpoint` | `Endpoint?` | `nil` | An endpoint that will be used for execution
+
+
+## `MultipartFormDataRequest` protocol
+
+**TYPE**: `protocol`
+**INHERITS**: `Request`
+
+A protocol that needs to be implemented in order to execute multipart form-data request.
+
+### Properties
+
+Name | Type | Accessibility | Description
+------------ | ------------- | ------------- | -------------
+`files` | `[MultipartFile]` | `get` `required` | A list of files to be included in request
+
+
+## `DefaultMultipartFormDataRequest` struct
+
+**TYPE**: `struct`
+**IMPLEMENT**: `MultipartFormDataRequest`
+
+A default implementation of `MultipartFormDataRequest` protocol that can be used for executing simple requests
+
+### Generics
+
+Name | Types | Description
+------------ | ------------- | -------------
+`Response` | `ResponseObject` | A type of a successful response object 
+`Error` | `ServerError` | A type of an error response object
+
+### Properties
+
+Name | Type | Accessibility | Description
+------------ | ------------- | ------------- | -------------
+`path` | `String` | `read-write` | A request path
+`method` | `HTTPMethod` | `read-write` | A request method
+`queryParams` | `[(String, String)]` | `read-write` | A request query parameters represented as an array of touples to save order
+`bodyParams` | `[String: Any]` | `read-write` | A request body params
+`headers` | `[RequestHeader]` | `read-write` | A request specific headers. Will be used is addition to headers from `Endpoint`
+`timeout` | `TimeInterval` | `read-write` | A request timeout. If not specified - will be used default from `Endpoint`
+`responseConverter` | `ResponseJsonConverter?` | `read-write` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
+`errorConverter` | `ResponseJsonConverter?` | `read-write` | An error response converter. Will be converted before mapping into a `ErrorType`
+`endpoint` | `Endpoint?` | `read-write` | An endpoint that will be used for execution
+
+### Methods
+
+* `init(path: String, method: HTTPMethod, queryParams: [(String, String)] = [], bodyParams: [String: Any] = [:], headers: [RequestHeader] = [], timeout: TimeInterval? = nil, responseConverter: ResponseJsonConverter? = nil, errorConverter: ResponseJsonConverter? = nil, endpoint: Endpoint? = nil)`
+
+Name | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`path` | `String` | - | A request path
+`method` | `HTTPMethod` | - | A request method
+`queryParams` | `[(String, String)]` | `[]` | A request query parameters represented as an array of touples to save order
+`bodyParams` | `[String: Any]` | `[:]` | A request body params
+`headers` | `[RequestHeader]` | `[]` | A request specific headers. Will be used is addition to headers from `Endpoint`
+`timeout` | `TimeInterval` | `nil` | A request timeout. If not specified - will be used default from `Endpoint`
+`responseConverter` | `ResponseJsonConverter?` | `nil` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
+`errorConverter` | `ResponseJsonConverter?` | `nil` | An error response converter. Will be converted before mapping into a `ErrorType`
+`endpoint` | `Endpoint?` | `nil` | An endpoint that will be used for execution
+`file` | `[MultipartFile]` | `[]` | A list of files that will be sent together with request
 
 # Next steps
 

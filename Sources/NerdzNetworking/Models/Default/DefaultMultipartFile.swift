@@ -9,12 +9,12 @@
 import Foundation
 
 public struct DefaultMultipartFile: MultipartFile {
-    public var subject: MultipartaSubject
+    public var resource: MultipartResourceConvertable
     public var mime: MimeType
-    public var fileName: String?
+    public var fileName: String
     
-    init(subject: MultipartaSubject, mime: MimeType, fileName: String? = nil) {
-        self.subject = subject
+    init(resource: MultipartResourceConvertable, mime: MimeType, fileName: String) {
+        self.resource = resource
         self.mime = mime
         self.fileName = fileName
     }

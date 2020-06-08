@@ -19,6 +19,8 @@ public struct DefaultRequest<Response: ResponseObject, Error: ServerError>: Requ
     public var headers: [RequestHeader] = []
     public var timeout: TimeInterval?
     public var endpoint: Endpoint?
+    public var responseConverter: ResponseJsonConverter?
+    public var errorConverter: ResponseJsonConverter?
     
     public init(
         path: String, 
@@ -27,6 +29,8 @@ public struct DefaultRequest<Response: ResponseObject, Error: ServerError>: Requ
         bodyParams: [String: Any] = [:], 
         headers: [RequestHeader] = [], 
         timeout: TimeInterval? = nil,
+        responseConverter: ResponseJsonConverter? = nil,
+        errorConverter: ResponseJsonConverter? = nil,
         endpoint: Endpoint? = nil)
     {
         self.path = path
@@ -35,6 +39,8 @@ public struct DefaultRequest<Response: ResponseObject, Error: ServerError>: Requ
         self.bodyParams = bodyParams
         self.headers = headers
         self.timeout = timeout
+        self.responseConverter = responseConverter
+        self.errorConverter = errorConverter
         self.endpoint = endpoint
     }
 }
