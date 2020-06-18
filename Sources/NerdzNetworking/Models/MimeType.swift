@@ -17,6 +17,35 @@ public struct MimeType {
         "\(type)/\(subtype)" + parameters.reduce("", { "; \($0)=\($1)" })
     }
     
+    public init?(_ string: String) {
+        guard string.contains("/") else {
+            return nil
+        }
+        
+        let components = string.components(separatedBy: "/;=")
+        
+        guard components.count >= 2 else {
+            return nil
+        }
+        
+        let type = components[0]
+        let subtype = components[1]
+        var parameters: [String : String] = [:]
+        
+        let hasPrameters = string.contains(";") && string.contains("=") && components.count > 3
+        
+        if hasPrameters {
+            let parametersComponents = components[3..<components.count]
+            let parametersCount = parametersComponents.count / 2
+            
+            for i in 0..<parametersCount {
+                parameters[parametersComponents[i*2]] = parametersComponents[i*2 + 1]
+            }
+        }
+        
+        self.init(type: type, subtype: subtype, parameters: parameters)
+    }
+    
     public init(type: String, subtype: String, parameters: [String: String] = [:]) {
         self.type = type
         self.subtype = subtype
@@ -153,4 +182,10 @@ public enum VideoMimeSubtype: String {
     case x_ms_wmv = "x-ms-wmv"
     case x_flv = "x-flv"
     case gpp3 = "3gpp"
+}
+
+public extension String {
+    init(_ type: MimeType) {
+        self.init(type.value)
+    }
 }

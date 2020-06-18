@@ -15,22 +15,10 @@ public class Endpoint {
     public let baseUrl: URL
     public let sessionConfiguration: URLSessionConfiguration
     
-    public var contentType: MimeType {
-        didSet { requestFactory.contentType = contentType }
+    public var headers: [RequestHeaderKey: String] {
+        didSet { requestFactory.headers = headers }
     }
-    
-    public var accept: MimeType {
-        didSet { requestFactory.accept = accept }
-    }
-    
-    public var additionalHeaders: [RequestHeader] {
-        didSet { requestFactory.headers = additionalHeaders }
-    }
-    
-    public var token: AuthToken? {
-        didSet { requestFactory.tokenHeader = token }
-    }
-    
+
     var requestFactory: RequestFactory {
         requestDispatcher.requestFactory
     }
@@ -49,22 +37,16 @@ public class Endpoint {
         contentType: MimeType = .application(.json),
         accept: MimeType = .application(.json),
         token: AuthToken? = nil,
-        additionalHeaders: [RequestHeader] = []) 
+        headers: [RequestHeaderKey: String] = [:]) 
     {
         self.baseUrl = baseUrl
         self.sessionConfiguration = sessionConfiguration
-        self.contentType = contentType
-        self.accept = accept
-        self.additionalHeaders = additionalHeaders
-        self.token = token
+        self.headers = headers
         
         self.requestExecuter = Endpoint.createdRequestExecuter(
             baseUrl             : baseUrl, 
-            sessionConfiguration: sessionConfiguration, 
-            contentType         : contentType, 
-            accept              : accept, 
-            token               : token, 
-            additionalHeaders   : additionalHeaders)
+            sessionConfiguration: sessionConfiguration,
+            headers             : headers)
     }
     
     // MARK: - Methods(Public)
@@ -91,19 +73,13 @@ public class Endpoint {
     private static func createdRequestExecuter(
         baseUrl             : URL, 
         sessionConfiguration: URLSessionConfiguration,
-        contentType         : MimeType,
-        accept              : MimeType,
-        token               : AuthToken?,
-        additionalHeaders   : [RequestHeader]) 
+        headers             : [RequestHeaderKey: String]) 
         
         -> RequestExecuter
     {
         let requestFactory = createdRequestFactory(
-            baseUrl          : baseUrl, 
-            tokenHeader      : token, 
-            contentType      : contentType, 
-            accept           : accept,
-            additionalHeaders: additionalHeaders)
+            baseUrl: baseUrl,
+            headers: headers)
         
         let networkDispatcher = createdNetworkDispatcher(
             requestFactory  : requestFactory, 
@@ -135,20 +111,11 @@ public class Endpoint {
     }
     
     private static func createdRequestFactory(
-        baseUrl          : URL, 
-        tokenHeader      : AuthToken?, 
-        contentType      : MimeType, 
-        accept           : MimeType,
-        additionalHeaders: [RequestHeader]) 
+        baseUrl: URL,
+        headers: [RequestHeaderKey: String]) 
         
         -> RequestFactory 
     {
-        let requestFactory = RequestFactory(baseUrl: baseUrl)
-        
-        requestFactory.tokenHeader = tokenHeader
-        requestFactory.contentType = contentType
-        requestFactory.accept      = accept
-        
-        return requestFactory
+        RequestFactory(baseUrl: baseUrl, headers: headers)
     }
 }

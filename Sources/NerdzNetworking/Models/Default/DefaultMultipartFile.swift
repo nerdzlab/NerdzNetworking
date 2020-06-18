@@ -13,7 +13,7 @@ public struct DefaultMultipartFile: MultipartFile {
     public var mime: MimeType
     public var fileName: String
     
-    init(resource: MultipartResourceConvertable, mime: MimeType, fileName: String) {
+    public init(resource: MultipartResourceConvertable, mime: MimeType, fileName: String) {
         self.resource = resource
         self.mime = mime
         self.fileName = fileName

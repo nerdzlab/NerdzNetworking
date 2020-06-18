@@ -15,7 +15,7 @@ public struct DefaultMultipartFormDataRequest<Response: ResponseObject, Error: S
     public var method: HTTPMethod
     public var queryParams: [(String, String)] = []
     public var bodyParams: [String: Any] = [:]
-    public var headers: [RequestHeader] = []
+    public var headers: [RequestHeaderKey: String] = [:]
     public var timeout: TimeInterval?
     public var endpoint: Endpoint?
     public var responseConverter: ResponseJsonConverter?
@@ -27,7 +27,7 @@ public struct DefaultMultipartFormDataRequest<Response: ResponseObject, Error: S
         method: HTTPMethod, 
         queryParams: [(String, String)] = [], 
         bodyParams: [String: Any] = [:], 
-        headers: [RequestHeader] = [], 
+        headers: [RequestHeaderKey: String] = [:], 
         timeout: TimeInterval? = nil,
         responseConverter: ResponseJsonConverter? = nil,
         errorConverter: ResponseJsonConverter? = nil,

@@ -13,13 +13,13 @@ public protocol RequestData {
     var method: HTTPMethod { get }
     var queryParams: [(String, String)] { get }
     var bodyParams: [String: Any] { get }
-    var headers: [RequestHeader] { get }
+    var headers: [RequestHeaderKey: String] { get }
     var timeout: TimeInterval? { get }
 }
 
 public extension RequestData {
     var queryParams: [(String, String)] { return [] }
     var bodyParams: [String: Any] { return [:] }
-    var headers: [RequestHeader] { return [] }
+    var headers: [RequestHeaderKey: String] { return [:] }
     var timeout: TimeInterval? { return nil }
 }

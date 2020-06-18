@@ -53,12 +53,10 @@ First of all you need to setup your endpoint that will be used later on for exec
 
 ```swift
 let myEndpoint = Endpoint(baseUrl: myBaseUrl)
-myEndpoint.contentType = .application(.json) // Specifying content type header
-myEndpoint.accept = .application(.json) // Specifying access header
-myEndpoint.token = .jwt(myTokenString) // Specifying auth token if such is required. PS: you can provide in later on. 
-myEndpoint.additionalHeaders = [
-    // Additional headers that will be attached to every request
-]
+myEndpoint.headers = defaultHeaders // Specifying some default headers
+myEndpoint.headers.contentType = .application(.json) // Specifying content type header
+myEndpoint.headers.accept = .application(.json) // Specifying access header
+myEndpoint.headers.authToken = .bearer(token) // Specifying auth token if such is required. PS: you can provide in later on
 ```
 
 After creating your endpoint, you can mark it as a `default`, so every request will pick it up automatically.
@@ -83,7 +81,7 @@ class MyRequest: Request {
     let methong = .get // Optional
     let queryParams = [("key", "value")] // Optional
     let bodyParams = ["key", "value"] // Optional
-    let headers = [DefaultRequestHeader(key: "key", value: "value")] // Optional
+    let headers = [RequestHeaderKey("key"): "value", .contentType: "application/json"] // Optional
     let timeout = 60 // Optional, by defauld will be picked from Endpoint
     let endpoint = myEndpoint // Optional, by default will be a Endpoint.default
 }
@@ -102,7 +100,7 @@ let myRequest = DefaultRequest<MyExpectedResponse, MyUnexpectedError>(
     method: .get, 
     queryParams: [("key", "value")], 
     bodyParams: ["key", "value"], 
-    headers: [DefaultRequestHeader(key: "key", value: "value")], 
+    headers: [RequestHeaderKey("key"): "value", .contentType: "application/json"], 
     timeout: 60,
     responseConverter: myResponseConverter,
     errorConverter: myErrorConverter,
@@ -308,11 +306,7 @@ Name | Type | Accessibility | Description
 `Endpoint.default` | `Endpoint` | `static` `read-write` | An instance of endpoint that will be used for executing request
 `baseUrl` | `URL` | `readonly` | An endpoint base url
 `sessionConfiguration` | `URLSessionConfiguration` | `readonly` | A configuration that is used for inner `URLSession`
-`contentType` | `MimeType` | `read-write` | A value for `Content-Type` header
-`accept` | `MimeType` | `read-write` | A value for `Accept` header
-`additionalHeaders` | `[RequestHeader]` | `read-write` | A headers that will be used with every request
-`token` | `AuthToken` | `read-write` | A value for `Authorization` header
-`contentType` | `MimeType` | `read-write` | A value for `Content-Type` header
+`headers` | `[RequestHeaderKey: String]` | `read-write` | A headers that will be used with every request
 
 ### Methods
 
@@ -324,10 +318,7 @@ Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `baseUrl` | `URL` | - | An endpoint base url
 `sessionConfiguration`| `URLSessionConfiguration` | `.default` | A configuration that will be used for inner `URLSession`
-`contentType`| `MimeType` | `.application(.json)` | A value for `Content-Type` header
-`accept` | `MimeType` | `.application(.json)` | A value for `Accept` header
-`token` | `AuthToken` | `nil` | A value for `Authorization` header
-`additionalHeaders` | `[RequestHeader]` | `[]` | A headers that will be used with every request 
+`headers` | `[RequestHeaderKey: String]` | `[:]` | A headers that will be used with every request 
 
 * `func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T>`
 
@@ -359,7 +350,7 @@ Name | Type | Accessibility | Description
 `method` | `HTTPMethod` | `get` `required` | A request method
 `queryParams` | `[(String, String)]` | `get` `optional` | A request query parameters represented as an array of touples to save order
 `bodyParams` | `[String: Any]` | `get` `optional` | A request body params
-`headers` | `[RequestHeader]` | `get` `optional` | A request specific headers. Will be used is addition to headers from `Endpoint`
+`headers` | `[RequestHeaderKey: String]` | `get` `optional` | A request specific headers. Will be used is addition to headers from `Endpoint`
 `timeout` | `TimeInterval` | `get` `optional` | A request timeout. If not specified - will be used default from `Endpoint`
 `responseConverter` | `ResponseJsonConverter?` | `get` `optional` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
 `errorConverter` | `ResponseJsonConverter?` | `get` `optional` | An error response converter. Will be converted before mapping into a `ErrorType`
@@ -402,7 +393,7 @@ Name | Type | Accessibility | Description
 `method` | `HTTPMethod` | `read-write` | A request method
 `queryParams` | `[(String, String)]` | `read-write` | A request query parameters represented as an array of touples to save order
 `bodyParams` | `[String: Any]` | `read-write` | A request body params
-`headers` | `[RequestHeader]` | `read-write` | A request specific headers. Will be used is addition to headers from `Endpoint`
+`headers` | `[RequestHeaderKey: String]` | `read-write` | A request specific headers. Will be used is addition to headers from `Endpoint`
 `timeout` | `TimeInterval` | `read-write` | A request timeout. If not specified - will be used default from `Endpoint`
 `responseConverter` | `ResponseJsonConverter?` | `read-write` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
 `errorConverter` | `ResponseJsonConverter?` | `read-write` | An error response converter. Will be converted before mapping into a `ErrorType`
@@ -412,13 +403,15 @@ Name | Type | Accessibility | Description
 
 * `init(path: String, method: HTTPMethod, queryParams: [(String, String)] = [], bodyParams: [String: Any] = [:], headers: [RequestHeader] = [], timeout: TimeInterval? = nil, responseConverter: ResponseJsonConverter? = nil, errorConverter: ResponseJsonConverter? = nil, endpoint: Endpoint? = nil)`
 
+*Initialize `DefaultRequest` object with all possible parameters*
+
 Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `path` | `String` | - | A request path
 `method` | `HTTPMethod` | - | A request method
 `queryParams` | `[(String, String)]` | `[]` | A request query parameters represented as an array of touples to save order
 `bodyParams` | `[String: Any]` | `[:]` | A request body params
-`headers` | `[RequestHeader]` | `[]` | A request specific headers. Will be used is addition to headers from `Endpoint`
+`headers` | `[RequestHeaderKey: String]` | `[:]` | A request specific headers. Will be used is addition to headers from `Endpoint`
 `timeout` | `TimeInterval` | `nil` | A request timeout. If not specified - will be used default from `Endpoint`
 `responseConverter` | `ResponseJsonConverter?` | `nil` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
 `errorConverter` | `ResponseJsonConverter?` | `nil` | An error response converter. Will be converted before mapping into a `ErrorType`
@@ -461,7 +454,7 @@ Name | Type | Accessibility | Description
 `method` | `HTTPMethod` | `read-write` | A request method
 `queryParams` | `[(String, String)]` | `read-write` | A request query parameters represented as an array of touples to save order
 `bodyParams` | `[String: Any]` | `read-write` | A request body params
-`headers` | `[RequestHeader]` | `read-write` | A request specific headers. Will be used is addition to headers from `Endpoint`
+`headers` | `[RequestHeaderKey: String]` | `read-write` | A request specific headers. Will be used is addition to headers from `Endpoint`
 `timeout` | `TimeInterval` | `read-write` | A request timeout. If not specified - will be used default from `Endpoint`
 `responseConverter` | `ResponseJsonConverter?` | `read-write` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
 `errorConverter` | `ResponseJsonConverter?` | `read-write` | An error response converter. Will be converted before mapping into a `ErrorType`
@@ -471,18 +464,37 @@ Name | Type | Accessibility | Description
 
 * `init(path: String, method: HTTPMethod, queryParams: [(String, String)] = [], bodyParams: [String: Any] = [:], headers: [RequestHeader] = [], timeout: TimeInterval? = nil, responseConverter: ResponseJsonConverter? = nil, errorConverter: ResponseJsonConverter? = nil, endpoint: Endpoint? = nil)`
 
+*Initialize `DefaultMultipartFormDataRequest` object with all possible parameters*
+
 Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `path` | `String` | - | A request path
 `method` | `HTTPMethod` | - | A request method
 `queryParams` | `[(String, String)]` | `[]` | A request query parameters represented as an array of touples to save order
 `bodyParams` | `[String: Any]` | `[:]` | A request body params
-`headers` | `[RequestHeader]` | `[]` | A request specific headers. Will be used is addition to headers from `Endpoint`
+`headers` | `[RequestHeaderKey: String]` | `[:]` | A request specific headers. Will be used is addition to headers from `Endpoint`
 `timeout` | `TimeInterval` | `nil` | A request timeout. If not specified - will be used default from `Endpoint`
 `responseConverter` | `ResponseJsonConverter?` | `nil` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
 `errorConverter` | `ResponseJsonConverter?` | `nil` | An error response converter. Will be converted before mapping into a `ErrorType`
 `endpoint` | `Endpoint?` | `nil` | An endpoint that will be used for execution
 `file` | `[MultipartFile]` | `[]` | A list of files that will be sent together with request
+
+
+## `HTTPMethod` enum
+
+**TYPE**: `enum`
+**INHERITS**: `String`
+
+An enum that represents a request http method.
+
+Name | Description
+------------ | ------------
+`get` | A `GET` http method
+`post` | A `POST` http method
+`put` | A `PUT` http method
+`delete` | A `DELETE` http method
+`path` | A `PATH` http method 
+
 
 # Next steps
 

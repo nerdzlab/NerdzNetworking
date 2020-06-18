@@ -25,13 +25,11 @@ class RequestFactory {
     
     let baseUrl: URL?
     
-    var tokenHeader: AuthToken?
-    var contentType: MimeType = .application(.json)
-    var accept: MimeType = .application(.json)
-    var headers: [RequestHeader] = []
+    var headers: [RequestHeaderKey: String] = [:]
 
-    init(baseUrl: URL) {
+    init(baseUrl: URL, headers: [RequestHeaderKey: String] = [:]) {
         self.baseUrl = baseUrl
+        self.headers = headers
     }
     
     func request(from requestData: RequestData) throws -> URLRequest {
@@ -55,7 +53,7 @@ class RequestFactory {
         
         if let data = requestData as? MultipartRequestData, let streamData = data.streamData {
             let mime: MimeType = .multipart(.form_data, parameters: ["boundary": streamData.boundary])
-            urlRequest.setHeader(ContentHeader.contenType(mime))
+            urlRequest.setHeader(.contentType, with: mime.value)
             urlRequest.httpBodyStream = streamData.stream
         }
         else if !requestData.bodyParams.isEmpty {
@@ -64,34 +62,17 @@ class RequestFactory {
 
         return urlRequest
     }
-
-    func updateHeader(_ header: RequestHeader) {
-        if let index = headers.firstIndex(where: { $0.key == header.key }) {
-            headers[index] = header
-        }
-    }
     
     private func setHeaders(for request: inout URLRequest, wuth data: RequestData) {
-        for header in headers {
-            request.setHeader(header)
-        }
-        
-        request.setHeader(ContentHeader.contenType(contentType))
-        request.setHeader(ContentHeader.accept(accept))
-        
-        if let token = tokenHeader {
-            request.setHeader(token)
-        }
-        
-        for header in data.headers {
-            request.setHeader(header)
+        for (header, value) in (headers + data.headers) {
+            request.setHeader(header, with: value)
         }
     }
 }
 
 private extension URLRequest {
-    mutating func setHeader( _ header: RequestHeader) {
-        setValue(header.value, forHTTPHeaderField: header.key)
+    mutating func setHeader( _ header: RequestHeaderKey, with value: String) {
+        setValue(value, forHTTPHeaderField: header.string)
     }
 }
 

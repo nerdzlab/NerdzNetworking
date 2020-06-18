@@ -74,14 +74,14 @@ private extension MultipartFile {
         
         guard 
             let postfixData = "\r\n".data(using: .utf8),
-            let subjectStream = resource.stream else 
+            let resourceStream = resource.stream else 
         {
             return nil
         }
         
         return SerialInputStream(inputStreams: [
             InputStream(data: prefixData),
-            subjectStream,
+            resourceStream,
             InputStream(data: postfixData)
         ])
     } 

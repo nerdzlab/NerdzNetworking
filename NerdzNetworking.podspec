@@ -2,7 +2,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'NerdzNetworking'
-  s.version          = '0.0.14'
+  s.version          = '0.0.15'
   s.summary          = 'A wrapper on top of URLSession and URLRequest to simplify creating and managing network requests'
   s.homepage         = 'https://github.com/nerdzlab/NerdzNetworking'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
