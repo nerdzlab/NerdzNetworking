@@ -15,15 +15,6 @@ public protocol RequestRetrier {
 
 
 class RequestExecuter {
-    enum InternaError: Error {
-        case unableToMap
-        
-        var localizedDescription: String {
-            switch self {
-            case .unableToMap: return "Unable to map response from server into expected data"
-            }
-        }
-    }
     
     let dispatcher: RequestDataDispatcher
     let observationManager: ObservationManager
@@ -68,51 +59,33 @@ class RequestExecuter {
                                                     
                                                     do {
                                                         let statusCode = StatusCode(statusCode)
-                                                        
-                                                        
+                                                    
                                                         if statusCode.isSuccessful {
-                                                            if let result = try T.ResponseObjectType.mapper.mapResponse(data, with: request.responseConverter) {
-                                                                strongSelf.callSuccess(
-                                                                    for: request, 
-                                                                    on: responseQueue, 
-                                                                    with: result, 
-                                                                    onSuccess: onSuccess)
-                                                                
-                                                            }
-                                                            else {
-                                                                strongSelf.callError(
-                                                                    for: request, 
-                                                                    on: responseQueue, 
-                                                                    with: .system(InternaError.unableToMap), 
-                                                                    onError: onError)
-                                                            }
+                                                            let result = try T.ResponseObjectType.mapper.mapResponse(data, with: request.responseConverter)
+                                                            
+                                                            strongSelf.callSuccess(
+                                                                for: request, 
+                                                                on: responseQueue, 
+                                                                with: result, 
+                                                                onSuccess: onSuccess)
                                                         }
                                                         else {
-                                                            if let result = try T.ErrorType.mapper.mapResponse(data, with: request.errorConverter) {
-                                                                let error: ErrorResponse<T.ErrorType> = .server(result, statusCode: statusCode)
-                                                                
-                                                                if retryOnFail {
-                                                                    strongSelf.retry(
-                                                                        with: error, 
-                                                                        for: request, 
-                                                                        responseQueue: responseQueue, 
-                                                                        onSuccess: onSuccess, 
-                                                                        onError: onError)
-                                                                }
-                                                                else {
-                                                                    strongSelf.callError(
-                                                                        for: request, 
-                                                                        on: responseQueue, 
-                                                                        with: error, 
-                                                                        onError: onError)
-                                                                }
-                                                                
+                                                            let result = try T.ErrorType.mapper.mapResponse(data, with: request.errorConverter)
+                                                            let error: ErrorResponse<T.ErrorType> = .server(result, statusCode: statusCode)
+                                                            
+                                                            if retryOnFail {
+                                                                strongSelf.retry(
+                                                                    with: error, 
+                                                                    for: request, 
+                                                                    responseQueue: responseQueue, 
+                                                                    onSuccess: onSuccess, 
+                                                                    onError: onError)
                                                             }
                                                             else {
                                                                 strongSelf.callError(
                                                                     for: request, 
                                                                     on: responseQueue, 
-                                                                    with: .system(InternaError.unableToMap), 
+                                                                    with: error, 
                                                                     onError: onError)
                                                             }
                                                         }

@@ -11,12 +11,13 @@ import Foundation
 class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     // MARK: - Errors
     
-    enum Errors: Error {
+    private enum RequestDataDispatcher: Error {
         case invalidResponse
         
         var localizedDescription: String {
             switch self {
-            case .invalidResponse: return "Response is invalid"
+            case .invalidResponse: 
+                return "Response is invalid"
             }
         }
     }
@@ -76,7 +77,7 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
                 onSuccess?(data, httpUrlResponse.statusCode)
             }
             else {
-                onError?(Errors.invalidResponse)
+                onError?(RequestDataDispatcher.invalidResponse)
             }
         }
         

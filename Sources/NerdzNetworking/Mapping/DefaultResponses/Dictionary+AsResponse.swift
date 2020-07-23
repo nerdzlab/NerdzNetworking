@@ -9,33 +9,39 @@
 import Foundation
 
 extension Dictionary: ResponseObject where Key == String, Value: ResponseObject {
+    private enum DictionaryMappingError: Error {
+        case jsonIsNotAnArray
+        
+        var localizedDescription: String {
+            switch self {
+            case .jsonIsNotAnArray: 
+                return "The json provided for mapping is not an array"
+            }
+        }
+    }
+    
     public static var mapper: BaseObjectMapper<Self> {
         return CustomObjectMapper(
-            jsonClosure: { json -> Self? in
-                return create(from: json)
+            jsonClosure: { json throws -> Self in
+                try create(from: json)
         }, 
-            dataClosure: { data -> Self? in
-                if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
-                    return create(from: json)
-                }
-                else {
-                    return nil
-                }
+            dataClosure: { data throws -> Self in
+                let json = try JSONSerialization.jsonObject(with: data, options: [])
+                return try create(from: json)
         })
         
     }
     
-    private static func create(from json: Any) -> Self? {
+    private static func create(from json: Any) throws -> Self {
         guard let dictionary = json as? [String: Any] else {
-            return nil
+            throw DictionaryMappingError.jsonIsNotAnArray
         }
         
         var result: Self = [:]
         
         for (key, value) in dictionary {
-            if let mappedObject = Value.mapper.mapJson(value) {
-                result[key] = mappedObject
-            }
+            let mappedObject = try Value.mapper.mapJson(value)
+            result[key] = mappedObject
         }
         
         return result

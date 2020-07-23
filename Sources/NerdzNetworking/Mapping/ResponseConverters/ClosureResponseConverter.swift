@@ -11,12 +11,13 @@ import Foundation
 public class ClosureResponseConverter: ResponseJsonConverter {
     public typealias Closure = (Any) -> Any?
     
-    enum InternalError: Error {
+    private enum ClosureResponseConverterError: Error {
         case unableToConvert
         
         var localizedDescription: String {
             switch self {
-            case .unableToConvert: return "Unable to convert response json by closure"
+            case .unableToConvert: 
+                return "Unable to convert response json by closure"
             }
         }
     }
@@ -32,7 +33,7 @@ public class ClosureResponseConverter: ResponseJsonConverter {
             return result
         }
         else {
-            throw InternalError.unableToConvert
+            throw ClosureResponseConverterError.unableToConvert
         }
     }
 }

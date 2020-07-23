@@ -8,9 +8,8 @@
 
 import Foundation
 
-public struct Status: ResponseObject, Codable {
-    
-    enum InternalError: Error {
+public struct Status: DecodableResponseObject, Codable {
+    private enum StatusError: Error {
         case unableToMap
         
         var localizedDescription: String {
@@ -26,6 +25,12 @@ public struct Status: ResponseObject, Codable {
         case status
     }
 
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+    
     let statusCode: StatusCode
 
     init(statusCode: StatusCode) {
@@ -43,7 +48,7 @@ public struct Status: ResponseObject, Codable {
             statusCode = StatusCode(code)
         }
         else {
-            throw InternalError.unableToMap
+            throw StatusError.unableToMap
         }
     }
 

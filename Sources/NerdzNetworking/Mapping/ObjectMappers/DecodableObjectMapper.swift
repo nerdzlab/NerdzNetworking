@@ -15,16 +15,12 @@ public final class DecodableObjectMapper<T>: BaseObjectMapper<T> where T: Decoda
         super.init()
     }
     
-    override public func mapJson(_ json: Any) -> T? {
-        if let data = try? JSONSerialization.data(withJSONObject: json, options: []) {
-            return mapData(data)
-        }
-        else {
-            return nil
-        }
+    override public func mapJson(_ json: Any) throws -> T {
+        let data = try JSONSerialization.data(withJSONObject: json, options: [])
+        return try mapData(data)
     }
     
-    override public func mapData(_ data: Data) -> T? {
-        return try? decoder.decode(T.self, from: data)
+    override public func mapData(_ data: Data) throws -> T {
+        return try decoder.decode(T.self, from: data)
     }
 }

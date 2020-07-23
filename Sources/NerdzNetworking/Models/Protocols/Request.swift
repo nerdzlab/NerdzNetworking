@@ -8,12 +8,13 @@
 
 import Foundation
 
-enum RequestTypeInternalError: Error {
+fileprivate enum RequestInternalError: Error {
     case defaultEndpointIsNotInitialized
 
     var localizedDescription: String {
         switch self {
-        case .defaultEndpointIsNotInitialized: return "Default endpoint is not initialized"
+        case .defaultEndpointIsNotInitialized: 
+            return "Default endpoint is not initialized"
         }
     }
 }
@@ -66,7 +67,7 @@ extension Request {
             let queue = OperationQueue.current?.underlyingQueue ?? .main
             
             queue.async {
-                mockedData.onFail?(.system(RequestTypeInternalError.defaultEndpointIsNotInitialized))
+                mockedData.onFail?(.system(RequestInternalError.defaultEndpointIsNotInitialized))
             }
             
             return mockedData

@@ -9,16 +9,21 @@
 import Foundation
 
 class RequestFactory {
-    enum InternalError: Error {
+    private enum RequestFactoryError: Error {
         case unsiutableMultipartParameters
         case invalidUrl
         case noBaseUrl
         
         var localizedDescription: String {
             switch self {
-            case .noBaseUrl: return "No base url provided to create a request"
-            case .invalidUrl: return "URL is invalid"
-            case .unsiutableMultipartParameters: return "Requst parameters for multipart request are invalid"
+            case .noBaseUrl: 
+                return "No base url provided to create a request"
+                
+            case .invalidUrl: 
+                return "URL is invalid"
+                
+            case .unsiutableMultipartParameters: 
+                return "Requst parameters for multipart request are invalid"
             }
         }
     }
@@ -34,13 +39,13 @@ class RequestFactory {
     
     func request(from requestData: RequestData) throws -> URLRequest {
         guard let baseUrl = baseUrl else {
-            throw InternalError.noBaseUrl
+            throw RequestFactoryError.noBaseUrl
         }
         
         let urlString = baseUrl.absoluteString + requestData.path
 
         guard let url = URL(string: urlString)?.withAdded(requestData.queryParams) else {
-            throw InternalError.invalidUrl
+            throw RequestFactoryError.invalidUrl
         }
 
         var urlRequest = URLRequest(url: url)

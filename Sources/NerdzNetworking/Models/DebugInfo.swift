@@ -14,4 +14,12 @@ public struct DebugInfo {
     let urlResponse: HTTPURLResponse?
     let errorResponse: Error?
     let requestDuration: TimeInterval
+    
+    var stringResponse: String? {
+        dataResponse.flatMap({ String(data: $0, encoding: .utf8) })
+    }
+    
+    var jsonResponse: Any? {
+        dataResponse.flatMap({ try? JSONSerialization.jsonObject(with: $0, options: []) })
+    }
 }

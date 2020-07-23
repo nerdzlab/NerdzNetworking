@@ -8,8 +8,8 @@
 import Foundation
 
 public protocol ManualMappingResponseObject: ResponseObject {
-    init?(json: Any)
-    init?(data: Data)
+    init(json: Any) throws
+    init(data: Data) throws
 }
 
 public extension ManualMappingResponseObject {
@@ -17,22 +17,36 @@ public extension ManualMappingResponseObject {
         return ManualObjectMapper<Self>()
     }
     
-    init?(json: Any) {
-        return nil
+    init(json: Any) throws {
+        throw ManualMappingResponseObjectError.isNotMappableFromJson
     }
     
-    init?(data: Data) {
-        return nil
+    init(data: Data) throws {
+        throw ManualMappingResponseObjectError.isNotMappableFromJson
+    }
+}
+
+fileprivate enum ManualMappingResponseObjectError: Error {
+    case isNotMappableFromJson
+    case isNotMappableFromData
+    
+    var localizedDescription: String {
+        switch self {
+        case .isNotMappableFromJson: 
+            return "Expected result can not be mapped from JSON"
+            
+        case .isNotMappableFromData:
+            return "Expected result can not be mapped from Data"
+        }
     }
 }
 
 private class ManualObjectMapper<T>: BaseObjectMapper<T> where T: ManualMappingResponseObject {
-    
-    override func mapJson(_ json: Any) -> T? {
-        return T(json: json)
+    override func mapJson(_ json: Any) throws -> T {
+        return try T(json: json)
     }
     
-    override func mapData(_ data: Data) -> T? {
-        return T(data: data)
+    override func mapData(_ data: Data) throws -> T {
+        return try T(data: data)
     }
 }

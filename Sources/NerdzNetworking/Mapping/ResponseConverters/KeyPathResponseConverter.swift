@@ -14,7 +14,8 @@ public class KeyPathResponseConverter: ResponseJsonConverter {
         
         var localizedDescription: String {
             switch self {
-            case .invalidPath(let path): return "Invalid json convertation path: `\(path)`"
+            case .invalidPath(let path): 
+                return "Invalid json convertation path: `\(path)`"
             }
         }
     }
