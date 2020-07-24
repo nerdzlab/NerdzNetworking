@@ -8,18 +8,18 @@
 import Foundation
 
 public struct DebugInfo {
-    let sessionConfiguration: URLSessionConfiguration
-    let request: URLRequest
-    let dataResponse: Data?
-    let urlResponse: HTTPURLResponse?
-    let errorResponse: Error?
-    let requestDuration: TimeInterval
+    public let sessionConfiguration: URLSessionConfiguration
+    public let request: URLRequest
+    public let dataResponse: Data?
+    public let urlResponse: HTTPURLResponse?
+    public let errorResponse: Error?
+    public let requestDuration: TimeInterval
     
-    var stringResponse: String? {
+    public var stringResponse: String? {
         dataResponse.flatMap({ String(data: $0, encoding: .utf8) })
     }
     
-    var jsonResponse: Any? {
+    public var jsonResponse: Any? {
         dataResponse.flatMap({ try? JSONSerialization.jsonObject(with: $0, options: []) })
     }
 }
