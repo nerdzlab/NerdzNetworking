@@ -34,9 +34,6 @@ public class Endpoint {
     public init(
         baseUrl: URL, 
         sessionConfiguration: URLSessionConfiguration = .default,
-        contentType: MimeType = .application(.json),
-        accept: MimeType = .application(.json),
-        token: AuthToken? = nil,
         headers: [RequestHeaderKey: String] = [:]) 
     {
         self.baseUrl = baseUrl

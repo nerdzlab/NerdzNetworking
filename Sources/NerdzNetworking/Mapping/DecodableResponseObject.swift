@@ -7,12 +7,6 @@
 
 import Foundation
 
-public extension Decodable where Self: ResponseObject {
-    static var mapper: BaseObjectMapper<Self> {
-        return DecodableObjectMapper<Self>()
-    }
-}
-
 public protocol DecodableResponseObject: Codable, ResponseObject {
     static var decoder: JSONDecoder { get }
 }
