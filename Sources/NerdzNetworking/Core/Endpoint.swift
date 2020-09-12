@@ -8,10 +8,22 @@
 import Foundation
 
 public class Endpoint {
+    
+    private enum Constants {
+        static let defaultHeaders: [RequestHeaderKey: String] = {
+            var headers: [RequestHeaderKey: String] = [:]
+            headers.accept = .application(.json)
+            headers.contentType = .application(.json)
+            return headers
+        }()
+    }
+    
     // MARK: - Singleton
+    
     public static var `default`: Endpoint?
     
     // MARK: - Configuration
+    
     public let baseUrl: URL
     public let sessionConfiguration: URLSessionConfiguration
     
@@ -38,7 +50,7 @@ public class Endpoint {
     {
         self.baseUrl = baseUrl
         self.sessionConfiguration = sessionConfiguration
-        self.headers = headers
+        self.headers = Constants.defaultHeaders + headers
         
         self.requestExecuter = Endpoint.createdRequestExecuter(
             baseUrl             : baseUrl, 
