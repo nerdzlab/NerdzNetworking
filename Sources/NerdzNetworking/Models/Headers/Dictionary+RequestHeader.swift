@@ -73,10 +73,10 @@ public extension Dictionary where Key == RequestHeaderKey, Value == String {
         
         set {
             if let value = newValue {
-                self[.authorization] = value
+                self[.acceptLanguage] = value
             }
             else {
-                removeValue(forKey: .authorization)
+                removeValue(forKey: .acceptLanguage)
             }
         }
     }
