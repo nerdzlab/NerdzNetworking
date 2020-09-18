@@ -7,10 +7,14 @@
 
 import Foundation
 
+#warning("REFOCTOR MAPPING")
+
+public var DefaultDecoder = JSONDecoder()
+
 public final class DecodableObjectMapper<T>: BaseObjectMapper<T> where T: Decodable, T: ResponseObject {
     private let decoder: JSONDecoder
     
-    public init(decoder: JSONDecoder = JSONDecoder()) {
+    public init(decoder: JSONDecoder = DefaultDecoder) {
         self.decoder = decoder
         super.init()
     }
