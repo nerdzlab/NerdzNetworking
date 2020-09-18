@@ -66,6 +66,21 @@ public extension Dictionary where Key == RequestHeaderKey, Value == String {
         }
     }
     
+    var language: String? {
+        get {
+            self[.acceptLanguage]
+        }
+        
+        set {
+            if let value = newValue {
+                self[.authorization] = value
+            }
+            else {
+                removeValue(forKey: .authorization)
+            }
+        }
+    }
+    
     static func + (lhs: Self, rhs: Self) -> Self {
         var result = lhs
         
