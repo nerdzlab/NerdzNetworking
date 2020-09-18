@@ -14,8 +14,8 @@ public var DefaultDecoder = JSONDecoder()
 public final class DecodableObjectMapper<T>: BaseObjectMapper<T> where T: Decodable, T: ResponseObject {
     private let decoder: JSONDecoder
     
-    public init(decoder: JSONDecoder? = nil) {
-        self.decoder = decoder ?? DefaultDecoder
+    public init(decoder: JSONDecoder = DefaultDecoder) {
+        self.decoder = decoder
         super.init()
     }
     

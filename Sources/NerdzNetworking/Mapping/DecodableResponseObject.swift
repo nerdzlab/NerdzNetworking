@@ -12,8 +12,8 @@ public protocol DecodableResponseObject: Codable, ResponseObject {
 }
 
 public extension DecodableResponseObject {
-    static var decoder: JSONDecoder? {
-        return nil
+    static var decoder: JSONDecoder {
+        return DefaultDecoder
     }
     
     static var mapper: BaseObjectMapper<Self> {
