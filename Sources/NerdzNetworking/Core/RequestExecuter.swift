@@ -13,7 +13,6 @@ public protocol RequestRetrier {
     func handle<T: Request>(_ error: ErrorResponse<T.ErrorType>, for request: T, completion: @escaping (T) -> Void) -> Bool
 }
 
-
 class RequestExecuter {
     
     let dispatcher: RequestDataDispatcher
