@@ -31,11 +31,11 @@ class RequestExecuter {
         try execute(request, 
                     responseQueue: data.responseQueue, 
                     retryOnFail: data.retryOnFail,
-                    onStart: data.onStart,
-                    onSuccess: data.onSuccess, 
+                    onSuccess: data.onSuccess,
                     onError: data.onFail, 
                     onProgress: data.onProgress, 
-                    onDebug: data.onDebug)
+                    onDebug: data.onDebug,
+                    onStart: data.onStart)
     }
     
     @discardableResult
