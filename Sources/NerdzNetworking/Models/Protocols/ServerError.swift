@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol ServerError: ResponseObject {
+public protocol ServerError: Decodable {
     var message: String { get }
 }
 

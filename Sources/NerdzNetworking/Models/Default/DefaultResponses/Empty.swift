@@ -8,12 +8,7 @@
 
 import Foundation
 
-public struct Empty: ResponseObject {
+public struct Empty: Decodable {
     
-    public static var mapper: BaseObjectMapper<Empty> {
-        return CustomObjectMapper(
-            jsonClosure: { _ in Empty() }, 
-            dataClosure: { _ in Empty() }
-        )
-    }
+    
 }

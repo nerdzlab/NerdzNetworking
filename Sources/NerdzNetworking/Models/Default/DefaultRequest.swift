@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct DefaultRequest<Response: ResponseObject, Error: ServerError>: Request {
+public struct DefaultRequest<Response: Decodable, Error: ServerError>: Request {
     public typealias ResponseObjectType = Response
     public typealias ErrorType = Error
     

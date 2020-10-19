@@ -20,26 +20,32 @@ fileprivate enum RequestInternalError: Error {
 }
 
 public protocol Request: RequestData {
-    associatedtype ResponseObjectType: ResponseObject
+    associatedtype ResponseObjectType: Decodable
     associatedtype ErrorType: ServerError
     
     var responseConverter: ResponseJsonConverter? { get }
     var errorConverter: ResponseJsonConverter? { get } 
     
     var endpoint: Endpoint? { get }
+    
+    var decoder: JSONDecoder? { get }
 }
 
 public extension Request {
     var responseConverter: ResponseJsonConverter? { 
-        return nil
+        nil
     }
     
     var errorConverter: ResponseJsonConverter? { 
-        return nil
+        nil
     } 
     
     var endpoint: Endpoint? {
-        return nil
+        nil
+    }
+    
+    var decoder: JSONDecoder?  {
+        nil
     }
 }
 
@@ -48,29 +54,29 @@ extension Request {
     public typealias ErrorCallback = (ErrorResponse<ErrorType>) -> Void
 
     var data: RequestData {
-        return self
+        self
     }
 
     @discardableResult
-    public func execute(on endpoint: Endpoint) -> ResponseInfoBuilder<Self> {
+    public func execute(on endpoint: Endpoint) -> ExecutionOperation<Self> {
         endpoint.execute(self)
     }
     
     @discardableResult
-    public func execute() -> ResponseInfoBuilder<Self> {
+    public func execute() -> ExecutionOperation<Self> {
         if let endpoint = self.endpoint ?? Endpoint.default {
             return execute(on: endpoint)
         } 
         else {
-            let mockedData = ResponseInfoBuilder<Self>()
+            let operation = ExecutionOperation<Self>(request: self)
 
             let queue = OperationQueue.current?.underlyingQueue ?? .main
             
             queue.async {
-                mockedData.onFail?(.system(RequestInternalError.defaultEndpointIsNotInitialized))
+                operation.callOnFail(with: .system(RequestInternalError.defaultEndpointIsNotInitialized))
             }
             
-            return mockedData
+            return operation
         }
     }
 }

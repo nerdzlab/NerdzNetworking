@@ -47,7 +47,7 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
         onProgress      : ((Double) -> Void)? = nil,
         onDebug         : ((DebugInfo) -> Void)? = nil) throws 
         
-        -> RequestOperation 
+        -> DispatchOperation 
     {
         let request = try requestFactory.request(from: requestData)
         

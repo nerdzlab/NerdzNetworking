@@ -24,8 +24,13 @@ public class Endpoint {
     
     // MARK: - Configuration
     
+    public let decoder: JSONDecoder?
+    public let responseQueue: DispatchQueue?
+    
     public let baseUrl: URL
     public let sessionConfiguration: URLSessionConfiguration
+    public let observation = ObservationManager()
+    public let requestRetrying = RequestRetryingManager()
     
     public var headers: [RequestHeaderKey: String] {
         didSet { requestFactory.headers = headers }
@@ -39,50 +44,53 @@ public class Endpoint {
         requestExecuter.dispatcher
     }
     
-    private(set) var requestExecuter: RequestExecuter
+    private var requestExecuter: RequestExecuter
     
     // MARK: - Initialization
     
     public init(
-        baseUrl: URL, 
+        baseUrl: URL,
+        decoder: JSONDecoder? = nil,
+        responseQueue: DispatchQueue? = nil,
         sessionConfiguration: URLSessionConfiguration = .default,
         headers: [RequestHeaderKey: String] = [:]) 
     {
         self.baseUrl = baseUrl
+        self.decoder = decoder
+        self.responseQueue = responseQueue
         self.sessionConfiguration = sessionConfiguration
         self.headers = Constants.defaultHeaders + headers
         
         self.requestExecuter = Endpoint.createdRequestExecuter(
-            baseUrl             : baseUrl, 
-            sessionConfiguration: sessionConfiguration,
-            headers             : headers)
+            baseUrl                 : baseUrl, 
+            sessionConfiguration    : sessionConfiguration,
+            headers                 : headers,
+            observation             : observation,
+            requestRetryingManager  : requestRetrying)
     }
     
     // MARK: - Methods(Public)
     
-    public func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T> {
-        let data = ResponseInfoBuilder<T>()
-        
-        let queue = OperationQueue.current?.underlyingQueue ?? .main
+    public func execute<T: Request>(_ request: T) -> ExecutionOperation<T> {
+        let queue = responseQueue ?? OperationQueue.current?.underlyingQueue ?? .main
+        let decoder = request.decoder ?? self.decoder ?? JSONDecoder()
+        let operation = ExecutionOperation<T>(request: request, decoder: decoder, responseQueue: queue)
         
         queue.async {
-            do {
-                try self.requestExecuter.execure(request, with: data)
-            }
-            catch {
-                data.onFail?(.system(error))
-            }
+            self.requestExecuter.execureOperation(operation)
         }
         
-        return data
+        return operation
     }
     
     // MARK: - Methods(Private)
     
     private static func createdRequestExecuter(
-        baseUrl             : URL, 
-        sessionConfiguration: URLSessionConfiguration,
-        headers             : [RequestHeaderKey: String]) 
+        baseUrl                 : URL, 
+        sessionConfiguration    : URLSessionConfiguration,
+        headers                 : [RequestHeaderKey: String],
+        observation             : ObservationManager,
+        requestRetryingManager  : RequestRetryingManager) 
         
         -> RequestExecuter
     {
@@ -95,19 +103,24 @@ public class Endpoint {
             configuration   : sessionConfiguration)
         
         let requestExecuter = createdRequestExecuter(
-            networkDispatcher   : networkDispatcher, 
-            observationManager  : ObservationManager())
+            networkDispatcher       : networkDispatcher, 
+            observationManager      : observation,
+            requestRetryingManager  : requestRetryingManager)
         
         return requestExecuter
     }
     
     private static func createdRequestExecuter(
-        networkDispatcher   : RequestDataDispatcher, 
-        observationManager  : ObservationManager)
+        networkDispatcher       : RequestDataDispatcher, 
+        observationManager      : ObservationManager,
+        requestRetryingManager  : RequestRetryingManager)
         
         -> RequestExecuter 
     {
-        return RequestExecuter(dispatcher: networkDispatcher, observationManager: observationManager)
+        return RequestExecuter(
+            dispatcher: networkDispatcher, 
+            observationManager: observationManager,
+            requestRetryingManager: requestRetryingManager)
     }
     
     private static func createdNetworkDispatcher(

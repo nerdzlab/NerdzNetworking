@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class ResponseInfoBuilder<T: Request> {
+public class ResponseSettings<T: Request> {
     public typealias ResponseSuccessCallback = (T.ResponseObjectType) -> Void
     public typealias FailCallback = (ErrorResponse<T.ErrorType>) -> Void
     public typealias ProgressCallback = (Double) -> Void
@@ -15,6 +15,7 @@ public class ResponseInfoBuilder<T: Request> {
     public typealias StartCallback = (RequestOperation) -> Void
     
     private(set) var responseQueue: DispatchQueue = OperationQueue.current?.underlyingQueue ?? .main
+    private(set) var decoder: JSONDecoder = JSONDecoder()
     private(set) var retryOnFail: Bool = true 
     
     private(set) var onSuccess: ResponseSuccessCallback? = nil
@@ -24,8 +25,14 @@ public class ResponseInfoBuilder<T: Request> {
     private(set) var onStart: StartCallback? = nil
     
     @discardableResult
-    func responseOn(_ queue: DispatchQueue) -> Self {
+    func response(on queue: DispatchQueue) -> Self {
         responseQueue = queue
+        return self
+    }
+    
+    @discardableResult
+    func decode(with decoder: JSONDecoder) -> Self {
+        self.decoder = decoder
         return self
     }
     

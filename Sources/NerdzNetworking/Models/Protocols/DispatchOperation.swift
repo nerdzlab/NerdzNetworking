@@ -8,8 +8,8 @@
 
 import Foundation
 
-public protocol RequestOperation {
+public protocol DispatchOperation {
     func cancel()
 }
 
-extension URLSessionDataTask: RequestOperation { }
+extension URLSessionDataTask: DispatchOperation { }

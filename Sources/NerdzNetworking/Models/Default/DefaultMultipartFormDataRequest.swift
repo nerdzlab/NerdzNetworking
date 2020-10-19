@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DefaultMultipartFormDataRequest<Response: ResponseObject, Error: ServerError>: MultipartFormDataRequest {
+public struct DefaultMultipartFormDataRequest<Response: Decodable, Error: ServerError>: MultipartFormDataRequest {
     public typealias ResponseObjectType = Response
     public typealias ErrorType = Error
     

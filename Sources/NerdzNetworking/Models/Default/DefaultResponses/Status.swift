@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Status: DecodableResponseObject, Codable {
+public struct Status: Decodable {
     private enum StatusError: Error {
         case unableToMap
         

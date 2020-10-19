@@ -14,7 +14,7 @@ public struct MimeType {
     public let parameters: [String: String]
     
     public var value: String {
-        "\(type)/\(subtype)" + parameters.reduce("", { "; \($0)=\($1)" })
+        "\(type)/\(subtype)" + parameters.reduce(into: String(), { return $0 += "; \($1.key)=\($1.value)" })
     }
     
     public init?(_ string: String) {

@@ -8,19 +8,19 @@
 
 import Foundation
 
-extension Int: ResponseObject { }
-extension Int8: ResponseObject { }
-extension Int16: ResponseObject { }
-extension Int32: ResponseObject { }
-extension Int64: ResponseObject { }
-
-extension UInt: ResponseObject { }
-extension UInt8: ResponseObject { }
-extension UInt16: ResponseObject { }
-extension UInt32: ResponseObject { }
-extension UInt64: ResponseObject { }
-
-extension Float: ResponseObject { }
-extension Double: ResponseObject { }
-extension Bool: ResponseObject { }
-extension Data: ResponseObject { }
+//extension Int: ResponseObject { }
+//extension Int8: ResponseObject { }
+//extension Int16: ResponseObject { }
+//extension Int32: ResponseObject { }
+//extension Int64: ResponseObject { }
+//
+//extension UInt: ResponseObject { }
+//extension UInt8: ResponseObject { }
+//extension UInt16: ResponseObject { }
+//extension UInt32: ResponseObject { }
+//extension UInt64: ResponseObject { }
+//
+//extension Float: ResponseObject { }
+//extension Double: ResponseObject { }
+//extension Bool: ResponseObject { }
+//extension Data: ResponseObject { }
