@@ -94,7 +94,7 @@ public class ExecutionOperation<T: Request>: DispatchOperation {
     
     // MARK: - Calling closures
     
-    func callOnFail(with error: ErrorResponse<T.ErrorType>) {
+    func callOnFail(with error: ErrorResponse<T.ErrorType>, completion: (() -> Void)? = nil) {
         responseQueue.async { [weak self] in
             for closure in self?.onFail ?? [] {
                 closure(error)
@@ -102,35 +102,43 @@ public class ExecutionOperation<T: Request>: DispatchOperation {
         }
     }
     
-    func callOnSuccess(with response: T.ResponseObjectType) {
+    func callOnSuccess(with response: T.ResponseObjectType, completion: (() -> Void)? = nil) {
         responseQueue.async { [weak self] in
             for closure in self?.onSuccess ?? [] {
                 closure(response)
             }
+            
+            completion?()
         }
     }
     
-    func callOnProgress(with progress: Double) {
+    func callOnProgress(with progress: Double, completion: (() -> Void)? = nil) {
         responseQueue.async { [weak self] in
             for closure in self?.onProgress ?? [] {
                 closure(progress)
             }
+            
+            completion?()
         }
     }
     
-    func callOnDebug(with info: DebugInfo) {
+    func callOnDebug(with info: DebugInfo, completion: (() -> Void)? = nil) {
         responseQueue.async { [weak self] in
             for closure in self?.onDebug ?? [] {
                 closure(info)
             }
+            
+            completion?()
         }
     }
     
-    func callOnStart() {
+    func callOnStart(completion: (() -> Void)? = nil) {
         responseQueue.async { [weak self] in
             for closure in self?.onStart ?? [] {
                 closure()
             }
+            
+            completion?()
         }
     }
     
