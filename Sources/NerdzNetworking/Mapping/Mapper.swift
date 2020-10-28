@@ -26,7 +26,7 @@ class Mapper<T: Decodable> {
     }
     
     func map(from data: Data?) throws -> T {
-        if let data = data {
+        if let data = data, !data.isEmpty {
             return try decoder.decode(T.self, from: data)
         }
         else if let result = Empty() as? T {
