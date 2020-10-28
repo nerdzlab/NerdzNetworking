@@ -7,17 +7,64 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		086962A8CC029EABC42D00785481CD5A /* Pods-NerdzNetworking_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 79276825F3DE9273CCFB614E931F4A00 /* Pods-NerdzNetworking_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7C2F48DFBFE1CEB6058742F5FDA74418 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
-		81F09B96842C3080155A392BC0F9DD11 /* NerdzNetworking-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E520577C58F476D6CECD7E659E65EFEC /* NerdzNetworking-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		824812B3ADF72FA6B588263633135E1A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
-		D75AAC1A4F3F1EF121577E845708ECC6 /* NerdzNetworking-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 71DA3FA546A81869E0B4ED06E648CADF /* NerdzNetworking-dummy.m */; };
-		E77DC6E95F014089951AAD646390254D /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018FC11FB4C03E450A996677B926E534 /* ReplaceMe.swift */; };
-		FCFB831F1042C3B8BC22004FF8DFDE8D /* Pods-NerdzNetworking_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E6C6D3096D568CE667E1E3F1F090C9 /* Pods-NerdzNetworking_Tests-dummy.m */; };
+		0479B7D4B657795F449148418A5C2EFB /* DispatchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63F010D5B4EAF425816D7FFC8EA77D7 /* DispatchOperation.swift */; };
+		04A72AD682EAB548D50110BD8F252A0C /* OnStatusCodesRequestRetrier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEDB2098040652A1E750F6E5F6816D93 /* OnStatusCodesRequestRetrier.swift */; };
+		11DB8A1916EF21CBEBBF7BBB4FA5B83E /* OnRequestRequestRetrier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94704DC0332CE6B8B7E36AD2D4B039B5 /* OnRequestRequestRetrier.swift */; };
+		19781A61A40EA9E051085B173864AEB6 /* MultipartRequestData+Create.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27DEC9066ECFBBC2E1A2E828AC15082 /* MultipartRequestData+Create.swift */; };
+		1E69B590B1D34A2B7AC81E5FA1D8C426 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FF17ED171BBF004DB4CD2835BD666 /* Request.swift */; };
+		22AD902A24CBF86F2AB6A8562E7358FA /* DefaultMultipartFormDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B004B2991977E915B6675E322CC27EE /* DefaultMultipartFormDataRequest.swift */; };
+		240FFD9DBFB189F3C2C05B5A838C4402 /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F8BA8A17AA999D7991AE205C0FC72B /* RequestFactory.swift */; };
+		2E561263ECC4769F17481830B7775AEA /* ExecutionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F77B2DB9AA2B05FE74081B369ABC804 /* ExecutionOperation.swift */; };
+		4600D6A3AB38EE246954F28717411E58 /* RequestRetrier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FC498EFF0A4D9DB9AF39BE36292921 /* RequestRetrier.swift */; };
+		46E5B77B166D9B0FE99673042A117206 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47EE41973F330F42546EBD9FC45DDBC /* Endpoint.swift */; };
+		47C11EEF4A1281287D9CF240A7C381B0 /* SerialInputStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F2FB3D7B956A61955D129282A51485 /* SerialInputStream.swift */; };
+		4B730953C4760BBA8607A20ACFC70279 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		56A5F8BC3E0F5B35DB530B460243E4D8 /* MultipartFormDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE2809481AD753F910178F057631F07 /* MultipartFormDataRequest.swift */; };
+		5FAFFF741CB4BCA01E21E906CC174D37 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9568FC286CE16427D5D6DA864F7DFC6F /* Status.swift */; };
+		60B689AAF94E7A2CEBFBEB93B20091FA /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69558E6AE9CFEFAF872A05E59A66255 /* AuthToken.swift */; };
+		61A74607DD33A68D373A163263241BD4 /* Dictionary+AsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E0A6533C5E86426DB309BE42A3B /* Dictionary+AsResponse.swift */; };
+		6B5970403CCB77E2BF9E1CB6DE8393BD /* RequestExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0105B3A4FA8139996164150ABA2A412 /* RequestExecuter.swift */; };
+		6EE36F0D4A353977C63CB3B3AA538FB5 /* Dictionary+RequestHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE0933E6975885CEED448F4271411B /* Dictionary+RequestHeader.swift */; };
+		6F720B15B31D9A22B7DC5EB3C6BDEF44 /* MultipartResourceConvertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978141DEFA040D9A1551749B1782EA71 /* MultipartResourceConvertable.swift */; };
+		712CA32BA3F314CD3448C2AA8AD62DD6 /* KeyPathResponseConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB48510248F866172205FDE92CC72E1 /* KeyPathResponseConverter.swift */; };
+		72170D34A72AD1AF78A90B1DBD5F43F6 /* URL+MultipartResourceConvertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3564BDB82F756DF42C738E9A46A30B4F /* URL+MultipartResourceConvertable.swift */; };
+		74A6A9E623A51CBBCD8C09B67EF268EB /* MultipartRequestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8D001A061BBE7A69CA789AE29D807E /* MultipartRequestData.swift */; };
+		78A61597F7920BBF90AABB12CAB4AD65 /* RequestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6110C6D503C4DCA98B849CAEC17324 /* RequestData.swift */; };
+		7BF2B405817F5519A79FEDF15BDE30EC /* NerdzNetworking-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F05EBD8606165692CF085819E3B500C7 /* NerdzNetworking-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		83B54D7DA0C8A39891D1BBF361BB1CB7 /* ResponseJsonConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330F1957440D417F1944E51CC1B0ADC3 /* ResponseJsonConverter.swift */; };
+		86CAD052C757618E0CF793ACAE07B168 /* RequestRetryingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC25B31D28B3EEBA31B32751861A508 /* RequestRetryingManager.swift */; };
+		894BF61D2D213ECC8720232D3BF72395 /* OnServerErrorRequestRetrier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F0901B99EA900490D23B6ED5094D1D /* OnServerErrorRequestRetrier.swift */; };
+		8D18A3C060D319DF1E1DA91F428FDBFC /* Pods-NerdzNetworking_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 79276825F3DE9273CCFB614E931F4A00 /* Pods-NerdzNetworking_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		96B71E0F2067581614A6C1A2DBA95F31 /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C658BB5B7ADB7484A004B3EE2726FE98 /* Mapper.swift */; };
+		9B1D09D5A20CC9F8AC3C0206FB5760F9 /* RequestDataDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6C147B2BB382B1DE178DC815F90996 /* RequestDataDispatcher.swift */; };
+		9E3F1C56918BA2FE5632398EEAEA45E0 /* Pods-NerdzNetworking_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E6C6D3096D568CE667E1E3F1F090C9 /* Pods-NerdzNetworking_Tests-dummy.m */; };
+		A1306C0FE284257B1270A8AD0D549B6D /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = A980BF0CEE08A519863A90F3AF627452 /* HTTPMethod.swift */; };
+		A53BDAD6CC3BAA0DFA52961AB6AB7FFA /* ObservationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8067CFE21ECE474B78BBB62CD40C /* ObservationManager.swift */; };
+		B1BDF8AA6CF99297D0E82F28243D411E /* NerdzNetworking-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAFBD1799342990424BC10C925F96D8 /* NerdzNetworking-dummy.m */; };
+		B38888738723F18EC8CEF2CCEE334B55 /* RequestHeaderKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1DBACEC4FB81C912D0C6AFE0CFC9CA /* RequestHeaderKey.swift */; };
+		B5632CFF33E65ABCDAAC010DD0E4D7D8 /* Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3E7B2F8FAC8A6938025DE24443B0 /* Empty.swift */; };
+		B828DB63F3EFA9931B81926BA17133E8 /* Data+MultipartResourceConvertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5636F85D5D73367A2489BB6DF8DD06CB /* Data+MultipartResourceConvertable.swift */; };
+		BA9ADC772E99DEB3B7759CC494798951 /* Data+AsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C1B647B20FC39E41F01263BB64DC29 /* Data+AsResponse.swift */; };
+		BAA5211B26C5C219D57A1E02E6D66262 /* ClosureResponseConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D881F40485A290447FA3EEFE924E706E /* ClosureResponseConverter.swift */; };
+		BB6518DE1BD3B5BCCBE8B2D78FB41C23 /* ServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60483833988CB4A745EDD5BA172D99D0 /* ServerError.swift */; };
+		BB7EBBD3F966151D7996AC251BEEA222 /* Array+AsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A710E383496B35CDA2317BA52DE0F5 /* Array+AsResponse.swift */; };
+		BEF8C6E8984736343A2DF58430E581BF /* MimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DA9AE18E875C5148F7907CEA7FF04D /* MimeType.swift */; };
+		C2F2B0DFEAAC44ADD80522B0DDA0E826 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B70C4B4D2039EAF00FE15193880E43 /* ErrorResponse.swift */; };
+		C99D28DF47F45DD447FB36EDC7809117 /* String+AsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7834128FFBA04C99B5C4515C3E17E548 /* String+AsResponse.swift */; };
+		CC3CF139EBF9ED48E648623A77D784EB /* String+MultipartResourceConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB35931CC99C6CCD9419E4BD029FD28A /* String+MultipartResourceConvertible.swift */; };
+		CC910FD93A03094908A3954689533897 /* DefaultMultipartFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF6613EA9BF75153AEA7612D233BD66 /* DefaultMultipartFile.swift */; };
+		CE1FD2124EDF43BE6660C809979F1179 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		D32A672A648F25762ED51B698E8A05BA /* RequestExecutionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330A5CA5719F77A43CE6E344F72CF56F /* RequestExecutionWrapper.swift */; };
+		D557609DA629059E584BC072D26964A5 /* Scalars+AsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B1FF20886742FD5F78CA27B7F4E45 /* Scalars+AsResponse.swift */; };
+		DFF3FB9045DFB7EE9E13F95CA15511FD /* DebugInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023D99224A56CD842E2604DF2F4C959A /* DebugInfo.swift */; };
+		E1052357827F3A9A96758E85146DCE55 /* Optional+AsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B5FBA59BD6F3BB028A5DC3F7E99F5C /* Optional+AsResponse.swift */; };
+		E54B41F290A0C48048A1EAD4FF9645AF /* DefaultRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD561E41421A4ACAA73C7CE8238593CE /* DefaultRequest.swift */; };
+		FBB0BC8A9C646A694E81A925A862FDD6 /* InputStream+MultipartResourceConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BDCE108454E2E459B441817C6A7B53 /* InputStream+MultipartResourceConvertible.swift */; };
+		FF4B539B52C6DE3DEAB0B017D6442948 /* StatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562820B8897C4D768279B1378585D421 /* StatusCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		383703B5521BB86A5E5FA95EF321E9B5 /* PBXContainerItemProxy */ = {
+		5534DAD2922D6DC4EAFB0F6286AA366F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -27,76 +74,232 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00677A8A265DD997DDAAB67C647F88ED /* NerdzNetworking.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = NerdzNetworking.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		018FC11FB4C03E450A996677B926E534 /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplaceMe.swift; path = NerdzNetworking/Classes/ReplaceMe.swift; sourceTree = "<group>"; };
+		023D99224A56CD842E2604DF2F4C959A /* DebugInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DebugInfo.swift; sourceTree = "<group>"; };
 		056C0F77FD136DAC538B7542E17070B2 /* Pods-NerdzNetworking_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NerdzNetworking_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		156A0B143B63E8A456355F884FB5379B /* NerdzNetworking.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = NerdzNetworking.modulemap; sourceTree = "<group>"; };
+		1202AC9B4D8F85DDF4BB604334AF03E2 /* NerdzNetworking-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NerdzNetworking-prefix.pch"; sourceTree = "<group>"; };
+		13F0901B99EA900490D23B6ED5094D1D /* OnServerErrorRequestRetrier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnServerErrorRequestRetrier.swift; sourceTree = "<group>"; };
+		16D301B00593D28B02521B397B3462A3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		1A7528541E6EE6362BBAB8DFFDE50951 /* NerdzNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = NerdzNetworking.framework; path = NerdzNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		23F8DFB3A754C1FFB51455BCFAC02C2C /* NerdzNetworking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NerdzNetworking.release.xcconfig; sourceTree = "<group>"; };
-		2C8FA0F9CA720FC5F5F42460AEFE62C0 /* NerdzNetworking-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "NerdzNetworking-Info.plist"; sourceTree = "<group>"; };
-		3004983056C8ECCFC1AEA96579BCB150 /* NerdzNetworking-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NerdzNetworking-prefix.pch"; sourceTree = "<group>"; };
+		1A8F3E7B2F8FAC8A6938025DE24443B0 /* Empty.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Empty.swift; sourceTree = "<group>"; };
+		28F8BA8A17AA999D7991AE205C0FC72B /* RequestFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
+		2B004B2991977E915B6675E322CC27EE /* DefaultMultipartFormDataRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DefaultMultipartFormDataRequest.swift; sourceTree = "<group>"; };
+		2F77B2DB9AA2B05FE74081B369ABC804 /* ExecutionOperation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExecutionOperation.swift; sourceTree = "<group>"; };
 		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		6313B832890DCAD52A0FF856E76AC57E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		71DA3FA546A81869E0B4ED06E648CADF /* NerdzNetworking-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NerdzNetworking-dummy.m"; sourceTree = "<group>"; };
+		330A5CA5719F77A43CE6E344F72CF56F /* RequestExecutionWrapper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RequestExecutionWrapper.swift; sourceTree = "<group>"; };
+		330F1957440D417F1944E51CC1B0ADC3 /* ResponseJsonConverter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResponseJsonConverter.swift; sourceTree = "<group>"; };
+		3564BDB82F756DF42C738E9A46A30B4F /* URL+MultipartResourceConvertable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "URL+MultipartResourceConvertable.swift"; sourceTree = "<group>"; };
+		38B5FBA59BD6F3BB028A5DC3F7E99F5C /* Optional+AsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Optional+AsResponse.swift"; sourceTree = "<group>"; };
+		494F790C5BECBE85003AD5B594D41E96 /* NerdzNetworking.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = NerdzNetworking.modulemap; sourceTree = "<group>"; };
+		4A6C147B2BB382B1DE178DC815F90996 /* RequestDataDispatcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RequestDataDispatcher.swift; sourceTree = "<group>"; };
+		562820B8897C4D768279B1378585D421 /* StatusCode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StatusCode.swift; sourceTree = "<group>"; };
+		5636F85D5D73367A2489BB6DF8DD06CB /* Data+MultipartResourceConvertable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Data+MultipartResourceConvertable.swift"; sourceTree = "<group>"; };
+		60483833988CB4A745EDD5BA172D99D0 /* ServerError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ServerError.swift; sourceTree = "<group>"; };
+		60903D46930EDC8FD04828ACD1FBA4BB /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		6BB48510248F866172205FDE92CC72E1 /* KeyPathResponseConverter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeyPathResponseConverter.swift; sourceTree = "<group>"; };
+		6FAFBD1799342990424BC10C925F96D8 /* NerdzNetworking-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NerdzNetworking-dummy.m"; sourceTree = "<group>"; };
+		70DA9AE18E875C5148F7907CEA7FF04D /* MimeType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MimeType.swift; sourceTree = "<group>"; };
+		7834128FFBA04C99B5C4515C3E17E548 /* String+AsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "String+AsResponse.swift"; sourceTree = "<group>"; };
 		79276825F3DE9273CCFB614E931F4A00 /* Pods-NerdzNetworking_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NerdzNetworking_Tests-umbrella.h"; sourceTree = "<group>"; };
+		79BDCE108454E2E459B441817C6A7B53 /* InputStream+MultipartResourceConvertible.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "InputStream+MultipartResourceConvertible.swift"; sourceTree = "<group>"; };
 		7B184B50614B315B3201AA1B1B31339E /* Pods-NerdzNetworking_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NerdzNetworking_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
+		80AB8067CFE21ECE474B78BBB62CD40C /* ObservationManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObservationManager.swift; sourceTree = "<group>"; };
+		86F2FB3D7B956A61955D129282A51485 /* SerialInputStream.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SerialInputStream.swift; sourceTree = "<group>"; };
+		893FF17ED171BBF004DB4CD2835BD666 /* Request.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		89C1B647B20FC39E41F01263BB64DC29 /* Data+AsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Data+AsResponse.swift"; sourceTree = "<group>"; };
 		9321FFF821371A58552B43DB28988D3B /* Pods_NerdzNetworking_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NerdzNetworking_Tests.framework; path = "Pods-NerdzNetworking_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		946D3CF0D1859BD6E9CEB1D8CFE281D1 /* Pods-NerdzNetworking_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NerdzNetworking_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		94704DC0332CE6B8B7E36AD2D4B039B5 /* OnRequestRequestRetrier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnRequestRequestRetrier.swift; sourceTree = "<group>"; };
+		9568FC286CE16427D5D6DA864F7DFC6F /* Status.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		96E6C6D3096D568CE667E1E3F1F090C9 /* Pods-NerdzNetworking_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NerdzNetworking_Tests-dummy.m"; sourceTree = "<group>"; };
+		978141DEFA040D9A1551749B1782EA71 /* MultipartResourceConvertable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MultipartResourceConvertable.swift; sourceTree = "<group>"; };
+		9D6110C6D503C4DCA98B849CAEC17324 /* RequestData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RequestData.swift; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A27DEC9066ECFBBC2E1A2E828AC15082 /* MultipartRequestData+Create.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "MultipartRequestData+Create.swift"; sourceTree = "<group>"; };
 		A56CF7060A8BF1CF3FA9C7F7852DA8D4 /* Pods-NerdzNetworking_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NerdzNetworking_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		A5A5F302E41F61D3982C508E008B42B4 /* Pods-NerdzNetworking_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NerdzNetworking_Tests-frameworks.sh"; sourceTree = "<group>"; };
-		AB0B82C5AD92203118A3F080EA90C31F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		A980BF0CEE08A519863A90F3AF627452 /* HTTPMethod.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		A9DA1D64938DD1177952215B4099412A /* NerdzNetworking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NerdzNetworking.release.xcconfig; sourceTree = "<group>"; };
 		ADDA7A6AF5FB90D50282E698F98B367E /* Pods-NerdzNetworking_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NerdzNetworking_Tests-Info.plist"; sourceTree = "<group>"; };
-		B05874B5DD6A5E2412749F5BA0425459 /* NerdzNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NerdzNetworking.debug.xcconfig; sourceTree = "<group>"; };
+		B0105B3A4FA8139996164150ABA2A412 /* RequestExecuter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RequestExecuter.swift; sourceTree = "<group>"; };
+		B53B1FF20886742FD5F78CA27B7F4E45 /* Scalars+AsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Scalars+AsResponse.swift"; sourceTree = "<group>"; };
+		B63F010D5B4EAF425816D7FFC8EA77D7 /* DispatchOperation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DispatchOperation.swift; sourceTree = "<group>"; };
+		B9B70C4B4D2039EAF00FE15193880E43 /* ErrorResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
+		B9C24D593DE0D35634F9EC7453ACAD3A /* NerdzNetworking.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = NerdzNetworking.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B9FC498EFF0A4D9DB9AF39BE36292921 /* RequestRetrier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RequestRetrier.swift; sourceTree = "<group>"; };
+		BB35931CC99C6CCD9419E4BD029FD28A /* String+MultipartResourceConvertible.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "String+MultipartResourceConvertible.swift"; sourceTree = "<group>"; };
+		BD561E41421A4ACAA73C7CE8238593CE /* DefaultRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DefaultRequest.swift; sourceTree = "<group>"; };
+		C658BB5B7ADB7484A004B3EE2726FE98 /* Mapper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
+		CCF6613EA9BF75153AEA7612D233BD66 /* DefaultMultipartFile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DefaultMultipartFile.swift; sourceTree = "<group>"; };
+		D17418BE7D9AD080CF197DFB869DFAB5 /* NerdzNetworking-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "NerdzNetworking-Info.plist"; sourceTree = "<group>"; };
+		D881F40485A290447FA3EEFE924E706E /* ClosureResponseConverter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClosureResponseConverter.swift; sourceTree = "<group>"; };
 		D9CBCFE679136DF19E0707AC7069D0A9 /* Pods-NerdzNetworking_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-NerdzNetworking_Tests.modulemap"; sourceTree = "<group>"; };
-		E520577C58F476D6CECD7E659E65EFEC /* NerdzNetworking-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NerdzNetworking-umbrella.h"; sourceTree = "<group>"; };
+		DAE2809481AD753F910178F057631F07 /* MultipartFormDataRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MultipartFormDataRequest.swift; sourceTree = "<group>"; };
+		DBC25B31D28B3EEBA31B32751861A508 /* RequestRetryingManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RequestRetryingManager.swift; sourceTree = "<group>"; };
+		E674A2AEEA847490583B75BA6A7BF07E /* NerdzNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NerdzNetworking.debug.xcconfig; sourceTree = "<group>"; };
+		E69558E6AE9CFEFAF872A05E59A66255 /* AuthToken.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
+		EA9B1E0A6533C5E86426DB309BE42A3B /* Dictionary+AsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Dictionary+AsResponse.swift"; sourceTree = "<group>"; };
+		ECBE0933E6975885CEED448F4271411B /* Dictionary+RequestHeader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Dictionary+RequestHeader.swift"; sourceTree = "<group>"; };
+		ED8D001A061BBE7A69CA789AE29D807E /* MultipartRequestData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MultipartRequestData.swift; sourceTree = "<group>"; };
+		F05EBD8606165692CF085819E3B500C7 /* NerdzNetworking-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NerdzNetworking-umbrella.h"; sourceTree = "<group>"; };
+		F47EE41973F330F42546EBD9FC45DDBC /* Endpoint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		F9A710E383496B35CDA2317BA52DE0F5 /* Array+AsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Array+AsResponse.swift"; sourceTree = "<group>"; };
+		FA1DBACEC4FB81C912D0C6AFE0CFC9CA /* RequestHeaderKey.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RequestHeaderKey.swift; sourceTree = "<group>"; };
+		FEDB2098040652A1E750F6E5F6816D93 /* OnStatusCodesRequestRetrier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnStatusCodesRequestRetrier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		60073DC735FC0D78304952514DDF71BA /* Frameworks */ = {
+		9294BD50EC3EAD2636536145C6D9FA9B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				824812B3ADF72FA6B588263633135E1A /* Foundation.framework in Frameworks */,
+				CE1FD2124EDF43BE6660C809979F1179 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6FB887804CE5B7081A00980B33C2C0F3 /* Frameworks */ = {
+		B21465D481192371CEB63AD507C44FCB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C2F48DFBFE1CEB6058742F5FDA74418 /* Foundation.framework in Frameworks */,
+				4B730953C4760BBA8607A20ACFC70279 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		337B46937E847DBE06CB3846FEA04137 /* NerdzNetworking */ = {
+		173A3F3EA316671F6ADBB3B192BDB06C /* RequestRetrier */ = {
 			isa = PBXGroup;
 			children = (
-				018FC11FB4C03E450A996677B926E534 /* ReplaceMe.swift */,
-				EAE7FAE0D9C7A9EA3878803172A20A7F /* Pod */,
-				89C632D00B195409BF518B7CC2C43F76 /* Support Files */,
+				94704DC0332CE6B8B7E36AD2D4B039B5 /* OnRequestRequestRetrier.swift */,
+				13F0901B99EA900490D23B6ED5094D1D /* OnServerErrorRequestRetrier.swift */,
+				FEDB2098040652A1E750F6E5F6816D93 /* OnStatusCodesRequestRetrier.swift */,
+				B9FC498EFF0A4D9DB9AF39BE36292921 /* RequestRetrier.swift */,
 			);
-			name = NerdzNetworking;
-			path = ../..;
+			name = RequestRetrier;
+			path = RequestRetrier;
 			sourceTree = "<group>";
 		};
-		89C632D00B195409BF518B7CC2C43F76 /* Support Files */ = {
+		24DD72BFF8F8A1BB6D30BBFB11CFC8A5 /* MultipartResourceConvertable */ = {
 			isa = PBXGroup;
 			children = (
-				156A0B143B63E8A456355F884FB5379B /* NerdzNetworking.modulemap */,
-				71DA3FA546A81869E0B4ED06E648CADF /* NerdzNetworking-dummy.m */,
-				2C8FA0F9CA720FC5F5F42460AEFE62C0 /* NerdzNetworking-Info.plist */,
-				3004983056C8ECCFC1AEA96579BCB150 /* NerdzNetworking-prefix.pch */,
-				E520577C58F476D6CECD7E659E65EFEC /* NerdzNetworking-umbrella.h */,
-				B05874B5DD6A5E2412749F5BA0425459 /* NerdzNetworking.debug.xcconfig */,
-				23F8DFB3A754C1FFB51455BCFAC02C2C /* NerdzNetworking.release.xcconfig */,
+				978141DEFA040D9A1551749B1782EA71 /* MultipartResourceConvertable.swift */,
+				8344E80B7C215F6E591D2570B4A635A5 /* DefaultSolutions */,
+			);
+			name = MultipartResourceConvertable;
+			path = MultipartResourceConvertable;
+			sourceTree = "<group>";
+		};
+		28DE85BABA0EB1AEA8B5E07429E30E02 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				16D301B00593D28B02521B397B3462A3 /* LICENSE */,
+				B9C24D593DE0D35634F9EC7453ACAD3A /* NerdzNetworking.podspec */,
+				60903D46930EDC8FD04828ACD1FBA4BB /* README.md */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		3C79435774EB78357A1F88C140B32470 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				494F790C5BECBE85003AD5B594D41E96 /* NerdzNetworking.modulemap */,
+				6FAFBD1799342990424BC10C925F96D8 /* NerdzNetworking-dummy.m */,
+				D17418BE7D9AD080CF197DFB869DFAB5 /* NerdzNetworking-Info.plist */,
+				1202AC9B4D8F85DDF4BB604334AF03E2 /* NerdzNetworking-prefix.pch */,
+				F05EBD8606165692CF085819E3B500C7 /* NerdzNetworking-umbrella.h */,
+				E674A2AEEA847490583B75BA6A7BF07E /* NerdzNetworking.debug.xcconfig */,
+				A9DA1D64938DD1177952215B4099412A /* NerdzNetworking.release.xcconfig */,
 			);
 			name = "Support Files";
 			path = "Example/Pods/Target Support Files/NerdzNetworking";
+			sourceTree = "<group>";
+		};
+		44CACE82DF06F62642AD803B5D8B890B /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C930493B287AF51DC3834CEFA4954544 /* NerdzNetworking */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		510E4D7F979ECDED3762A5B49D1BEE3F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B63F010D5B4EAF425816D7FFC8EA77D7 /* DispatchOperation.swift */,
+				DAE2809481AD753F910178F057631F07 /* MultipartFormDataRequest.swift */,
+				893FF17ED171BBF004DB4CD2835BD666 /* Request.swift */,
+				9D6110C6D503C4DCA98B849CAEC17324 /* RequestData.swift */,
+				60483833988CB4A745EDD5BA172D99D0 /* ServerError.swift */,
+				173A3F3EA316671F6ADBB3B192BDB06C /* RequestRetrier */,
+			);
+			name = Protocols;
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		52D83538D3E66B88B68F24638A55F8DB /* Default */ = {
+			isa = PBXGroup;
+			children = (
+				CCF6613EA9BF75153AEA7612D233BD66 /* DefaultMultipartFile.swift */,
+				2B004B2991977E915B6675E322CC27EE /* DefaultMultipartFormDataRequest.swift */,
+				BD561E41421A4ACAA73C7CE8238593CE /* DefaultRequest.swift */,
+				E44AC8E19EF6D3CB2F16E2E5C57356CA /* DefaultResponses */,
+			);
+			name = Default;
+			path = Default;
+			sourceTree = "<group>";
+		};
+		5A604314CF6575B84B467AB78C2C0DBF /* DefaultResponses */ = {
+			isa = PBXGroup;
+			children = (
+				F9A710E383496B35CDA2317BA52DE0F5 /* Array+AsResponse.swift */,
+				89C1B647B20FC39E41F01263BB64DC29 /* Data+AsResponse.swift */,
+				EA9B1E0A6533C5E86426DB309BE42A3B /* Dictionary+AsResponse.swift */,
+				38B5FBA59BD6F3BB028A5DC3F7E99F5C /* Optional+AsResponse.swift */,
+				B53B1FF20886742FD5F78CA27B7F4E45 /* Scalars+AsResponse.swift */,
+				7834128FFBA04C99B5C4515C3E17E548 /* String+AsResponse.swift */,
+			);
+			name = DefaultResponses;
+			path = DefaultResponses;
+			sourceTree = "<group>";
+		};
+		75B8E4C6ECCB708E0FB9A273A6B0C24B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				023D99224A56CD842E2604DF2F4C959A /* DebugInfo.swift */,
+				B9B70C4B4D2039EAF00FE15193880E43 /* ErrorResponse.swift */,
+				A980BF0CEE08A519863A90F3AF627452 /* HTTPMethod.swift */,
+				70DA9AE18E875C5148F7907CEA7FF04D /* MimeType.swift */,
+				562820B8897C4D768279B1378585D421 /* StatusCode.swift */,
+				52D83538D3E66B88B68F24638A55F8DB /* Default */,
+				D047EE37BD7BAD88BB86255B3434A35B /* Headers */,
+				E196D122FF8436E01DD6D561ABC98C3B /* Multipart */,
+				510E4D7F979ECDED3762A5B49D1BEE3F /* Protocols */,
+			);
+			name = Models;
+			path = Sources/NerdzNetworking/Models;
+			sourceTree = "<group>";
+		};
+		8344E80B7C215F6E591D2570B4A635A5 /* DefaultSolutions */ = {
+			isa = PBXGroup;
+			children = (
+				5636F85D5D73367A2489BB6DF8DD06CB /* Data+MultipartResourceConvertable.swift */,
+				79BDCE108454E2E459B441817C6A7B53 /* InputStream+MultipartResourceConvertible.swift */,
+				BB35931CC99C6CCD9419E4BD029FD28A /* String+MultipartResourceConvertible.swift */,
+				3564BDB82F756DF42C738E9A46A30B4F /* URL+MultipartResourceConvertable.swift */,
+			);
+			name = DefaultSolutions;
+			path = DefaultSolutions;
+			sourceTree = "<group>";
+		};
+		B5C2FAEB8DBCD561043A47F64955354C /* ResponseConverters */ = {
+			isa = PBXGroup;
+			children = (
+				D881F40485A290447FA3EEFE924E706E /* ClosureResponseConverter.swift */,
+				6BB48510248F866172205FDE92CC72E1 /* KeyPathResponseConverter.swift */,
+				330F1957440D417F1944E51CC1B0ADC3 /* ResponseJsonConverter.swift */,
+			);
+			name = ResponseConverters;
+			path = ResponseConverters;
 			sourceTree = "<group>";
 		};
 		B727DCCEFFE251DC7B583472B712062E /* Targets Support Files */ = {
@@ -115,23 +318,50 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		C1A2E1E3DD2026FF6DC915F782EDF4EB /* Development Pods */ = {
+		C687B7E88AAF030155F37939CFB3AACA /* Mapping */ = {
 			isa = PBXGroup;
 			children = (
-				337B46937E847DBE06CB3846FEA04137 /* NerdzNetworking */,
+				C658BB5B7ADB7484A004B3EE2726FE98 /* Mapper.swift */,
+				5A604314CF6575B84B467AB78C2C0DBF /* DefaultResponses */,
+				B5C2FAEB8DBCD561043A47F64955354C /* ResponseConverters */,
 			);
-			name = "Development Pods";
+			name = Mapping;
+			path = Sources/NerdzNetworking/Mapping;
+			sourceTree = "<group>";
+		};
+		C930493B287AF51DC3834CEFA4954544 /* NerdzNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				ED059041FA47D9A7AB4AA2CDC0D68431 /* Core */,
+				C687B7E88AAF030155F37939CFB3AACA /* Mapping */,
+				75B8E4C6ECCB708E0FB9A273A6B0C24B /* Models */,
+				28DE85BABA0EB1AEA8B5E07429E30E02 /* Pod */,
+				3C79435774EB78357A1F88C140B32470 /* Support Files */,
+			);
+			name = NerdzNetworking;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
-				C1A2E1E3DD2026FF6DC915F782EDF4EB /* Development Pods */,
+				44CACE82DF06F62642AD803B5D8B890B /* Development Pods */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
 				F2803400F61AF669C836C10FEF300861 /* Products */,
 				B727DCCEFFE251DC7B583472B712062E /* Targets Support Files */,
 			);
+			sourceTree = "<group>";
+		};
+		D047EE37BD7BAD88BB86255B3434A35B /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				E69558E6AE9CFEFAF872A05E59A66255 /* AuthToken.swift */,
+				ECBE0933E6975885CEED448F4271411B /* Dictionary+RequestHeader.swift */,
+				FA1DBACEC4FB81C912D0C6AFE0CFC9CA /* RequestHeaderKey.swift */,
+			);
+			name = Headers;
+			path = Headers;
 			sourceTree = "<group>";
 		};
 		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
@@ -140,6 +370,18 @@
 				C0834CEBB1379A84116EF29F93051C60 /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E196D122FF8436E01DD6D561ABC98C3B /* Multipart */ = {
+			isa = PBXGroup;
+			children = (
+				ED8D001A061BBE7A69CA789AE29D807E /* MultipartRequestData.swift */,
+				A27DEC9066ECFBBC2E1A2E828AC15082 /* MultipartRequestData+Create.swift */,
+				86F2FB3D7B956A61955D129282A51485 /* SerialInputStream.swift */,
+				24DD72BFF8F8A1BB6D30BBFB11CFC8A5 /* MultipartResourceConvertable */,
+			);
+			name = Multipart;
+			path = Multipart;
 			sourceTree = "<group>";
 		};
 		E1DAFBAFEFD58745EBF563963E34FED0 /* Pods-NerdzNetworking_Tests */ = {
@@ -159,14 +401,30 @@
 			path = "Target Support Files/Pods-NerdzNetworking_Tests";
 			sourceTree = "<group>";
 		};
-		EAE7FAE0D9C7A9EA3878803172A20A7F /* Pod */ = {
+		E44AC8E19EF6D3CB2F16E2E5C57356CA /* DefaultResponses */ = {
 			isa = PBXGroup;
 			children = (
-				AB0B82C5AD92203118A3F080EA90C31F /* LICENSE */,
-				00677A8A265DD997DDAAB67C647F88ED /* NerdzNetworking.podspec */,
-				6313B832890DCAD52A0FF856E76AC57E /* README.md */,
+				1A8F3E7B2F8FAC8A6938025DE24443B0 /* Empty.swift */,
+				9568FC286CE16427D5D6DA864F7DFC6F /* Status.swift */,
 			);
-			name = Pod;
+			name = DefaultResponses;
+			path = DefaultResponses;
+			sourceTree = "<group>";
+		};
+		ED059041FA47D9A7AB4AA2CDC0D68431 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				F47EE41973F330F42546EBD9FC45DDBC /* Endpoint.swift */,
+				2F77B2DB9AA2B05FE74081B369ABC804 /* ExecutionOperation.swift */,
+				80AB8067CFE21ECE474B78BBB62CD40C /* ObservationManager.swift */,
+				4A6C147B2BB382B1DE178DC815F90996 /* RequestDataDispatcher.swift */,
+				B0105B3A4FA8139996164150ABA2A412 /* RequestExecuter.swift */,
+				330A5CA5719F77A43CE6E344F72CF56F /* RequestExecutionWrapper.swift */,
+				28F8BA8A17AA999D7991AE205C0FC72B /* RequestFactory.swift */,
+				DBC25B31D28B3EEBA31B32751861A508 /* RequestRetryingManager.swift */,
+			);
+			name = Core;
+			path = Sources/NerdzNetworking/Core;
 			sourceTree = "<group>";
 		};
 		F2803400F61AF669C836C10FEF300861 /* Products */ = {
@@ -181,19 +439,19 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		C30FB2362F788731A24E907B59C9D4D7 /* Headers */ = {
+		5CB01629E72DB4CE32D520B5BEEBE557 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				086962A8CC029EABC42D00785481CD5A /* Pods-NerdzNetworking_Tests-umbrella.h in Headers */,
+				7BF2B405817F5519A79FEDF15BDE30EC /* NerdzNetworking-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CA785F559A6303907E093E819DAB13E9 /* Headers */ = {
+		7BCA2DC6052DB5521514DF0B7F1490C7 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81F09B96842C3080155A392BC0F9DD11 /* NerdzNetworking-umbrella.h in Headers */,
+				8D18A3C060D319DF1E1DA91F428FDBFC /* Pods-NerdzNetworking_Tests-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,17 +460,17 @@
 /* Begin PBXNativeTarget section */
 		A075691489BFD4E602A99E374E0F77DB /* Pods-NerdzNetworking_Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C0BB1137040911659BE258B30B07B5E5 /* Build configuration list for PBXNativeTarget "Pods-NerdzNetworking_Tests" */;
+			buildConfigurationList = 97E236F0CEE38997DCE12FF881F7A281 /* Build configuration list for PBXNativeTarget "Pods-NerdzNetworking_Tests" */;
 			buildPhases = (
-				C30FB2362F788731A24E907B59C9D4D7 /* Headers */,
-				5D8127C04D063101C1EA9028AB1E6253 /* Sources */,
-				6FB887804CE5B7081A00980B33C2C0F3 /* Frameworks */,
-				A66C26EF05D0253B441BDA4E5BB031E0 /* Resources */,
+				7BCA2DC6052DB5521514DF0B7F1490C7 /* Headers */,
+				F5ED1E12ECE9B4EDDADFBEDE68570962 /* Sources */,
+				B21465D481192371CEB63AD507C44FCB /* Frameworks */,
+				909B0854341C53E53A616B63CD6D5A06 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				9228A312EDC3020FECDBD1B684C88233 /* PBXTargetDependency */,
+				1E85B25AE56D12616DCFE626C01B5445 /* PBXTargetDependency */,
 			);
 			name = "Pods-NerdzNetworking_Tests";
 			productName = "Pods-NerdzNetworking_Tests";
@@ -221,12 +479,12 @@
 		};
 		EADF878530C1737A8D84F5C5D3BDD662 /* NerdzNetworking */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4FED463AF3622143FABA84C380AB2D09 /* Build configuration list for PBXNativeTarget "NerdzNetworking" */;
+			buildConfigurationList = 51E56103E412EADA5B492BDFAF79B58C /* Build configuration list for PBXNativeTarget "NerdzNetworking" */;
 			buildPhases = (
-				CA785F559A6303907E093E819DAB13E9 /* Headers */,
-				AD4E3A29A104CB0D7119ED19FB831797 /* Sources */,
-				60073DC735FC0D78304952514DDF71BA /* Frameworks */,
-				4B79468502D2E493089E8D1B6B05D034 /* Resources */,
+				5CB01629E72DB4CE32D520B5BEEBE557 /* Headers */,
+				F86BDA1462040F93573D370AB5A8A5C3 /* Sources */,
+				9294BD50EC3EAD2636536145C6D9FA9B /* Frameworks */,
+				8776B959DF1405A11A54CC04133A5192 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -266,14 +524,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		4B79468502D2E493089E8D1B6B05D034 /* Resources */ = {
+		8776B959DF1405A11A54CC04133A5192 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A66C26EF05D0253B441BDA4E5BB031E0 /* Resources */ = {
+		909B0854341C53E53A616B63CD6D5A06 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -283,101 +541,85 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		5D8127C04D063101C1EA9028AB1E6253 /* Sources */ = {
+		F5ED1E12ECE9B4EDDADFBEDE68570962 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCFB831F1042C3B8BC22004FF8DFDE8D /* Pods-NerdzNetworking_Tests-dummy.m in Sources */,
+				9E3F1C56918BA2FE5632398EEAEA45E0 /* Pods-NerdzNetworking_Tests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AD4E3A29A104CB0D7119ED19FB831797 /* Sources */ = {
+		F86BDA1462040F93573D370AB5A8A5C3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D75AAC1A4F3F1EF121577E845708ECC6 /* NerdzNetworking-dummy.m in Sources */,
-				E77DC6E95F014089951AAD646390254D /* ReplaceMe.swift in Sources */,
+				BB7EBBD3F966151D7996AC251BEEA222 /* Array+AsResponse.swift in Sources */,
+				60B689AAF94E7A2CEBFBEB93B20091FA /* AuthToken.swift in Sources */,
+				BAA5211B26C5C219D57A1E02E6D66262 /* ClosureResponseConverter.swift in Sources */,
+				BA9ADC772E99DEB3B7759CC494798951 /* Data+AsResponse.swift in Sources */,
+				B828DB63F3EFA9931B81926BA17133E8 /* Data+MultipartResourceConvertable.swift in Sources */,
+				DFF3FB9045DFB7EE9E13F95CA15511FD /* DebugInfo.swift in Sources */,
+				CC910FD93A03094908A3954689533897 /* DefaultMultipartFile.swift in Sources */,
+				22AD902A24CBF86F2AB6A8562E7358FA /* DefaultMultipartFormDataRequest.swift in Sources */,
+				E54B41F290A0C48048A1EAD4FF9645AF /* DefaultRequest.swift in Sources */,
+				61A74607DD33A68D373A163263241BD4 /* Dictionary+AsResponse.swift in Sources */,
+				6EE36F0D4A353977C63CB3B3AA538FB5 /* Dictionary+RequestHeader.swift in Sources */,
+				0479B7D4B657795F449148418A5C2EFB /* DispatchOperation.swift in Sources */,
+				B5632CFF33E65ABCDAAC010DD0E4D7D8 /* Empty.swift in Sources */,
+				46E5B77B166D9B0FE99673042A117206 /* Endpoint.swift in Sources */,
+				C2F2B0DFEAAC44ADD80522B0DDA0E826 /* ErrorResponse.swift in Sources */,
+				2E561263ECC4769F17481830B7775AEA /* ExecutionOperation.swift in Sources */,
+				A1306C0FE284257B1270A8AD0D549B6D /* HTTPMethod.swift in Sources */,
+				FBB0BC8A9C646A694E81A925A862FDD6 /* InputStream+MultipartResourceConvertible.swift in Sources */,
+				712CA32BA3F314CD3448C2AA8AD62DD6 /* KeyPathResponseConverter.swift in Sources */,
+				96B71E0F2067581614A6C1A2DBA95F31 /* Mapper.swift in Sources */,
+				BEF8C6E8984736343A2DF58430E581BF /* MimeType.swift in Sources */,
+				56A5F8BC3E0F5B35DB530B460243E4D8 /* MultipartFormDataRequest.swift in Sources */,
+				19781A61A40EA9E051085B173864AEB6 /* MultipartRequestData+Create.swift in Sources */,
+				74A6A9E623A51CBBCD8C09B67EF268EB /* MultipartRequestData.swift in Sources */,
+				6F720B15B31D9A22B7DC5EB3C6BDEF44 /* MultipartResourceConvertable.swift in Sources */,
+				B1BDF8AA6CF99297D0E82F28243D411E /* NerdzNetworking-dummy.m in Sources */,
+				A53BDAD6CC3BAA0DFA52961AB6AB7FFA /* ObservationManager.swift in Sources */,
+				11DB8A1916EF21CBEBBF7BBB4FA5B83E /* OnRequestRequestRetrier.swift in Sources */,
+				894BF61D2D213ECC8720232D3BF72395 /* OnServerErrorRequestRetrier.swift in Sources */,
+				04A72AD682EAB548D50110BD8F252A0C /* OnStatusCodesRequestRetrier.swift in Sources */,
+				E1052357827F3A9A96758E85146DCE55 /* Optional+AsResponse.swift in Sources */,
+				1E69B590B1D34A2B7AC81E5FA1D8C426 /* Request.swift in Sources */,
+				78A61597F7920BBF90AABB12CAB4AD65 /* RequestData.swift in Sources */,
+				9B1D09D5A20CC9F8AC3C0206FB5760F9 /* RequestDataDispatcher.swift in Sources */,
+				6B5970403CCB77E2BF9E1CB6DE8393BD /* RequestExecuter.swift in Sources */,
+				D32A672A648F25762ED51B698E8A05BA /* RequestExecutionWrapper.swift in Sources */,
+				240FFD9DBFB189F3C2C05B5A838C4402 /* RequestFactory.swift in Sources */,
+				B38888738723F18EC8CEF2CCEE334B55 /* RequestHeaderKey.swift in Sources */,
+				4600D6A3AB38EE246954F28717411E58 /* RequestRetrier.swift in Sources */,
+				86CAD052C757618E0CF793ACAE07B168 /* RequestRetryingManager.swift in Sources */,
+				83B54D7DA0C8A39891D1BBF361BB1CB7 /* ResponseJsonConverter.swift in Sources */,
+				D557609DA629059E584BC072D26964A5 /* Scalars+AsResponse.swift in Sources */,
+				47C11EEF4A1281287D9CF240A7C381B0 /* SerialInputStream.swift in Sources */,
+				BB6518DE1BD3B5BCCBE8B2D78FB41C23 /* ServerError.swift in Sources */,
+				5FAFFF741CB4BCA01E21E906CC174D37 /* Status.swift in Sources */,
+				FF4B539B52C6DE3DEAB0B017D6442948 /* StatusCode.swift in Sources */,
+				C99D28DF47F45DD447FB36EDC7809117 /* String+AsResponse.swift in Sources */,
+				CC3CF139EBF9ED48E648623A77D784EB /* String+MultipartResourceConvertible.swift in Sources */,
+				72170D34A72AD1AF78A90B1DBD5F43F6 /* URL+MultipartResourceConvertable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		9228A312EDC3020FECDBD1B684C88233 /* PBXTargetDependency */ = {
+		1E85B25AE56D12616DCFE626C01B5445 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = NerdzNetworking;
 			target = EADF878530C1737A8D84F5C5D3BDD662 /* NerdzNetworking */;
-			targetProxy = 383703B5521BB86A5E5FA95EF321E9B5 /* PBXContainerItemProxy */;
+			targetProxy = 5534DAD2922D6DC4EAFB0F6286AA366F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		51F20BF04ADBC753E37D1DC9400AA612 /* Release */ = {
+		6206A60A70B763F05D27362B409CE0E9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 23F8DFB3A754C1FFB51455BCFAC02C2C /* NerdzNetworking.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/NerdzNetworking/NerdzNetworking-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/NerdzNetworking/NerdzNetworking-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/NerdzNetworking/NerdzNetworking.modulemap";
-				PRODUCT_MODULE_NAME = NerdzNetworking;
-				PRODUCT_NAME = NerdzNetworking;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		541B52D94C83FD9504280D5E2E1F8317 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B05874B5DD6A5E2412749F5BA0425459 /* NerdzNetworking.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/NerdzNetworking/NerdzNetworking-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/NerdzNetworking/NerdzNetworking-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/NerdzNetworking/NerdzNetworking.modulemap";
-				PRODUCT_MODULE_NAME = NerdzNetworking;
-				PRODUCT_NAME = NerdzNetworking;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		A98B30BFF1F4312441C16700EC4C20DB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 946D3CF0D1859BD6E9CEB1D8CFE281D1 /* Pods-NerdzNetworking_Tests.debug.xcconfig */;
+			baseConfigurationReference = A56CF7060A8BF1CF3FA9C7F7852DA8D4 /* Pods-NerdzNetworking_Tests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -402,6 +644,38 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		729FE1DBCD8697F12617EFB67588F02A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E674A2AEEA847490583B75BA6A7BF07E /* NerdzNetworking.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/NerdzNetworking/NerdzNetworking-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/NerdzNetworking/NerdzNetworking-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/NerdzNetworking/NerdzNetworking.modulemap";
+				PRODUCT_MODULE_NAME = NerdzNetworking;
+				PRODUCT_NAME = NerdzNetworking;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -532,9 +806,41 @@
 			};
 			name = Debug;
 		};
-		FC08ED76699B0E8E9D33DE5341C32137 /* Release */ = {
+		E90FE9BF61C77F91030EFFD6B6B29671 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A56CF7060A8BF1CF3FA9C7F7852DA8D4 /* Pods-NerdzNetworking_Tests.release.xcconfig */;
+			baseConfigurationReference = A9DA1D64938DD1177952215B4099412A /* NerdzNetworking.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/NerdzNetworking/NerdzNetworking-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/NerdzNetworking/NerdzNetworking-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/NerdzNetworking/NerdzNetworking.modulemap";
+				PRODUCT_MODULE_NAME = NerdzNetworking;
+				PRODUCT_NAME = NerdzNetworking;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		EE9C7A44A7AAC257956DFBCC4747CA2F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 946D3CF0D1859BD6E9CEB1D8CFE281D1 /* Pods-NerdzNetworking_Tests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -560,11 +866,10 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -578,20 +883,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4FED463AF3622143FABA84C380AB2D09 /* Build configuration list for PBXNativeTarget "NerdzNetworking" */ = {
+		51E56103E412EADA5B492BDFAF79B58C /* Build configuration list for PBXNativeTarget "NerdzNetworking" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				541B52D94C83FD9504280D5E2E1F8317 /* Debug */,
-				51F20BF04ADBC753E37D1DC9400AA612 /* Release */,
+				729FE1DBCD8697F12617EFB67588F02A /* Debug */,
+				E90FE9BF61C77F91030EFFD6B6B29671 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C0BB1137040911659BE258B30B07B5E5 /* Build configuration list for PBXNativeTarget "Pods-NerdzNetworking_Tests" */ = {
+		97E236F0CEE38997DCE12FF881F7A281 /* Build configuration list for PBXNativeTarget "Pods-NerdzNetworking_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A98B30BFF1F4312441C16700EC4C20DB /* Debug */,
-				FC08ED76699B0E8E9D33DE5341C32137 /* Release */,
+				EE9C7A44A7AAC257956DFBCC4747CA2F /* Debug */,
+				6206A60A70B763F05D27362B409CE0E9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

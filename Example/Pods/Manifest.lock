@@ -1,5 +1,5 @@
 PODS:
-  - NerdzNetworking (0.1.0)
+  - NerdzNetworking (0.9.5)
 
 DEPENDENCIES:
   - NerdzNetworking (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  NerdzNetworking: 0c50f68c1454bfa077a38869990b9bb7f935f634
+  NerdzNetworking: 37c79a32db644a14f2483d5447259b6df7722f3e
 
 PODFILE CHECKSUM: c00aca58898ea48d99dfad63ed700ff6998c55f0
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

@@ -8,18 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		D6EC171D98ADA5888C197F6E /* Pods_NerdzNetworking_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 360232E88A0BC016BF4E4149 /* Pods_NerdzNetworking_Tests.framework */; };
+		6F0BAF6024981A929A4F8E4A /* Pods_NerdzNetworking_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA9BA6562477338F161EB52 /* Pods_NerdzNetworking_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		16ECA8970431AAD66BF6E938 /* Pods-NerdzNetworking_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NerdzNetworking_Tests.release.xcconfig"; path = "Target Support Files/Pods-NerdzNetworking_Tests/Pods-NerdzNetworking_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		30D44E07CFF556DA49E61D8E /* NerdzNetworking.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = NerdzNetworking.podspec; path = ../NerdzNetworking.podspec; sourceTree = "<group>"; };
-		360232E88A0BC016BF4E4149 /* Pods_NerdzNetworking_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NerdzNetworking_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		56CCFF5AEE8AA74527D8B6CD /* Pods-NerdzNetworking_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NerdzNetworking_Tests.debug.xcconfig"; path = "Target Support Files/Pods-NerdzNetworking_Tests/Pods-NerdzNetworking_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		4DA9BA6562477338F161EB52 /* Pods_NerdzNetworking_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NerdzNetworking_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E3427D9B3A13CA02787FB1A /* Pods-NerdzNetworking_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NerdzNetworking_Tests.release.xcconfig"; path = "Target Support Files/Pods-NerdzNetworking_Tests/Pods-NerdzNetworking_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* NerdzNetworking_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NerdzNetworking_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		639241ACFCC0E0CA2C1889AA /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		A9A1680F3C0B34C5E0C0E711 /* Pods-NerdzNetworking_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NerdzNetworking_Tests.debug.xcconfig"; path = "Target Support Files/Pods-NerdzNetworking_Tests/Pods-NerdzNetworking_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED71D760AB6F66ED876854EF /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -28,26 +28,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6EC171D98ADA5888C197F6E /* Pods_NerdzNetworking_Tests.framework in Frameworks */,
+				6F0BAF6024981A929A4F8E4A /* Pods_NerdzNetworking_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		337243C87FC74BE13010EAAD /* Frameworks */ = {
+		269AE41B50E6A0CB3E03B10B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				360232E88A0BC016BF4E4149 /* Pods_NerdzNetworking_Tests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		5660E5AD6C36EB684B53C02E /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				56CCFF5AEE8AA74527D8B6CD /* Pods-NerdzNetworking_Tests.debug.xcconfig */,
-				16ECA8970431AAD66BF6E938 /* Pods-NerdzNetworking_Tests.release.xcconfig */,
+				A9A1680F3C0B34C5E0C0E711 /* Pods-NerdzNetworking_Tests.debug.xcconfig */,
+				5E3427D9B3A13CA02787FB1A /* Pods-NerdzNetworking_Tests.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -59,8 +51,8 @@
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
-				5660E5AD6C36EB684B53C02E /* Pods */,
-				337243C87FC74BE13010EAAD /* Frameworks */,
+				269AE41B50E6A0CB3E03B10B /* Pods */,
+				62BF0DD54AB5070D139248C1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +91,14 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		62BF0DD54AB5070D139248C1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4DA9BA6562477338F161EB52 /* Pods_NerdzNetworking_Tests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -106,11 +106,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "NerdzNetworking_Tests" */;
 			buildPhases = (
-				DCDA3B811FE96B62F9F6662B /* [CP] Check Pods Manifest.lock */,
+				11B209E521883EDBA0DD66A5 /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
-				357F32CC953369D1C9AC4E02 /* [CP] Embed Pods Frameworks */,
+				7D40C8B128B6DAC5F84EABF7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -171,25 +171,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		357F32CC953369D1C9AC4E02 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NerdzNetworking_Tests/Pods-NerdzNetworking_Tests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/NerdzNetworking/NerdzNetworking.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NerdzNetworking.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NerdzNetworking_Tests/Pods-NerdzNetworking_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DCDA3B811FE96B62F9F6662B /* [CP] Check Pods Manifest.lock */ = {
+		11B209E521883EDBA0DD66A5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -209,6 +191,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7D40C8B128B6DAC5F84EABF7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NerdzNetworking_Tests/Pods-NerdzNetworking_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/NerdzNetworking/NerdzNetworking.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NerdzNetworking.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NerdzNetworking_Tests/Pods-NerdzNetworking_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -326,7 +326,7 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 56CCFF5AEE8AA74527D8B6CD /* Pods-NerdzNetworking_Tests.debug.xcconfig */;
+			baseConfigurationReference = A9A1680F3C0B34C5E0C0E711 /* Pods-NerdzNetworking_Tests.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
@@ -348,7 +348,7 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 16ECA8970431AAD66BF6E938 /* Pods-NerdzNetworking_Tests.release.xcconfig */;
+			baseConfigurationReference = 5E3427D9B3A13CA02787FB1A /* Pods-NerdzNetworking_Tests.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",

@@ -1,22 +1,26 @@
 {
   "name": "NerdzNetworking",
-  "version": "0.1.0",
-  "summary": "A short description of NerdzNetworking.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/VasylKhmil/NerdzNetworking",
+  "version": "0.9.5",
+  "summary": "A wrapper on top of URLSession and URLRequest to simplify creating and managing network requests",
+  "homepage": "https://github.com/nerdzlab/NerdzNetworking",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
   },
   "authors": {
-    "VasylKhmil": "vasylkhmil1995@gmail.com"
+    "NerdzLab": "supernerd@nerdzlab.com"
   },
   "source": {
-    "git": "https://github.com/VasylKhmil/NerdzNetworking.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/nerdzlab/NerdzNetworking.git",
+    "tag": "0.9.5"
   },
+  "social_media_url": "https://nerdzlab.com",
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0"
   },
-  "source_files": "NerdzNetworking/Classes/**/*"
+  "swift_versions": [
+    "5.0"
+  ],
+  "source_files": "Sources/**/*",
+  "swift_version": "5.0"
 }
