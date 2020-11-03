@@ -20,13 +20,21 @@ class Mapper<T: Decodable> {
     }
     
     let decoder: JSONDecoder
+    let converter: ResponseJsonConverter?
     
-    init(decoder: JSONDecoder) {
+    init(decoder: JSONDecoder, converter: ResponseJsonConverter? = nil) {
         self.decoder = decoder
+        self.converter = converter
     }
     
     func map(from data: Data?) throws -> T {
-        if let data = data, !data.isEmpty {
+        var finalData = data
+        
+        if let converter = converter, let data = data {
+            finalData = try converter.convertedData(from: data)
+        }
+        
+        if let data = finalData, !data.isEmpty {
             return try decoder.decode(T.self, from: data)
         }
         else if let result = Empty() as? T {

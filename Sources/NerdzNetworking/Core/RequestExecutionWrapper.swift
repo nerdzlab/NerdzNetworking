@@ -7,15 +7,15 @@
 
 import Foundation
 
-class RequestExecutionWrapper<T: Request> {
+class RequestExecutionWrapper<RequestType: Request> {
     
-    var onNeedRetrier: ((_ error: ErrorResponse<T.ErrorType>) -> RequestRetrier?)?
-    var onFinish: ((_ result: T.ResponseObjectType?, _ error: ErrorResponse<T.ErrorType>?) -> Void)?
+    var onNeedRetrier: ((_ error: ErrorResponse<RequestType.ErrorType>) -> RequestRetrier?)?
+    var onFinish: ((_ result: RequestType.ResponseObjectType?, _ error: ErrorResponse<RequestType.ErrorType>?) -> Void)?
     
-    let operation: ExecutionOperation<T>
+    let operation: ExecutionOperation<RequestType>
     let dispatcher: RequestDataDispatcher
     
-    init(operation: ExecutionOperation<T>, dispatcher: RequestDataDispatcher) {
+    init(operation: ExecutionOperation<RequestType>, dispatcher: RequestDataDispatcher) {
         self.operation = operation
         self.dispatcher = dispatcher
     }
@@ -48,17 +48,25 @@ class RequestExecutionWrapper<T: Request> {
         }
     }
     
-    private func handleDispatchingSuccess(with response: Data?, _ statusCode: Int) {
+    private func handleDispatchingSuccess( with response: Data?, _ statusCode: Int) {
         do {
             let statusCode = StatusCode(statusCode)
         
             if statusCode.isSuccessful {
-                let result = try Mapper<T.ResponseObjectType>(decoder: self.operation.decoder).map(from: response)
+                let result = try Mapper<RequestType.ResponseObjectType>(
+                    decoder: self.operation.decoder, 
+                    converter: self.operation.request.responseConverter)
+                    .map(from: response)
+                
                 self.callSuccess(with: result)
             }
             else {
-                let result = try Mapper<T.ErrorType>(decoder: self.operation.decoder).map(from: response)
-                let error: ErrorResponse<T.ErrorType> = .server(result, statusCode: statusCode)
+                let result = try Mapper<RequestType.ErrorType>(
+                    decoder: self.operation.decoder, 
+                    converter: self.operation.request.errorConverter)
+                    .map(from: response)
+                
+                let error: ErrorResponse<RequestType.ErrorType> = .server(result, statusCode: statusCode)
                 retryIfNeededOrCall(for: error)
             }
         }
@@ -68,11 +76,11 @@ class RequestExecutionWrapper<T: Request> {
     }
     
     private func handleDispatchingError(with error: Error) {
-        let error: ErrorResponse<T.ErrorType> = .system(error)
+        let error: ErrorResponse<RequestType.ErrorType> = .system(error)
         retryIfNeededOrCall(for: error)
     }
     
-    private func retryIfNeededOrCall(for error: ErrorResponse<T.ErrorType>) {
+    private func retryIfNeededOrCall(for error: ErrorResponse<RequestType.ErrorType>) {
         if let retrier = onNeedRetrier?(error), operation.retryOnFail {
             retrier.handleError(error, for: operation.request) { [weak self] newRequest in
                 self?.operation.request = newRequest
@@ -84,13 +92,13 @@ class RequestExecutionWrapper<T: Request> {
         }
     }
     
-    private func callSuccess(with result: T.ResponseObjectType) {
+    private func callSuccess(with result: RequestType.ResponseObjectType) {
         operation.callOnSuccess(with: result) { [weak self] in
             self?.onFinish?(result, nil)
         }
     }
     
-    private func callError(with error: ErrorResponse<T.ErrorType>) {
+    private func callError(with error: ErrorResponse<RequestType.ErrorType>) {
         operation.callOnFail(with: error) { [weak self] in
             self?.onFinish?(nil, error)
         }
