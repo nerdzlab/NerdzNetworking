@@ -105,6 +105,7 @@ public enum ApplicationMimeSubtype: String {
     case x_bittorrent = "x-bittorrent"
     case x_tex = "x-tex"
     case xml = "xml"
+    case x_www_form_urlencoded = "x-www-form-urlencoded"
 }
 
 public enum AudioMimeSubtype: String {
