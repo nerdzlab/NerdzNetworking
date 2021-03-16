@@ -13,7 +13,6 @@ public protocol RequestData {
     var method: HTTPMethod { get }
     var queryParams: [(String, String)] { get }
     var bodyParams: [String: Any] { get }
-    var bodyParamsDecodedData: Data? { get }
     var headers: [RequestHeaderKey: String] { get }
     var timeout: TimeInterval? { get }
 }
@@ -21,7 +20,6 @@ public protocol RequestData {
 public extension RequestData {
     var queryParams: [(String, String)] { return [] }
     var bodyParams: [String: Any] { return [:] }
-    var bodyParamsDecodedData: Data? { return nil }
     var headers: [RequestHeaderKey: String] { return [:] }
     var timeout: TimeInterval? { return nil }
 }
