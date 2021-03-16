@@ -99,6 +99,8 @@ public class ExecutionOperation<T: Request>: DispatchOperation {
             for closure in self?.onFail ?? [] {
                 closure(error)
             }
+            
+            completion?()
         }
     }
     
