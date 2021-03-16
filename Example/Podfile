@@ -1,6 +1,0 @@
-use_frameworks!
-target 'NerdzNetworking_Tests' do
-  pod 'NerdzNetworking', :path => '../'
-  
-  
-end
