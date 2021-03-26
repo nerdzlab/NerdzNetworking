@@ -17,3 +17,12 @@ extension String: ServerError {
         return self
     }
 }
+
+extension Optional: ServerError where Wrapped: ServerError {
+    public var message: String {
+        switch self {
+        case .some(let error): return error.message
+        case .none: return "Empty response"
+        }
+    }
+}
