@@ -29,6 +29,7 @@ public class Endpoint {
     
     public let baseUrl: URL
     public let sessionConfiguration: URLSessionConfiguration
+    public let retryingCount: Int
     public let observation = ObservationManager()
     public let requestRetrying = RequestRetryingManager()
     
@@ -53,11 +54,13 @@ public class Endpoint {
         decoder: JSONDecoder? = nil,
         responseQueue: DispatchQueue? = nil,
         sessionConfiguration: URLSessionConfiguration = .default,
+        retryingCount: Int = 1,
         headers: [RequestHeaderKey: String] = [:]) 
     {
         self.baseUrl = baseUrl
         self.decoder = decoder
         self.responseQueue = responseQueue
+        self.retryingCount = retryingCount
         self.sessionConfiguration = sessionConfiguration
         self.headers = Constants.defaultHeaders + headers
         
@@ -74,7 +77,7 @@ public class Endpoint {
     public func execute<T: Request>(_ request: T) -> ExecutionOperation<T> {
         let queue = responseQueue ?? OperationQueue.current?.underlyingQueue ?? .main
         let decoder = request.decoder ?? self.decoder ?? JSONDecoder()
-        let operation = ExecutionOperation<T>(request: request, decoder: decoder, responseQueue: queue)
+        let operation = ExecutionOperation<T>(request: request, decoder: decoder, responseQueue: queue, retryingCount: retryingCount)
         
         queue.async {
             self.requestExecuter.execureOperation(operation)

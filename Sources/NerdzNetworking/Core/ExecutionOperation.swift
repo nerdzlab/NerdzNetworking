@@ -20,10 +20,10 @@ public class ExecutionOperation<T: Request>: DispatchOperation {
     
     private(set) var responseQueue: DispatchQueue
     private(set) var decoder: JSONDecoder
-    private(set) var retryOnFailCount: Int
+    private(set) var retryingCount: Int
     
     var willRetryOnFail: Bool {
-        retryOnFailCount > 0
+        retryingCount > 0
     }
     
     private(set) var onSuccess: [ResponseSuccessCallback] = []
@@ -34,11 +34,11 @@ public class ExecutionOperation<T: Request>: DispatchOperation {
     
     private(set) var isValid: Bool = true
     
-    init(request: T, decoder: JSONDecoder = JSONDecoder(), responseQueue: DispatchQueue = OperationQueue.current?.underlyingQueue ?? .main, retryOnFail: Int = 1) {
+    init(request: T, decoder: JSONDecoder = JSONDecoder(), responseQueue: DispatchQueue = OperationQueue.current?.underlyingQueue ?? .main, retryingCount: Int = 1) {
         self.request = request
         self.decoder = decoder
         self.responseQueue = responseQueue
-        self.retryOnFailCount = retryOnFail
+        self.retryingCount = retryingCount
     }
     
     // MARK: - Setup
@@ -56,8 +56,8 @@ public class ExecutionOperation<T: Request>: DispatchOperation {
     }
     
     @discardableResult
-    public func retryOnFail(_ retryOnFailCount: Int) -> Self {
-        self.retryOnFailCount = retryOnFailCount
+    public func retryOnFail(_ retryingCount: Int) -> Self {
+        self.retryingCount = retryingCount
         return self
     }
     
@@ -149,7 +149,7 @@ public class ExecutionOperation<T: Request>: DispatchOperation {
     }
     
     func handleRetryOnFailActionMade() {
-        retryOnFailCount = max(0, retryOnFailCount - 1)
+        retryingCount = max(0, retryingCount - 1)
     }
     
     func invalidate() {
