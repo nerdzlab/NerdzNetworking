@@ -11,5 +11,5 @@ public protocol RequestRetrier: class {
     
     func canHandleError<T: Request>(_ error: ErrorResponse<T.ErrorType>, for request: T) -> Bool
     
-    func handleError<T: Request>(_ error: ErrorResponse<T.ErrorType>, for request: T, completion: @escaping (T) -> Void)
+    func handleError<T: Request>(_ error: ErrorResponse<T.ErrorType>, for request: T, completion: @escaping (T?) -> Void)
 }

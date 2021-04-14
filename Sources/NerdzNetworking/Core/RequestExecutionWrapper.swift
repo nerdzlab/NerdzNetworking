@@ -81,10 +81,17 @@ class RequestExecutionWrapper<RequestType: Request> {
     }
     
     private func retryIfNeededOrCall(for error: ErrorResponse<RequestType.ErrorType>) {
-        if let retrier = onNeedRetrier?(error), operation.retryOnFail {
+        if let retrier = onNeedRetrier?(error), operation.willRetryOnFail {
+            operation.handleRetryOnFailActionMade()
+            
             retrier.handleError(error, for: operation.request) { [weak self] newRequest in
-                self?.operation.request = newRequest
-                self?.execute()
+                if let request = newRequest {
+                    self?.operation.request = request
+                    self?.execute()
+                }
+                else {
+                    self?.retryIfNeededOrCall(for: error)
+                }
             }
         }
         else {
