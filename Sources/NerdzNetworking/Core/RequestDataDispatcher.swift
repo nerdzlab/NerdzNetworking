@@ -64,7 +64,8 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
                 dataResponse        : data, 
                 urlResponse         : response as? HTTPURLResponse, 
                 errorResponse       : error, 
-                requestDuration     : Date().timeIntervalSince(requestStartDate))
+                requestDuration     : Date().timeIntervalSince(requestStartDate),
+                cURL                : request.cURL)
             
             onDebug?(debugInfo)
             

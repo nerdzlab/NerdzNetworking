@@ -86,6 +86,10 @@ public class Endpoint {
         return operation
     }
     
+    public func cURL<T: Request>(for request: T) throws -> String {
+        try requestFactory.request(from: request).cURL
+    }
+    
     // MARK: - Methods(Private)
     
     private static func createdRequestExecuter(

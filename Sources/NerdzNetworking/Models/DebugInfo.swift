@@ -14,6 +14,7 @@ public struct DebugInfo {
     public let urlResponse: HTTPURLResponse?
     public let errorResponse: Error?
     public let requestDuration: TimeInterval
+    public let cURL: String?
     
     public var stringResponse: String? {
         dataResponse.flatMap({ String(data: $0, encoding: .utf8) })
