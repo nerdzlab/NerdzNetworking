@@ -12,14 +12,14 @@ public protocol RequestData {
     var path: String { get }
     var method: HTTPMethod { get }
     var queryParams: [(String, String)] { get }
-    var bodyParams: [String: Any] { get }
+    var body: RequestBody? { get }
     var headers: [RequestHeaderKey: String] { get }
     var timeout: TimeInterval? { get }
 }
 
 public extension RequestData {
-    var queryParams: [(String, String)] { return [] }
-    var bodyParams: [String: Any] { return [:] }
-    var headers: [RequestHeaderKey: String] { return [:] }
-    var timeout: TimeInterval? { return nil }
+    var queryParams: [(String, String)] { [] }
+    var bodyParams: RequestBody? { nil }
+    var headers: [RequestHeaderKey: String] { [:] }
+    var timeout: TimeInterval? { nil }
 }

@@ -61,8 +61,8 @@ class RequestFactory {
             urlRequest.setHeader(.contentType, with: mime.value)
             urlRequest.httpBodyStream = streamData.stream
         }
-        else if !requestData.bodyParams.isEmpty {
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: requestData.bodyParams, options: [])
+        else {
+            urlRequest.httpBody = try requestData.body?.generateBodyData()
         }
 
         return urlRequest

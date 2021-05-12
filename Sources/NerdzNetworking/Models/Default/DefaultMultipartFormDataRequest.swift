@@ -14,7 +14,7 @@ public struct DefaultMultipartFormDataRequest<Response: Decodable, Error: Server
     public var path: String
     public var method: HTTPMethod
     public var queryParams: [(String, String)] = []
-    public var bodyParams: [String: Any] = [:]
+    public var body: RequestBody? = nil
     public var headers: [RequestHeaderKey: String] = [:]
     public var timeout: TimeInterval?
     public var endpoint: Endpoint?
@@ -26,7 +26,7 @@ public struct DefaultMultipartFormDataRequest<Response: Decodable, Error: Server
         path: String, 
         method: HTTPMethod, 
         queryParams: [(String, String)] = [], 
-        bodyParams: [String: Any] = [:], 
+        body: RequestBody? = nil, 
         headers: [RequestHeaderKey: String] = [:], 
         timeout: TimeInterval? = nil,
         responseConverter: ResponseJsonConverter? = nil,
@@ -37,7 +37,7 @@ public struct DefaultMultipartFormDataRequest<Response: Decodable, Error: Server
         self.path = path
         self.method = method
         self.queryParams = queryParams
-        self.bodyParams = bodyParams
+        self.body = body
         self.headers = headers
         self.timeout = timeout
         self.responseConverter = responseConverter

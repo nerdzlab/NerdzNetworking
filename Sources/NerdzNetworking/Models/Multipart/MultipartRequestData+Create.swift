@@ -11,6 +11,10 @@ import Foundation
 extension MultipartRequestData {
     
     var streamData: (stream: InputStream, boundary: String)? {
+        guard case .params(let bodyParams) = body else {
+            return nil
+        }
+        
         let boundary = newBoundary()
         
         var streams: [InputStream] = []
