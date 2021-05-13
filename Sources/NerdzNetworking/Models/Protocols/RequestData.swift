@@ -19,7 +19,7 @@ public protocol RequestData {
 
 public extension RequestData {
     var queryParams: [(String, String)] { [] }
-    var bodyParams: RequestBody? { nil }
+    var body: RequestBody? { nil }
     var headers: [RequestHeaderKey: String] { [:] }
     var timeout: TimeInterval? { nil }
 }
