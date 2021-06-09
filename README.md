@@ -13,15 +13,19 @@ class LoginWithFacebookRequest: Request {
     
     let path = "login/facebook"
     let methong = .post
-    let bodyParams: [String: Any]
+    let body: RequestBody?
     
     init(token: String) {   
-        bodyParams = ["token": token]
+        body = .params(
+            [
+                "token": token
+            ]
+        )
     }
 }
 ```
 
-And then just use it.
+And then just use it. (*each call is optional and can be skipped if needed*)
 
 ```swift
 LoginWithFacebookRequest(token: fbToken)
@@ -31,7 +35,19 @@ LoginWithFacebookRequest(token: fbToken)
         ...
     }
     
-    onError { error in
+    .onFail { error in
+        ...
+    }
+    
+    .onStart { operation in
+        ...
+    }
+    
+    .onProgress { progress in
+        ...
+    }
+    
+    .onDebug { info in
         ...
     }
 }
@@ -39,10 +55,18 @@ LoginWithFacebookRequest(token: fbToken)
 
 # Ideology
 
+##  Structure
+
 The main ideology for creating `NerdzNetworking` library was to maximaly split networking into small pieces. 
 The ideal scenario would be to have a separate class/structure per each request. This should help easily navigate and search information for specific request in files structure. 
 
 ![Requests example](https://raw.githubusercontent.com/nerdzlab/NerdzNetworking/master/requests_example.png)
+
+## Strong typization
+
+Another flow that library truing to follow - predefined options for using and simplicity of using. 
+We are trying to use generic types on top of protocols, as well as enumerations instead of raw values. As an example - predefined headers like `Content-Type` or `Accept`. Instead of giving a possibility to put any value, we have defined and enumerations that limits possbie input only to predefined scenarios like `.application(.json)`.
+To make it simple, previously mentioned headers already have `.application(.json)` value preselected for you, so in case you are using standard REST API - everything ready from the box.
 
 # Tutorial
 
@@ -52,17 +76,15 @@ First of all you need to setup your endpoint that will be used later on for exec
 `Endpoint` class will collect all general settings for performing requests. You can change any parameter at any time you want.
 
 ```swift
-let myEndpoint = Endpoint(baseUrl: myBaseUrl)
-myEndpoint.headers = defaultHeaders // Specifying some default headers
-myEndpoint.headers.contentType = .application(.json) // Specifying content type header
-myEndpoint.headers.accept = .application(.json) // Specifying access header
-myEndpoint.headers.authToken = .bearer(token) // Specifying auth token if such is required. PS: you can provide in later on
+let endpoint = Endpoint(baseUrl: myBaseUrl)
+endpoint.headers = defaultHeaders // Specifying some default headers like OS, device language, device model, etc.
+endpoint.headers.authToken = .bearer(tokenString) // Specifying user token
 ```
 
 After creating your endpoint, you can mark it as a `default`, so every request will pick it up automatically.
 
 ```swift
-Endpoint.default = myEndoint
+Endpoint.default = endpoint
 ```
 
 You can change `default` endpoint based on configuration or environment you need.
@@ -80,7 +102,7 @@ class MyRequest: Request {
     let path = "my/path/to/backend" // Required
     let methong = .get // Optional
     let queryParams = [("key", "value")] // Optional
-    let bodyParams = ["key", "value"] // Optional
+    let body = .params(["key", "value"]) // Optional
     let headers = [RequestHeaderKey("key"): "value", .contentType: "application/json"] // Optional
     let timeout = 60 // Optional, by defauld will be picked from Endpoint
     let endpoint = myEndpoint // Optional, by default will be a Endpoint.default
@@ -99,7 +121,7 @@ let myRequest = DefaultRequest<MyExpectedResponse, MyUnexpectedError>(
     path: "my/path/to/backend", 
     method: .get, 
     queryParams: [("key", "value")], 
-    bodyParams: ["key", "value"], 
+    body: .params(["key", "value"]), 
     headers: [RequestHeaderKey("key"): "value", .contentType: "application/json"], 
     timeout: 60,
     responseConverter: myResponseConverter,
@@ -135,22 +157,30 @@ To exucute request you can use next constructions:
 
 ### Handling execution process
 
-To handle execution process you can use futures-style methods after `execute` method called.
+To handle execution process you can use futures-style methods after `execute` method called. (*every method is optional, so use only those you really need*)
 
 ```swift
 myRequest
     .execute()
     .responseOn(.main) // Response will be returned in `.main` queue
     .retryOnFail(false) // If this request will fail - system will not try to rerun it again
+    
     .onStart { requestOperation in
         // Will be called when request will start and return request operation that allow to control request during the execution
     }
+    
+    .onProgress { progress in
+        // Will provide a progress of request execution. Useful for multipart uploading requests
+    }
+    
     .onSuccess { response in
         // Will return a response object specified in request under `ResponseType`
     }
+    
     .onFail { error in
         // Will return `ErrorResponse` that might contain `ErrorType` specified in request
     }
+    
     .onDebug { info in
         // Will return `DebugInfo` that contain a list of useful information for debugging request failure 
     }
@@ -158,79 +188,28 @@ myRequest
 
 ## Mapping
 
-For now `NerdzNetworking` library support custom mapping or `Decodable` approach. Later on we plan to add `ObjectMapper` library as well.
+For now `NerdzNetworking` library supports only native `Codable` mapping. [Tutorial](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types).
 
-### ResponseObject
+## Response converters
 
-Every response should be implementing `ResponseObject` protocol.
-
-Some of the default classes implement it dirrectly from the box, so you can use them as a response without extra efort.
-
-- All scalars [`Double`, `Float`, `Bool`, `Int`, `Int8`,  `Int16`, `Int32`,  etc...]
-- `Data`: will return raw bytes of the response
-- `String`: will return response as a string (very good for debugging as it will not fail on mapping)
-- `[ResponseObject]`: you can provide an array as a response if his elements conform to `ResponseObject` protocol
-- `ResponseObject?`: you can provide an optional `ResponseObject` in case you do not know if server will return you something or not
-- `[String: ResponseObject]`: similar to arrays, you can provide a dictionary as a response if values respond to `ResponseObject` protocol
-
-### `Decodable`
-
-To use `Decodable` protocol you need your response class to conform `ResponseObject & Decodable` or `DecodableResponseObject`.
-
-We recommend to use `DecodableResponseObject` as than you get more flexibility by providing custom `JSONDecoder` for each response.
-
-```swift
-class MyResponse: DecodableResponseObject {
-    var decoder: JSONDecoder {
-        myCustomJSONDecoder
-    }
-    
-    init(from decoder: Decoder) throws {
-        // Decodable mapping
-    }
-}
-```
-
-### Custom object mapping
-
-To have custom mapping you should be using `CustomObjectMapper` class or implement your own class inherited from `BaseObjectMapper`.
-
-If you decide to go with custom mapping - you will need to provide mapping from `JSON(Any)` and from `Data`. This is because `NerdzNetworking` library works not only with `JSON` response, but support also scalars, data, string, etc.
-
-You can provide your custom mapper in `ResponseObject` class under `mapper` field.
-
-```swift
-class MyResponse: ResponseObject {
-    var mapper: BaseObjectMapper<Self> {
-        return CustomObjectMapper<Self>(
-            jsonClosure: {
-                // Return object or nil based on iput json
-            },
-            
-            dataClosure: {
-                // Return object or nil based on input data
-            }
-        )
-    }
-}
-```
+`NerdzNetworking` supports response converters that might convert response before mapping process. Might be useful if case you need to adopt response data to internal model, or to bypass parent object to map only chileds.
 
 ### `ResponseJsonConverter`
 
-You can also provide a response converters to convert some unpropertly returned responses becore mapping into expected response starts. The responsible protocol for this is `ResponseJsonConverter`.
+You can also provide a response converters to convert some unpropertly returned responses beаore mapping into expected response starts. The responsible protocol for this is `ResponseJsonConverter`.
 
-Response converter should be specified in `Request` class under `responseConverter`(success) or/and `errorConverter`(fail).
+Response converter should be specified in `Request` class under `responseConverter`(*success*) or/and `errorConverter`(*fail*)  fields.
 
 You can have your own converters that implement `ResponseJsonConverter` protocol, or use built in implementations: `KeyPathResponseConverter`, `ClosureResponseConverter`.
 
 #### `KeyPathResponseConverter`
 
-`KeyPathResponseConverter` allow you to pull a data from `JSON` by specific `path` provided. 
+`KeyPathResponseConverter` allow you to pull a data from `JSON` chileds node by specific `path` to the node. 
 
 ```swift
 class MyRequest: Request {
     var responseConverter: ResponseJsonConverter {
-        KeyPathResponseConverter(path: "path/to/object")
+        KeyPathResponseConverter(path: "path/to/node")
     }
     
     var errorConverter: ResponseJsonConverter {
@@ -241,7 +220,7 @@ class MyRequest: Request {
 
 #### `ClosureResponseConverter`
 
-`ClosureResponseConverter` allow you to provide custom convertation. You will need to provide a `closure` that takes `Any` and return `Any` after convertation.
+`ClosureResponseConverter` allow you to provide custom convertation by closure. You will need to provide a `closure` that takes `Any` and return `Any` after convertation.
 
 ```swift
 class MyRequest: Request {
@@ -280,7 +259,7 @@ You can use [CocoaPods](https://cocoapods.org) dependency manager to install `Ne
 In your `Podfile` spicify:
 
 ```ruby
-pod 'NerdzNetworking', '~> 0.0'
+pod 'NerdzNetworking', '~> 1.0.1'
 ```
 
 
