@@ -2,6 +2,8 @@
 
 `NerdzNetworking` is a wrapper on top of `URLSession` and `URLRequest` to simplify creating and managing network requests written on `Swift` language.
 
+<br>
+
 # Example
 
 You need to define request.
@@ -53,6 +55,8 @@ LoginWithFacebookRequest(token: fbToken)
 }
 ```
 
+<br>
+
 # Ideology
 
 ##  Structure
@@ -62,11 +66,15 @@ The ideal scenario would be to have a separate class/structure per each request.
 
 ![Requests example](https://raw.githubusercontent.com/nerdzlab/NerdzNetworking/master/requests_example.png)
 
+<br>
+
 ## Strong typization
 
 Another flow that library truing to follow - predefined options for using and simplicity of using. 
 We are trying to use generic types on top of protocols, as well as enumerations instead of raw values. As an example - predefined headers like `Content-Type` or `Accept`. Instead of giving a possibility to put any value, we have defined and enumerations that limits possbie input only to predefined scenarios like `.application(.json)`.
 To make it simple, previously mentioned headers already have `.application(.json)` value preselected for you, so in case you are using standard REST API - everything ready from the box.
+
+<br>
 
 # Tutorial
 
@@ -89,8 +97,12 @@ Endpoint.default = endpoint
 
 You can change `default` endpoint based on configuration or environment you need.
 
+<br>
+
 ## Request creation
 To create a request you should implement `Request` protocol. You can or have separate class per each request or an `enum`.
+
+<br>
 
 ### Separate class for each request
 
@@ -112,6 +124,8 @@ class MyRequest: Request {
 This is just an example and probably you will not have all parameters required and static. To have dynamicaly created request - you can just use initializers that willl be taking dynamic parameters required for request. 
 As an example - some dynamic bodyParams or dynamic path.
 
+<br>
+
 ### Default request
 
 You can use buit in class `DefaultRequest` to perform requests without a need to create a separate class.
@@ -128,6 +142,8 @@ let myRequest = DefaultRequest<MyExpectedResponse, MyUnexpectedError>(
     errorConverter: myErrorConverter,
     endpoint: myEndpoint)
 ```
+
+<br>
 
 ### Multipart request
 
@@ -147,6 +163,8 @@ class MyMultipartRequest: MultipartFormDataRequest {
 }
 ```
 
+<br>
+
 ## Request execution
 
 To exucute request you can use next constructions:
@@ -154,6 +172,8 @@ To exucute request you can use next constructions:
 - `myRequest.execute()`: will execute `myRequest` on `Endpoint.default`
 - `myRequest.execute(on: myEndpoint)`: will execute `myRequest` on `myEndpoint`
 - `myEndpoint.execute(myRequest)`: will execute `myRequest` on `myEndpoint`
+
+<br>
 
 ### Handling execution process
 
@@ -186,13 +206,19 @@ myRequest
     }
 ```
 
+<br>
+
 ## Mapping
 
 For now `NerdzNetworking` library supports only native `Codable` mapping. [Tutorial](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types).
 
+<br>
+
 ## Response converters
 
 `NerdzNetworking` supports response converters that might convert response before mapping process. Might be useful if case you need to adopt response data to internal model, or to bypass parent object to map only chileds.
+
+<br>
 
 ### `ResponseJsonConverter`
 
@@ -201,6 +227,8 @@ You can also provide a response converters to convert some unpropertly returned 
 Response converter should be specified in `Request` class under `responseConverter`(*success*) or/and `errorConverter`(*fail*)  fields.
 
 You can have your own converters that implement `ResponseJsonConverter` protocol, or use built in implementations: `KeyPathResponseConverter`, `ClosureResponseConverter`.
+
+<br>
 
 #### `KeyPathResponseConverter`
 
@@ -217,6 +245,8 @@ class MyRequest: Request {
     }
 }
 ```
+
+<br>
 
 #### `ClosureResponseConverter`
 
@@ -238,6 +268,8 @@ class MyRequest: Request {
 }
 ```
 
+<br>
+
 #### Custom `ResponseJsonConverter`
 
 You can implement your ovn converter by implementing `ResponseJsonConverter` protocol.
@@ -250,9 +282,9 @@ class MyResponseConverter: ResponseJsonConverter {
 }
 ```
 
-# Installation
- 
 <br>
+
+# Installation
 
 ## CocoaPods
 
@@ -279,7 +311,7 @@ To add NerdzNetworking to a [Swift Package Manager](https://swift.org/package-ma
 
 <br>
 
-## `Endpoint` class
+## @ `Endpoint` class
 
 Class that represents and endpoint with all settings for requests execution. You need to create at least one instance to be able to execute requests.
 
@@ -338,7 +370,7 @@ Name | Type | Default value | Description
 
 <br>
 
-## `Request` protocol
+## @ `Request` protocol
 
 **TYPE**: `protocol`
 
@@ -392,7 +424,7 @@ func execute() -> ResponseInfoBuilder<Self>
 
 <br>
 
-## `DefaultRequest` struct
+## @ `DefaultRequest` struct
 
 **TYPE**: `struct`
 
@@ -462,9 +494,10 @@ Name | Type | Default value | Description
 
 <br>
 
-## `MultipartFormDataRequest` protocol
+## @ `MultipartFormDataRequest` protocol
 
 **TYPE**: `protocol`
+
 **INHERITS**: `Request` protocol
 
 Protocol that represents a multipart form-data request. Protocol inherits `Request` protocol, and adding files property on top. So mostly it is the same as `Request` protocol.
@@ -518,7 +551,7 @@ func execute() -> ResponseInfoBuilder<Self>
 
 <br>
 
-## `DefaultMultipartFormDataRequest` struct
+## @ `DefaultMultipartFormDataRequest` struct
 
 **TYPE**: `struct`
 
@@ -591,7 +624,64 @@ Name | Type | Default value | Description
 
 <br>
 
-## `HTTPMethod` enum
+## @ `DefaultMultipartFile` struct
+
+A default implementation of `MultipartFile` protocol that you can use in case you do not want to create additional class for sending multipart request
+
+<br>
+
+### Properties
+
+Name | Type | Accessibility | Description
+------------ | ------------- | ------------- | -------------
+`fileName` | `String` | `read-write` | A file name
+`mime` | `MimeType` | `read-write` | a file mime type
+`resource` | `MultipartResourceConvertable` | `read-write` | A representation of file data. Might be `String`, `Data`, `URL`, `InputStream`
+
+<br>
+
+### Methods
+
+```
+init(
+    resource: MultipartResourceConvertable, 
+    mime: MimeType, 
+    fileName: String
+)
+```
+
+*Initialize `DefaultMultipartFile` object with all possible parameters*
+
+Name | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`resource` | `MultipartResourceConvertable` | | A file name
+`mime` | `MimeType` | | a file mime type
+`fileName` | `String` | | A representation of file data. Might be `String`, `Data`, `URL`, `InputStream`
+
+<br>
+
+## @ `ServerError` protocol
+
+A protocol that represents an error returned from server
+
+<br>
+
+### Properties
+
+Name | Type | Accessibility | Description
+------------ | ------------- | ------------- | -------------
+`message` | `String` | `get` `required` | A message of an error
+
+<br>
+
+### Supported types
+
+- `String`
+- `Optional`
+
+<br>
+
+## @ `HTTPMethod` enum
 
 **TYPE**: `enum`
 
@@ -601,12 +691,27 @@ An enum that represents a request http method.
 
 Name | Description
 ------------ | ------------
-`get` | A `GET` http method
-`post` | A `POST` http method
-`put` | A `PUT` http method
-`delete` | A `DELETE` http method
-`path` | A `PATH` http method 
+`.get` | A `GET` http method
+`.post` | A `POST` http method
+`.put` | A `PUT` http method
+`.delete` | A `DELETE` http method
+`.path` | A `PATH` http method 
 
+<br>
+
+## @ `RequestBody` enum
+
+**TYPE**: `enum`
+
+An enum that represents different types of request body
+
+Name | Parameters | Description
+------------ | ------------ | ------------
+`.raw` | `value: Data` | A raw data
+`.string` | `value: String` | A string body
+`.params` | `value: [String: Any]` | A body formed with parameters
+
+<br>
 
 # Next steps
 
