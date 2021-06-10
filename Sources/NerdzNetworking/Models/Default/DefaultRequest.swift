@@ -18,7 +18,10 @@ public struct DefaultRequest<Response: Decodable, Error: ServerError>: Request {
     public var body: RequestBody? = nil
     public var headers: [RequestHeaderKey: String] = [:]
     public var timeout: TimeInterval?
+    
+    public var decoder: JSONDecoder?
     public var endpoint: Endpoint?
+    
     public var responseConverter: ResponseJsonConverter?
     public var errorConverter: ResponseJsonConverter?
     
@@ -31,7 +34,9 @@ public struct DefaultRequest<Response: Decodable, Error: ServerError>: Request {
         timeout: TimeInterval? = nil,
         responseConverter: ResponseJsonConverter? = nil,
         errorConverter: ResponseJsonConverter? = nil,
-        endpoint: Endpoint? = nil)
+        endpoint: Endpoint? = nil,
+        decoder: JSONDecoder? = nil
+    )
     {
         self.path = path
         self.method = method
@@ -42,5 +47,6 @@ public struct DefaultRequest<Response: Decodable, Error: ServerError>: Request {
         self.responseConverter = responseConverter
         self.errorConverter = errorConverter
         self.endpoint = endpoint
+        self.decoder = decoder
     }
 }

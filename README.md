@@ -251,7 +251,8 @@ class MyResponseConverter: ResponseJsonConverter {
 ```
 
 # Installation
-
+ 
+<br>
 
 ## CocoaPods
 
@@ -262,6 +263,7 @@ In your `Podfile` spicify:
 pod 'NerdzNetworking', '~> 1.0.1'
 ```
 
+<br>
 
 ## Swift Package Manager
 
@@ -271,12 +273,17 @@ To add NerdzNetworking to a [Swift Package Manager](https://swift.org/package-ma
 .package(url: "https://github.com/nerdzlab/NerdzNetworking")
 ```
 
+<br>
+
 # Docummentation
 
+<br>
 
 ## `Endpoint` class
 
 Class that represents and endpoint with all settings for requests execution. You need to create at least one instance to be able to execute requests.
+
+<br>
 
 ### Properties
 
@@ -284,22 +291,44 @@ Name | Type | Accessibility | Description
 ------------ | ------------- | ------------- | -------------
 `Endpoint.default` | `Endpoint` | `static` `read-write` | An instance of endpoint that will be used for executing request
 `baseUrl` | `URL` | `readonly` | An endpoint base url
+`decoder` | `JSONDecoder?` | A decoder that will be used by default for decoding json responses if provided
+`responseQueue` | `DispatchQueue?` | A queue that will be used by default for dispatching requests completions
+`retryingCount` | `Int` | A number of retryings that should happen before aborting an error on request exeqution
+`observation` | `ObservationManager` | A manager where you should register observers for observing different types of requests/responses
+`requestRetrying` | `RequestRetryingManager` | a manager where you should register retriers
 `sessionConfiguration` | `URLSessionConfiguration` | `readonly` | A configuration that is used for inner `URLSession`
 `headers` | `[RequestHeaderKey: String]` | `read-write` | A headers that will be used with every request
 
-### Methods
+<br>
 
-* `init(baseUrl: URL, sessionConfiguration: URLSessionConfiguration = .default, contentType: MimeType = .application(.json), accept: MimeType = .application(.json), token: AuthToken? = nil, additionalHeaders: [RequestHeader] = [])`
+### Methods
+```
+init(
+    baseUrl                : URL,
+    decoder                : JSONDecoder? = nil,
+    responseQueue        : DispatchQueue? = nil,
+    sessionConfiguration: URLSessionConfiguration = .default,
+    retryingCount        : Int = 1,
+    headers                : [RequestHeaderKey: String] = [:]
+)
+```
 
 *Initializing with all parameters*
 
 Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
-`baseUrl` | `URL` | - | An endpoint base url
+`baseUrl` | `URL` | | An endpoint base url
+`decoder` | `JSONDecoder?` | `nil` | A JSON response default decoder
+`responseQueue` | `DispatchQueue` | `nil` | A default response queue for completions
 `sessionConfiguration`| `URLSessionConfiguration` | `.default` | A configuration that will be used for inner `URLSession`
+`retryingCount` | `Int` | `1` | A number of retryings on request failing
 `headers` | `[RequestHeaderKey: String]` | `[:]` | A headers that will be used with every request 
 
-* `func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T>`
+<br>
+
+```
+func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T>
+```
 
 *Executing request on current endpoint*
 
@@ -307,6 +336,7 @@ Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `request` | `Request` | - | Request to be executed
 
+<br>
 
 ## `Request` protocol
 
@@ -314,12 +344,16 @@ Name | Type | Default value | Description
 
 Protocol that represents a single request. You can imlement this protocol and then execute it
 
+<br>
+
 ### `associatedtype`
 
 Name | Type | Accessibility | Description
 ------------ | ------------- | ------------- | -------------
-`ResponseObjectType` | `ResponseObject` | A type of expected response from server. It should implement `ResponseObject` protocol 
-`ErrorType` | `ServerError` | A type of expected error from server. It should implement `ServerError` protocol 
+`ResponseObjectType` | `ResponseObject` | | A type of expected response from server. It should implement `ResponseObject` protocol 
+`ErrorType` | `ServerError` | | A type of expected error from server. It should implement `ServerError` protocol 
+
+<br>
 
 ### Properties
 
@@ -328,34 +362,45 @@ Name | Type | Accessibility | Description
 `path` | `String` | `get` `required` | A request path
 `method` | `HTTPMethod` | `get` `required` | A request method
 `queryParams` | `[(String, String)]` | `get` `optional` | A request query parameters represented as an array of touples to save order
-`bodyParams` | `[String: Any]` | `get` `optional` | A request body params
+`body` | `RequestBody?` | `get` `optional` | A request body
 `headers` | `[RequestHeaderKey: String]` | `get` `optional` | A request specific headers. Will be used is addition to headers from `Endpoint`
 `timeout` | `TimeInterval` | `get` `optional` | A request timeout. If not specified - will be used default from `Endpoint`
 `responseConverter` | `ResponseJsonConverter?` | `get` `optional` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
 `errorConverter` | `ResponseJsonConverter?` | `get` `optional` | An error response converter. Will be converted before mapping into a `ErrorType`
 `endpoint` | `Endpoint?` | `get` `optional` | An endpoint that will be used for execution
+`decoder` | `JSONDecoder?` | `get` `optional` | A JSON response decoder that will be used for decoding response. In case not provided - decoder from `Endpoint` will be used
+
+<br>
 
 ### Methods
-
-* `func execute(on endpoint: Endpoint) -> ResponseInfoBuilder<Self>`
+```
+func execute(on endpoint: Endpoint) -> ResponseInfoBuilder<Self>
+```
 
 *Executing current request on provided endpoint*
 
 Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
-`endpoint` | `Endpoint` | - | Endpoint on what current request will be executed
+`endpoint` | `Endpoint` | | Endpoint on what current request will be executed. 
 
-* `func execute() -> ResponseInfoBuilder<Self>`
+<br>
 
-*Executing current request on endpoint provided in property or on `Endpoint.default`*
+```
+func execute() -> ResponseInfoBuilder<Self>
+```
+*Executing current request on `Endpoint.default` instance*
 
+<br>
 
 ## `DefaultRequest` struct
 
 **TYPE**: `struct`
+
 **IMPLEMENT**: `Request`
 
-A default implementation of `Request` protocol that can be used for executing simple requests
+A default implementation of `Request` protocol that can be used for executing requests without creation of extra class
+
+<br>
 
 ### Generics
 
@@ -364,6 +409,8 @@ Name | Types | Description
 `Response` | `ResponseObject` | A type of a successful response object 
 `Error` | `ServerError` | A type of an error response object
 
+<br>
+
 ### Properties
 
 Name | Type | Accessibility | Description
@@ -371,16 +418,32 @@ Name | Type | Accessibility | Description
 `path` | `String` | `read-write` | A request path
 `method` | `HTTPMethod` | `read-write` | A request method
 `queryParams` | `[(String, String)]` | `read-write` | A request query parameters represented as an array of touples to save order
-`bodyParams` | `[String: Any]` | `read-write` | A request body params
+`body` | `RequestBody?` | `read-write` | A request body
 `headers` | `[RequestHeaderKey: String]` | `read-write` | A request specific headers. Will be used is addition to headers from `Endpoint`
 `timeout` | `TimeInterval` | `read-write` | A request timeout. If not specified - will be used default from `Endpoint`
 `responseConverter` | `ResponseJsonConverter?` | `read-write` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
 `errorConverter` | `ResponseJsonConverter?` | `read-write` | An error response converter. Will be converted before mapping into a `ErrorType`
 `endpoint` | `Endpoint?` | `read-write` | An endpoint that will be used for execution
+`decoder` | `JSONDecoder?` | `read-write` | A JSON response decoder that will be used for decoding response. In case not provided - decoder from `Endpoint` will be used
+
+<br>
 
 ### Methods
 
-* `init(path: String, method: HTTPMethod, queryParams: [(String, String)] = [], bodyParams: [String: Any] = [:], headers: [RequestHeader] = [], timeout: TimeInterval? = nil, responseConverter: ResponseJsonConverter? = nil, errorConverter: ResponseJsonConverter? = nil, endpoint: Endpoint? = nil)`
+```
+init(
+    path                : String, 
+    method                : HTTPMethod, 
+    queryParams            : [(String, String)] = [], 
+    body                : RequestBody? = nil, 
+    headers                : [RequestHeaderKey: String] = [:], 
+    timeout                : TimeInterval? = nil,
+    responseConverter    : ResponseJsonConverter? = nil,
+    errorConverter        : ResponseJsonConverter? = nil,
+    endpoint            : Endpoint? = nil,
+    decoder                : JSONDecoder? = nil
+)
+```
 
 *Initialize `DefaultRequest` object with all possible parameters*
 
@@ -395,28 +458,75 @@ Name | Type | Default value | Description
 `responseConverter` | `ResponseJsonConverter?` | `nil` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
 `errorConverter` | `ResponseJsonConverter?` | `nil` | An error response converter. Will be converted before mapping into a `ErrorType`
 `endpoint` | `Endpoint?` | `nil` | An endpoint that will be used for execution
+`decoder` | `JSONDecoder?` | `nil` | A JSON response decoder that will be used for decoding response. In case not provided - decoder from `Endpoint` will be used
 
+<br>
 
 ## `MultipartFormDataRequest` protocol
 
 **TYPE**: `protocol`
-**INHERITS**: `Request`
+**INHERITS**: `Request` protocol
 
-A protocol that needs to be implemented in order to execute multipart form-data request.
+Protocol that represents a multipart form-data request. Protocol inherits `Request` protocol, and adding files property on top. So mostly it is the same as `Request` protocol.
+
+<br>
+
+### `associatedtype`
+
+Name | Type | Accessibility | Description
+------------ | ------------- | ------------- | -------------
+`ResponseObjectType` | `ResponseObject` | | A type of expected response from server. It should implement `ResponseObject` protocol 
+`ErrorType` | `ServerError` | | A type of expected error from server. It should implement `ServerError` protocol 
+
+<br>
 
 ### Properties
 
 Name | Type | Accessibility | Description
 ------------ | ------------- | ------------- | -------------
-`files` | `[MultipartFile]` | `get` `required` | A list of files to be included in request
+`path` | `String` | `get` `required` | A request path
+`method` | `HTTPMethod` | `get` `required` | A request method
+`queryParams` | `[(String, String)]` | `get` `optional` | A request query parameters represented as an array of touples to save order
+`body` | `RequestBody?` | `get` `optional` | A request body
+`headers` | `[RequestHeaderKey: String]` | `get` `optional` | A request specific headers. Will be used is addition to headers from `Endpoint`
+`timeout` | `TimeInterval` | `get` `optional` | A request timeout. If not specified - will be used default from `Endpoint`
+`responseConverter` | `ResponseJsonConverter?` | `get` `optional` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
+`errorConverter` | `ResponseJsonConverter?` | `get` `optional` | An error response converter. Will be converted before mapping into a `ErrorType`
+`endpoint` | `Endpoint?` | `get` `optional` | An endpoint that will be used for execution
+`decoder` | `JSONDecoder?` | `get` `optional` | A JSON response decoder that will be used for decoding response. In case not provided - decoder from `Endpoint` will be used
+`files` | `[MultipartFile]` | `get` `required` | A list of files that needs to be processed with request
 
+<br>
+
+### Methods
+```
+func execute(on endpoint: Endpoint) -> ResponseInfoBuilder<Self>
+```
+
+*Executing current request on provided endpoint*
+
+Name | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`endpoint` | `Endpoint` | | Endpoint on what current request will be executed. 
+
+<br>
+
+```
+func execute() -> ResponseInfoBuilder<Self>
+```
+*Executing current request on `Endpoint.default` instance*
+
+<br>
 
 ## `DefaultMultipartFormDataRequest` struct
 
 **TYPE**: `struct`
+
 **IMPLEMENT**: `MultipartFormDataRequest`
 
-A default implementation of `MultipartFormDataRequest` protocol that can be used for executing simple requests
+A default implementation of `MultipartFormDataRequest` protocol that can be used for executing multipart requests without creation of extra class
+
+<br>
 
 ### Generics
 
@@ -425,6 +535,8 @@ Name | Types | Description
 `Response` | `ResponseObject` | A type of a successful response object 
 `Error` | `ServerError` | A type of an error response object
 
+<br>
+
 ### Properties
 
 Name | Type | Accessibility | Description
@@ -432,16 +544,34 @@ Name | Type | Accessibility | Description
 `path` | `String` | `read-write` | A request path
 `method` | `HTTPMethod` | `read-write` | A request method
 `queryParams` | `[(String, String)]` | `read-write` | A request query parameters represented as an array of touples to save order
-`bodyParams` | `[String: Any]` | `read-write` | A request body params
+`body` | `RequestBody?` | `read-write` | A request body
 `headers` | `[RequestHeaderKey: String]` | `read-write` | A request specific headers. Will be used is addition to headers from `Endpoint`
 `timeout` | `TimeInterval` | `read-write` | A request timeout. If not specified - will be used default from `Endpoint`
 `responseConverter` | `ResponseJsonConverter?` | `read-write` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
 `errorConverter` | `ResponseJsonConverter?` | `read-write` | An error response converter. Will be converted before mapping into a `ErrorType`
 `endpoint` | `Endpoint?` | `read-write` | An endpoint that will be used for execution
+`decoder` | `JSONDecoder?` | `read-write` | A JSON response decoder that will be used for decoding response. In case not provided - decoder from `Endpoint` will be used
+`files` | `[MultipartFile]` | `read-write` | A list of files that needs to be processed in request
+
+<br>
 
 ### Methods
 
-* `init(path: String, method: HTTPMethod, queryParams: [(String, String)] = [], bodyParams: [String: Any] = [:], headers: [RequestHeader] = [], timeout: TimeInterval? = nil, responseConverter: ResponseJsonConverter? = nil, errorConverter: ResponseJsonConverter? = nil, endpoint: Endpoint? = nil)`
+```
+init(
+    path                : String, 
+    method                : HTTPMethod, 
+    queryParams            : [(String, String)] = [], 
+    body                : RequestBody? = nil, 
+    headers                : [RequestHeaderKey: String] = [:], 
+    timeout                : TimeInterval? = nil,
+    responseConverter    : ResponseJsonConverter? = nil,
+    errorConverter        : ResponseJsonConverter? = nil,
+    endpoint            : Endpoint? = nil,
+    decoder                : JSONDecoder? = nil,
+    files                : [MultipartFile] = []
+)
+```
 
 *Initialize `DefaultMultipartFormDataRequest` object with all possible parameters*
 
@@ -456,12 +586,15 @@ Name | Type | Default value | Description
 `responseConverter` | `ResponseJsonConverter?` | `nil` | A successful response converter. Will be converted before mapping into a `ResponseObjectType`
 `errorConverter` | `ResponseJsonConverter?` | `nil` | An error response converter. Will be converted before mapping into a `ErrorType`
 `endpoint` | `Endpoint?` | `nil` | An endpoint that will be used for execution
-`file` | `[MultipartFile]` | `[]` | A list of files that will be sent together with request
+`decoder` | `JSONDecoder?` | `nil` | A JSON response decoder that will be used for decoding response. In case not provided - decoder from `Endpoint` will be used
+`files` | `[MultipartFile]` | `[]` | A list of files that needs to be processed in request
 
+<br>
 
 ## `HTTPMethod` enum
 
 **TYPE**: `enum`
+
 **INHERITS**: `String`
 
 An enum that represents a request http method.
@@ -482,5 +615,6 @@ Name | Description
 # License
 
 This code is distributed under the MIT license. See the `LICENSE` file for more info.
+
 
 

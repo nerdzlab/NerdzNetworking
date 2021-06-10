@@ -55,7 +55,8 @@ public class Endpoint {
         responseQueue: DispatchQueue? = nil,
         sessionConfiguration: URLSessionConfiguration = .default,
         retryingCount: Int = 1,
-        headers: [RequestHeaderKey: String] = [:]) 
+        headers: [RequestHeaderKey: String] = [:]
+    ) 
     {
         self.baseUrl = baseUrl
         self.decoder = decoder

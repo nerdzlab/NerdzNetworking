@@ -20,6 +20,7 @@ public struct DefaultMultipartFormDataRequest<Response: Decodable, Error: Server
     public var endpoint: Endpoint?
     public var responseConverter: ResponseJsonConverter?
     public var errorConverter: ResponseJsonConverter?
+    public var decoder: JSONDecoder?
     public var files: [MultipartFile] = []
     
     public init(
@@ -32,6 +33,7 @@ public struct DefaultMultipartFormDataRequest<Response: Decodable, Error: Server
         responseConverter: ResponseJsonConverter? = nil,
         errorConverter: ResponseJsonConverter? = nil,
         endpoint: Endpoint? = nil,
+        decoder: JSONDecoder? = nil
         files: [MultipartFile] = [])
     {
         self.path = path
