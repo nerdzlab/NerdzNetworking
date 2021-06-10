@@ -374,7 +374,7 @@ Name | Type | Default value | Description
 
 **TYPE**: `protocol`
 
-Protocol that represents a single request. You can imlement this protocol and then execute it
+Protocol that represents a single request. You can imlement this protocol and then execute it. You can use `DefaultRequest` struct, that already implements this protocol, for executing requests.
 
 <br>
 
@@ -500,7 +500,7 @@ Name | Type | Default value | Description
 
 **INHERITS**: `Request` protocol
 
-Protocol that represents a multipart form-data request. Protocol inherits `Request` protocol, and adding files property on top. So mostly it is the same as `Request` protocol.
+Protocol that represents a multipart form-data request. Protocol inherits `Request` protocol, and adding files property on top. So mostly it is the same as `Request` protocol. You can use `DefaultMultipartFormDataRequest` struct, that already implements this protocol, for executing multipart requests.
 
 <br>
 
@@ -713,9 +713,19 @@ Name | Parameters | Description
 
 <br>
 
+# API To be continued...
+
+<br>
+
 # Next steps
 
-**TBD**
+- [ ] Finish documentation
+- [ ] Improve request retriers logic
+- [ ] Improve request observation logic
+- [ ] Add `Combine` support
+- [ ] Add support of custom mapping logic
+
+<br>
 
 # License
 
