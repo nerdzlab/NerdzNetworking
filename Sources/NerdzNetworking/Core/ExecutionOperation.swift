@@ -44,13 +44,13 @@ public class ExecutionOperation<T: Request>: DispatchOperation {
     // MARK: - Setup
     
     @discardableResult
-    func response(on queue: DispatchQueue) -> Self {
+    public func response(on queue: DispatchQueue) -> Self {
         responseQueue = queue
         return self
     }
     
     @discardableResult
-    func decode(with decoder: JSONDecoder) -> Self {
+    public func decode(with decoder: JSONDecoder) -> Self {
         self.decoder = decoder
         return self
     }

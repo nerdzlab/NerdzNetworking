@@ -307,7 +307,7 @@ To add NerdzNetworking to a [Swift Package Manager](https://swift.org/package-ma
 
 <br>
 
-# Docummentation
+# Documentation
 
 <br>
 
@@ -336,12 +336,12 @@ Name | Type | Accessibility | Description
 ### Methods
 ```
 init(
-    baseUrl                : URL,
-    decoder                : JSONDecoder? = nil,
-    responseQueue        : DispatchQueue? = nil,
+    baseUrl             : URL,
+    decoder             : JSONDecoder? = nil,
+    responseQueue       : DispatchQueue? = nil,
     sessionConfiguration: URLSessionConfiguration = .default,
-    retryingCount        : Int = 1,
-    headers                : [RequestHeaderKey: String] = [:]
+    retryingCount       : Int = 1,
+    headers             : [RequestHeaderKey: String] = [:]
 )
 ```
 
@@ -356,7 +356,7 @@ Name | Type | Default value | Description
 `retryingCount` | `Int` | `1` | A number of retryings on request failing
 `headers` | `[RequestHeaderKey: String]` | `[:]` | A headers that will be used with every request 
 
-<br>
+---
 
 ```
 func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T>
@@ -366,9 +366,170 @@ func execute<T: Request>(_ request: T) -> ResponseInfoBuilder<T>
 
 Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
-`request` | `Request` | - | Request to be executed
+`request` | `Request` | | Request to be executed
+
+---
+
+```
+func cURL<T: Request>(for request: T) throws -> String
+```
+
+*Return cURL string representation for provided request*
+
+> Useful for comparing requests from apps like Postman or Proxyman and code, or for fast execution request from terminal.
+
+---
+
+```
+func useAsDefault()
+```
+
+*Sets current instance as a `default` for future execution*
 
 <br>
+
+## @ `ExecutionOperation<T>` class
+
+**GENERICS**: `T: Request`
+
+A class that represents request operation execution parameters like `queue` and completions like `onSuccess`.
+
+<br>
+
+### Properties
+
+Name | Type | Accessibility | Description
+------------ | ------------- | ------------- | -------------
+`request` | `T` | `readonly` | A request that is used in operation
+
+<br>
+
+### Methods
+
+```
+func response(on queue: DispatchQueue) -> Self
+```
+
+*Setting up a queue on what all completions will be called. By default `main` queue will be used*
+
+Name | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`queue` | `DispatchQueue` | | Queue on what completions will be called 
+
+---
+
+```
+func decode(with decoder: JSONDecoder) -> Self
+```
+
+*Setting up a decoder that will be used for decoding JSON response or error*
+
+Name | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`decoder` | `JSONDecoder` | | A decoder for response JSON decoding
+
+---
+
+```
+func retryOnFail(_ retryingCount: Int) -> Self
+```
+
+*Setting up retrying count for request failings. By default it is equal to `1`*
+
+Name | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`retryingCount` | `Int` | | A retrying count number
+
+---
+
+```
+func onSuccess(_ closure: @escaping ResponseSuccessCallback) -> Self
+```
+
+`ResponseSuccessCallback = (T.ResponseObjectType) -> Void`
+
+*Registering closure that will be called if request was successful*
+
+> You can call this method several times, and every registered closure will be triggered
+
+Name | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`closure` | `(T.ResponseObjectType) -> Void` | | Triggered closure
+
+---
+
+```
+func onFail(_ closure: @escaping FailCallback) -> Self
+```
+
+`FailCallback = (ErrorResponse<T.ErrorType>) -> Void`
+
+*Registering closure that will be called if request fails*
+
+> You can call this method several times, and every registered closure will be triggered
+
+Name | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`closure` | `(ErrorResponse<T.ErrorType>) -> Void` | | Triggered closure
+
+---
+
+```
+func onProgress(_ closure: @escaping ProgressCallback) -> Self
+```
+
+`ProgressCallback = (Double) -> Void`
+
+*Registering closure that will return request processing progress*
+
+> You can call this method several times, and every registered closure will be triggered
+
+Name | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`closure` | `(Double) -> Void` | | Triggered closure
+
+---
+
+```
+func onDebug(_ closure: @escaping DebugCallback) -> Self
+```
+
+`DebugCallback = (DebugInfo) -> Void`
+
+*Registering closure that will return request & response information for debugging*
+
+> You can call this method several times, and every registered closure will be triggered
+
+Name | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`closure` | `(DebugInfo) -> Void` | | Triggered closure
+
+---
+
+```
+func onStart(_ closure: @escaping StartCallback) -> Self
+```
+
+`StartCallback = () -> Void`
+
+*Registering closure that will be triggered when request starts processing*
+
+> You can call this method several times, and every registered closure will be triggered
+
+Name | Type | Default value | Description
+------------ | ------------ | ------------- | -------------
+`closure` | `() -> Void` | | Triggered closure
+
+---
+
+```
+func calncel()
+```
+
+*Cancel request processing*
+
+<br>
+
 
 ## @ `Request` protocol
 
@@ -415,7 +576,7 @@ Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `endpoint` | `Endpoint` | | Endpoint on what current request will be executed. 
 
-<br>
+---
 
 ```
 func execute() -> ResponseInfoBuilder<Self>
@@ -465,15 +626,15 @@ Name | Type | Accessibility | Description
 ```
 init(
     path                : String, 
-    method                : HTTPMethod, 
-    queryParams            : [(String, String)] = [], 
+    method              : HTTPMethod, 
+    queryParams         : [(String, String)] = [], 
     body                : RequestBody? = nil, 
-    headers                : [RequestHeaderKey: String] = [:], 
-    timeout                : TimeInterval? = nil,
-    responseConverter    : ResponseJsonConverter? = nil,
-    errorConverter        : ResponseJsonConverter? = nil,
+    headers             : [RequestHeaderKey: String] = [:], 
+    timeout             : TimeInterval? = nil,
+    responseConverter   : ResponseJsonConverter? = nil,
+    errorConverter      : ResponseJsonConverter? = nil,
     endpoint            : Endpoint? = nil,
-    decoder                : JSONDecoder? = nil
+    decoder             : JSONDecoder? = nil
 )
 ```
 
@@ -542,7 +703,7 @@ Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `endpoint` | `Endpoint` | | Endpoint on what current request will be executed. 
 
-<br>
+---
 
 ```
 func execute() -> ResponseInfoBuilder<Self>
@@ -593,16 +754,16 @@ Name | Type | Accessibility | Description
 ```
 init(
     path                : String, 
-    method                : HTTPMethod, 
-    queryParams            : [(String, String)] = [], 
+    method              : HTTPMethod, 
+    queryParams         : [(String, String)] = [], 
     body                : RequestBody? = nil, 
-    headers                : [RequestHeaderKey: String] = [:], 
-    timeout                : TimeInterval? = nil,
-    responseConverter    : ResponseJsonConverter? = nil,
-    errorConverter        : ResponseJsonConverter? = nil,
+    headers             : [RequestHeaderKey: String] = [:], 
+    timeout             : TimeInterval? = nil,
+    responseConverter   : ResponseJsonConverter? = nil,
+    errorConverter      : ResponseJsonConverter? = nil,
     endpoint            : Endpoint? = nil,
-    decoder                : JSONDecoder? = nil,
-    files                : [MultipartFile] = []
+    decoder             : JSONDecoder? = nil,
+    files               : [MultipartFile] = []
 )
 ```
 
@@ -645,7 +806,7 @@ Name | Type | Accessibility | Description
 ```
 init(
     resource: MultipartResourceConvertable, 
-    mime: MimeType, 
+    mime    : MimeType, 
     fileName: String
 )
 ```
@@ -730,6 +891,7 @@ Name | Parameters | Description
 # License
 
 This code is distributed under the MIT license. See the `LICENSE` file for more info.
+
 
 
 

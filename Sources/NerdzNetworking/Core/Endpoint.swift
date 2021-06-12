@@ -91,6 +91,10 @@ public class Endpoint {
         try requestFactory.request(from: request).cURL
     }
     
+    public func useAsDefault() {
+        type(of: self).default = self
+    }
+    
     // MARK: - Methods(Private)
     
     private static func createdRequestExecuter(
