@@ -220,6 +220,8 @@ For now `NerdzNetworking` library supports only native `Codable` mapping. [Tutor
 
 <br>
 
+---
+
 ### `ResponseJsonConverter`
 
 You can also provide a response converters to convert some unpropertly returned responses beаore mapping into expected response starts. The responsible protocol for this is `ResponseJsonConverter`.
@@ -229,6 +231,8 @@ Response converter should be specified in `Request` class under `responseConvert
 You can have your own converters that implement `ResponseJsonConverter` protocol, or use built in implementations: `KeyPathResponseConverter`, `ClosureResponseConverter`.
 
 <br>
+
+---
 
 #### `KeyPathResponseConverter`
 
@@ -247,6 +251,8 @@ class MyRequest: Request {
 ```
 
 <br>
+
+---
 
 #### `ClosureResponseConverter`
 
@@ -269,6 +275,8 @@ class MyRequest: Request {
 ```
 
 <br>
+
+---
 
 #### Custom `ResponseJsonConverter`
 
@@ -307,7 +315,7 @@ To add NerdzNetworking to a [Swift Package Manager](https://swift.org/package-ma
 
 <br>
 
-# Documentation
+# Docummentation
 
 <br>
 
@@ -356,6 +364,8 @@ Name | Type | Default value | Description
 `retryingCount` | `Int` | `1` | A number of retryings on request failing
 `headers` | `[RequestHeaderKey: String]` | `[:]` | A headers that will be used with every request 
 
+<br>
+
 ---
 
 ```
@@ -368,6 +378,8 @@ Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `request` | `Request` | | Request to be executed
 
+<br>
+
 ---
 
 ```
@@ -377,6 +389,8 @@ func cURL<T: Request>(for request: T) throws -> String
 *Return cURL string representation for provided request*
 
 > Useful for comparing requests from apps like Postman or Proxyman and code, or for fast execution request from terminal.
+
+<br>
 
 ---
 
@@ -416,6 +430,8 @@ Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `queue` | `DispatchQueue` | | Queue on what completions will be called 
 
+<br>
+
 ---
 
 ```
@@ -428,6 +444,8 @@ Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `decoder` | `JSONDecoder` | | A decoder for response JSON decoding
 
+<br>
+
 ---
 
 ```
@@ -439,6 +457,8 @@ func retryOnFail(_ retryingCount: Int) -> Self
 Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `retryingCount` | `Int` | | A retrying count number
+
+<br>
 
 ---
 
@@ -456,6 +476,8 @@ Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `closure` | `(T.ResponseObjectType) -> Void` | | Triggered closure
 
+<br>
+
 ---
 
 ```
@@ -471,6 +493,8 @@ func onFail(_ closure: @escaping FailCallback) -> Self
 Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `closure` | `(ErrorResponse<T.ErrorType>) -> Void` | | Triggered closure
+
+<br>
 
 ---
 
@@ -488,6 +512,8 @@ Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `closure` | `(Double) -> Void` | | Triggered closure
 
+<br>
+
 ---
 
 ```
@@ -504,6 +530,8 @@ Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `closure` | `(DebugInfo) -> Void` | | Triggered closure
 
+<br>
+
 ---
 
 ```
@@ -519,6 +547,8 @@ func onStart(_ closure: @escaping StartCallback) -> Self
 Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `closure` | `() -> Void` | | Triggered closure
+
+<br>
 
 ---
 
@@ -566,6 +596,7 @@ Name | Type | Accessibility | Description
 <br>
 
 ### Methods
+
 ```
 func execute(on endpoint: Endpoint) -> ResponseInfoBuilder<Self>
 ```
@@ -576,11 +607,14 @@ Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `endpoint` | `Endpoint` | | Endpoint on what current request will be executed. 
 
+<br>
+
 ---
 
 ```
 func execute() -> ResponseInfoBuilder<Self>
 ```
+
 *Executing current request on `Endpoint.default` instance*
 
 <br>
@@ -702,6 +736,8 @@ func execute(on endpoint: Endpoint) -> ResponseInfoBuilder<Self>
 Name | Type | Default value | Description
 ------------ | ------------ | ------------- | -------------
 `endpoint` | `Endpoint` | | Endpoint on what current request will be executed. 
+
+<br>
 
 ---
 
@@ -871,6 +907,32 @@ Name | Parameters | Description
 `.raw` | `value: Data` | A raw data
 `.string` | `value: String` | A string body
 `.params` | `value: [String: Any]` | A body formed with parameters
+
+<br>
+
+## @ `DebugInfo` struct
+
+**TYPE**: `struct`
+
+Represents an information for debugging networking request. 
+
+> Can be received from`ExecutionOperation` class.
+
+<br>
+
+### Properties
+
+Name | Type | Accessibility | Description
+------------ | ------------- | ------------- | -------------
+`sessionConfiguration` | `URLSessionConfiguration` | `readonly` | Current request `URLSession` configuration
+`request` | `URLRequest` | `readonly` | `URLRequest` that were built for execution
+`dataResponse` | `Data?` | `readonly` | A response in `Data` format
+`urlResponse` | `HTTPURLResponse` | `readonly` | Response returned by system
+`errorResponse` | `Error?` | `readonly` | Response error returned by system
+`requestDuration` | `TimeInterval` | `readonly` | Request execution duration
+`cURL` | `String?` | `readonly` | Request representation in cURL format
+`stringResponse` | `String?` | `readonly` | A response in `String` format
+`jsonResponse` | `Any?` | `readonly` | A response in `JSON` format
 
 <br>
 
