@@ -136,6 +136,14 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        guard let task = task as? URLSessionDataTask else {
+            return
+        }
         
+        guard let error = error else {
+            return
+        }
+        
+        ongoingTasks[task.taskIdentifier]?.onError?(error)
     }
 }
