@@ -57,7 +57,7 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
         
         let task = session.dataTask(with: request) { [weak self] (data, response, error) in
             
-            if let id = backgroundIdentifiers[task.taskIdentifier] {
+            if let id = self?.backgroundIdentifiers[task.taskIdentifier] {
                 UIApplication.shared.endBackgroundTask(id)
             }
             
@@ -93,7 +93,7 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
             progressClosures[task] = progressClosure
         }
         
-        let backgroundId = UIApplcation.shared.beginBackgroundTask()
+        let backgroundId = UIApplication.shared.beginBackgroundTask()
         backgroundIdentifiers[task.taskIdentifier] = backgroundId
         
         task.resume()
