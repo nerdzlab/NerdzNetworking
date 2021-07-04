@@ -22,16 +22,33 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
         }
     }
     
+    private struct DataTaskInfo {
+        let id: Int
+        let startDate: Date
+        let request: URLRequest
+        
+        var response: HTTPURLResponse?
+        
+        let onSuccess: ((Data?, Int) -> Void)? 
+        let onError: ((Error) -> Void)?
+        let onProgress: ((Double) -> Void)?
+        let onDebug: ((DebugInfo) -> Void)?
+    }
+    
     // MARK: - Properties(Public)
     
     let requestFactory: RequestFactory
     let configuration: URLSessionConfiguration
     
+    // MARK: - Properties(Private)
+    
+    private var ongoingTasks: [Int: DataTaskInfo] = [:]
+    
     private(set) lazy var session: URLSession = {
         return URLSession(configuration: configuration, delegate: self, delegateQueue: .main) 
     }()
     
-    init(requestFactory: RequestFactory, sessionConfiguration: URLSessionConfiguration = .default) {
+    init(requestFactory: RequestFactory, sessionConfiguration: URLSessionConfiguration) {
         self.configuration = sessionConfiguration
         self.requestFactory = requestFactory
     }
@@ -51,36 +68,18 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     {
         let request = try requestFactory.request(from: requestData)
         
-        let requestStartDate = Date()
+        let task = session.dataTask(with: request)
         
-        let task = session.dataTask(with: request) { [weak self] (data, response, error) in
-            guard let self = self else {
-                return
-            }
-            
-            let debugInfo = DebugInfo(
-                sessionConfiguration: self.session.configuration, 
-                request             : request, 
-                dataResponse        : data, 
-                urlResponse         : response as? HTTPURLResponse, 
-                errorResponse       : error, 
-                requestDuration     : Date().timeIntervalSince(requestStartDate),
-                cURL                : request.cURL)
-            
-            onDebug?(debugInfo)
-            
-            if let error = error {
-                onError?(error)
-                return
-            }
-            
-            if let httpUrlResponse = response as? HTTPURLResponse {
-                onSuccess?(data, httpUrlResponse.statusCode)
-            }
-            else {
-                onError?(RequestDataDispatcher.invalidResponse)
-            }
-        }
+        ongoingTasks[task.taskIdentifier] = DataTaskInfo(
+            id: task.taskIdentifier, 
+            startDate: Date(), 
+            request: request, 
+            response: nil, 
+            onSuccess: onSuccess, 
+            onError: onError, 
+            onProgress: onProgress, 
+            onDebug: onDebug
+        )
         
         if let progressClosure = onProgress {
             progressClosures[task] = progressClosure
@@ -98,5 +97,45 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
             let progress = Double(totalBytesSent) / Double(totalBytesExpectedToSend)
             closure(progress)
         }
+    }
+    
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+        
+        guard var info = ongoingTasks[dataTask.taskIdentifier] else {
+            completionHandler(.cancel)
+            return
+        }
+        
+        info.response = response as? HTTPURLResponse
+        ongoingTasks[dataTask.taskIdentifier] = info
+        completionHandler(.allow)
+    }
+    
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        
+        guard let info = ongoingTasks[dataTask.taskIdentifier] else {
+            return
+        }
+        
+        let response = info.response
+        let request = info.request
+        
+        let debugInfo = DebugInfo(
+            sessionConfiguration: self.session.configuration, 
+            request             : request, 
+            dataResponse        : data, 
+            urlResponse         : response, 
+            errorResponse       : nil, 
+            requestDuration     : Date().timeIntervalSince(info.startDate),
+            cURL                : request.cURL)
+        
+        info.onDebug?(debugInfo)
+        info.onSuccess?(data, response?.statusCode ?? 0)
+        
+        ongoingTasks.removeValue(forKey: dataTask.taskIdentifier)
+    }
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        
     }
 }

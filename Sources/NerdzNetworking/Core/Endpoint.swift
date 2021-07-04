@@ -53,7 +53,7 @@ public class Endpoint {
         baseUrl: URL,
         decoder: JSONDecoder? = nil,
         responseQueue: DispatchQueue? = nil,
-        sessionConfiguration: URLSessionConfiguration = .default,
+        sessionConfiguration: URLSessionConfiguration = .background(withIdentifier: "nerdznetworking-main-session"),
         retryingCount: Int = 1,
         headers: [RequestHeaderKey: String] = [:]
     ) 
