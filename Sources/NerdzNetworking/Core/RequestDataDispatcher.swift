@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     // MARK: - Errors
@@ -39,6 +40,7 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     // MARK: - Properties(Private)
     
     private var progressClosures: [URLSessionTask: (Double) -> Void] = [:]
+    private var backgroundIdentifiers: [Int: UIBackgroundTaskIdentifier] = [:]
     
     public func dispatch(
         _ requestData   : RequestData, 
@@ -54,6 +56,11 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
         let requestStartDate = Date()
         
         let task = session.dataTask(with: request) { [weak self] (data, response, error) in
+            
+            if let id = backgroundIdentifiers[task.taskIdentifier] {
+                UIApplication.shared.endBackgroundTask(id)
+            }
+            
             guard let self = self else {
                 return
             }
@@ -85,6 +92,9 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
         if let progressClosure = onProgress {
             progressClosures[task] = progressClosure
         }
+        
+        let backgroundId = UIApplcation.shared.beginBackgroundTask()
+        backgroundIdentifiers[task.taskIdentifier] = backgroundId
         
         task.resume()
         
