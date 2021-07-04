@@ -40,7 +40,7 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     // MARK: - Properties(Private)
     
     private var progressClosures: [URLSessionTask: (Double) -> Void] = [:]
-    private var backgroundIdentifiers: [Int: UIBackgroundTaskIdentifier] = [:]
+    private var backgroundIdentifiers: [String: UIBackgroundTaskIdentifier] = [:]
     
     public func dispatch(
         _ requestData   : RequestData, 
@@ -54,10 +54,11 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
         let request = try requestFactory.request(from: requestData)
         
         let requestStartDate = Date()
+        let udid = UUID().uuidString
         
         let task = session.dataTask(with: request) { [weak self] (data, response, error) in
             
-            if let id = self?.backgroundIdentifiers[task.taskIdentifier] {
+            if let id = self?.backgroundIdentifiers[udid] {
                 UIApplication.shared.endBackgroundTask(id)
             }
             
@@ -94,7 +95,7 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
         }
         
         let backgroundId = UIApplication.shared.beginBackgroundTask()
-        backgroundIdentifiers[task.taskIdentifier] = backgroundId
+        backgroundIdentifiers[udid] = backgroundId
         
         task.resume()
         
