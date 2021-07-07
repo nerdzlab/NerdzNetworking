@@ -11,25 +11,24 @@ import Foundation
 extension MultipartRequestData {
     
     var streamData: (stream: InputStream, boundary: String)? {
-        guard case .params(let bodyParams) = body else {
-            return nil
-        }
-        
+
         let boundary = newBoundary()
         
         var streams: [InputStream] = []
         
-        var parametersData = Data()
-
-        for (key, value) in bodyParams {
-            let values = ["--\(boundary)\r\n",
-                "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n",
-                "\(value)\r\n"]
+        if case .params(let bodyParams) = body {
+            var parametersData = Data()
             
-            parametersData.append(values: values)
+            for (key, value) in bodyParams {
+                let values = ["--\(boundary)\r\n",
+                    "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n",
+                    "\(value)\r\n"]
+                
+                parametersData.append(values: values)
+            }
+            
+            streams.append(InputStream(data: parametersData))
         }
-        
-        streams.append(InputStream(data: parametersData))
         
         let moreTnenOneFile = files.count > 1
         
