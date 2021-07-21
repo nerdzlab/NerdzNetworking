@@ -23,7 +23,7 @@ class RequestExecuter {
         self.requestRetryingManager = requestRetryingManager
     }
     
-    func execureOperation<T: Request>(_ operation: ExecutionOperation<T>) {
+    func execute<T: Request>(_ operation: RequestExecutionOperation<T>) {
         let wrapper = RequestExecutionWrapper(operation: operation, dispatcher: dispatcher)
         let key = UUID().uuidString
         

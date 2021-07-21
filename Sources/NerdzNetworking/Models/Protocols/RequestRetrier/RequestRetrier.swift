@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol RequestRetrier: class {
+public protocol RequestRetrier: AnyObject {
     
     func canHandleError<T: Request>(_ error: ErrorResponse<T.ErrorType>, for request: T) -> Bool
     

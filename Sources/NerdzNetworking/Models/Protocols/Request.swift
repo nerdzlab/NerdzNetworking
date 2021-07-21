@@ -9,11 +9,11 @@
 import Foundation
 
 fileprivate enum RequestInternalError: Error {
-    case defaultEndpointIsNotInitialized
+    case endpointIsNotInitialized
 
     var localizedDescription: String {
         switch self {
-        case .defaultEndpointIsNotInitialized: 
+        case .endpointIsNotInitialized: 
             return "Default endpoint is not initialized"
         }
     }
@@ -49,31 +49,31 @@ public extension Request {
     }
 }
 
-extension Request {
-    public typealias ResponseSuccessCallback = (ResponseObjectType) -> Void
-    public typealias ErrorCallback = (ErrorResponse<ErrorType>) -> Void
+public extension Request {
+    typealias ResponseSuccessCallback = (ResponseObjectType) -> Void
+    typealias ErrorCallback = (ErrorResponse<ErrorType>) -> Void
 
     var data: RequestData {
         self
     }
 
     @discardableResult
-    public func execute(on endpoint: Endpoint) -> ExecutionOperation<Self> {
+    func execute(on endpoint: Endpoint) -> RequestExecutionOperation<Self> {
         endpoint.execute(self)
     }
     
     @discardableResult
-    public func execute() -> ExecutionOperation<Self> {
+    func execute() -> RequestExecutionOperation<Self> {
         if let endpoint = self.endpoint ?? Endpoint.default {
             return execute(on: endpoint)
         } 
         else {
-            let operation = ExecutionOperation<Self>(request: self)
+            let operation = RequestExecutionOperation<Self>(request: self)
 
             let queue = OperationQueue.current?.underlyingQueue ?? .main
             
             queue.async {
-                operation.callOnFail(with: .system(RequestInternalError.defaultEndpointIsNotInitialized))
+                operation.callOnFail(with: .system(RequestInternalError.endpointIsNotInitialized))
             }
             
             return operation

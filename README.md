@@ -402,7 +402,7 @@ func useAsDefault()
 
 <br>
 
-## @ `ExecutionOperation<T>` class
+## @ `RequestExecutionOperation<T>` class
 
 **GENERICS**: `T: Request`
 

@@ -12,10 +12,10 @@ class RequestExecutionWrapper<RequestType: Request> {
     var onNeedRetrier: ((_ error: ErrorResponse<RequestType.ErrorType>) -> RequestRetrier?)?
     var onFinish: ((_ result: RequestType.ResponseObjectType?, _ error: ErrorResponse<RequestType.ErrorType>?) -> Void)?
     
-    let operation: ExecutionOperation<RequestType>
+    let operation: RequestExecutionOperation<RequestType>
     let dispatcher: RequestDataDispatcher
     
-    init(operation: ExecutionOperation<RequestType>, dispatcher: RequestDataDispatcher) {
+    init(operation: RequestExecutionOperation<RequestType>, dispatcher: RequestDataDispatcher) {
         self.operation = operation
         self.dispatcher = dispatcher
     }

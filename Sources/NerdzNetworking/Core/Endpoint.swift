@@ -22,6 +22,18 @@ public class Endpoint {
     
     public static var `default`: Endpoint?
     
+    public static var download: Endpoint? {
+        get {
+            storredDownload ?? .default
+        }
+        
+        set {
+            storredDownload = newValue
+        }
+    }
+    
+    private static var storredDownload: Endpoint? 
+    
     // MARK: - Configuration
     
     public let decoder: JSONDecoder?
@@ -75,14 +87,21 @@ public class Endpoint {
     
     // MARK: - Methods(Public)
     
-    public func execute<T: Request>(_ request: T) -> ExecutionOperation<T> {
+    public func execute<T: Request>(_ request: T) -> RequestExecutionOperation<T> {
         let queue = responseQueue ?? OperationQueue.current?.underlyingQueue ?? .main
         let decoder = request.decoder ?? self.decoder ?? JSONDecoder()
-        let operation = ExecutionOperation<T>(request: request, decoder: decoder, responseQueue: queue, retryingCount: retryingCount)
+        let operation = RequestExecutionOperation<T>(request: request, decoder: decoder, responseQueue: queue, retryingCount: retryingCount)
         
         queue.async {
-            self.requestExecuter.execureOperation(operation)
+            self.requestExecuter.execute(operation)
         }
+        
+        return operation
+    }
+    
+    public func execute<T: DownloadRequest>(_ request: T) -> DownloadExecutionOperation<T> {
+        let queue = responseQueue ?? OperationQueue.current?.underlyingQueue ?? .main
+        let operation = DownloadExecutionOperation(request: request, responseQueue: queue)
         
         return operation
     }
