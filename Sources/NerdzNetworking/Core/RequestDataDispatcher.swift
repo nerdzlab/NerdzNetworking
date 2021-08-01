@@ -9,6 +9,13 @@
 import Foundation
 
 class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
+    
+    // MARK: - Constants
+    
+    private enum Constants {
+        static let downloadSessionId = "NerdzNetworking.downloadSession"
+    }
+    
     // MARK: - Errors
     
     private enum RequestDataDispatcher: Error {
@@ -25,14 +32,16 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     // MARK: - Properties(Public)
     
     let requestFactory: RequestFactory
-    let configuration: URLSessionConfiguration
+    let httpRequestConfiguration: URLSessionConfiguration
     
-    private(set) lazy var session: URLSession = {
-        return URLSession(configuration: configuration, delegate: self, delegateQueue: .main) 
+    let downloadConfiguration = URLSessionConfiguration.background(withIdentifier: Constants.downloadSessionId)
+    
+    private(set) lazy var httpRequestSession: URLSession = {
+        return URLSession(configuration: httpRequestConfiguration, delegate: self, delegateQueue: .main) 
     }()
     
     init(requestFactory: RequestFactory, sessionConfiguration: URLSessionConfiguration = .default) {
-        self.configuration = sessionConfiguration
+        self.httpRequestConfiguration = sessionConfiguration
         self.requestFactory = requestFactory
     }
     
@@ -53,13 +62,13 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
         
         let requestStartDate = Date()
         
-        let task = session.dataTask(with: request) { [weak self] (data, response, error) in
+        let task = httpRequestSession.dataTask(with: request) { [weak self] (data, response, error) in
             guard let self = self else {
                 return
             }
             
             let debugInfo = DebugInfo(
-                sessionConfiguration: self.session.configuration, 
+                sessionConfiguration: self.httpRequestSession.configuration, 
                 request             : request, 
                 dataResponse        : data, 
                 urlResponse         : response as? HTTPURLResponse, 
