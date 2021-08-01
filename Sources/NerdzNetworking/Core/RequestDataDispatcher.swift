@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TrustKit
 
 class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     // MARK: - Errors
@@ -97,6 +98,15 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
         if let closure = progressClosures[task] {
             let progress = Double(totalBytesSent) / Double(totalBytesExpectedToSend)
             closure(progress)
+        }
+    }
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        
+        let validator = TrustKit.sharedInstance().pinningValidator
+        
+        if !validator.handle(challenge, completionHandler: completionHandler) {
+            completionHandler(.performDefaultHandling, nil)
         }
     }
 }
