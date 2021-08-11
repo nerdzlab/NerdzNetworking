@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import TrustKit
 
 public class Endpoint {
     
@@ -32,6 +33,12 @@ public class Endpoint {
     public let retryingCount: Int
     public let observation = ObservationManager()
     public let requestRetrying = RequestRetryingManager()
+    
+    public var trustKit: TrustKit? {
+        didSet {
+            requestDispatcher.trustKit = trustKit
+        }
+    }
     
     public var headers: [RequestHeaderKey: String] {
         didSet { requestFactory.headers = headers }

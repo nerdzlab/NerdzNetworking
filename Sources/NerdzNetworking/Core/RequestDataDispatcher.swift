@@ -28,6 +28,8 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     let requestFactory: RequestFactory
     let configuration: URLSessionConfiguration
     
+    var trustKit: TrustKit?
+    
     private(set) lazy var session: URLSession = {
         return URLSession(configuration: configuration, delegate: self, delegateQueue: .main) 
     }()
@@ -103,9 +105,9 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         
-        let validator = TrustKit.sharedInstance().pinningValidator
+        let validator = trustKit?.pinningValidator
         
-        if !validator.handle(challenge, completionHandler: completionHandler) {
+        if validator?.handle(challenge, completionHandler: completionHandler) != true {
             completionHandler(.performDefaultHandling, nil)
         }
     }
