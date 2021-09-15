@@ -80,8 +80,8 @@ extension Request {
         }
     }
     
-    public func cached(decoder: JSONDecoder? = nil, converter: ResponseJsonConverter? = nil) -> ResponseObjectType? {
-        let endpoint = self.endpoint ?? .default
+    public func cached(in endpoint: Endpoint? = nil, decoder: JSONDecoder? = nil, converter: ResponseJsonConverter? = nil) -> ResponseObjectType? {
+        let endpoint = endpoint ?? self.endpoint ?? .default
     
         return endpoint?.cachedResponse(for: self, decoder: decoder, converter: converter)
     }
