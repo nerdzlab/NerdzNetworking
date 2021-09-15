@@ -31,14 +31,15 @@ public class DefaultRequest<Response: Decodable, Error: ServerError>: DefaultReq
         decoder: JSONDecoder? = nil
     )
     {
-        super.init()
+        super.init(
+            path: path, 
+            method: method, 
+            queryParams: queryParams, 
+            body: body, 
+            headers: headers, 
+            timeout: timeout
+        )
         
-        self.path = path
-        self.method = method
-        self.queryParams = queryParams
-        self.body = body
-        self.headers = headers
-        self.timeout = timeout
         self.responseConverter = responseConverter
         self.errorConverter = errorConverter
         self.endpoint = endpoint
