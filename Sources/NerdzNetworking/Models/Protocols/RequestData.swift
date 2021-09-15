@@ -15,6 +15,7 @@ public protocol RequestData {
     var body: RequestBody? { get }
     var headers: [RequestHeaderKey: String] { get }
     var timeout: TimeInterval? { get }
+    var shouldCache: Bool { get }
 }
 
 public extension RequestData {
@@ -22,4 +23,5 @@ public extension RequestData {
     var body: RequestBody? { nil }
     var headers: [RequestHeaderKey: String] { [:] }
     var timeout: TimeInterval? { nil }
+    var shouldCache: Bool { false }
 }

@@ -22,8 +22,13 @@ class RequestExecutionWrapper<RequestType: Request> {
     
     func execute() {
         do {
-            let dispatchOperation = try dispatcher.dispatch(
-                operation.request.data,
+            
+            let defaultData = DefaultRequestData(operation.request.data)
+            defaultData.timeout = operation.timeout
+            defaultData.shouldCache = operation.shouldCache
+            
+            let dispatchOperation = try dispatcher.dispatch(defaultData,
+                
                 onSuccess: { [weak self] (data, statusCode) in
                     self?.handleDispatchingSuccess(with: data, statusCode)
                 },

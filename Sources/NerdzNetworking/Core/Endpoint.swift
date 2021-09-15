@@ -25,7 +25,7 @@ public class Endpoint {
     
     // MARK: - Configuration
     
-    public let decoder: JSONDecoder?
+    public let decoder: JSONDecoder
     public let responseQueue: DispatchQueue?
     
     public let baseUrl: URL
@@ -58,7 +58,7 @@ public class Endpoint {
     
     public init(
         baseUrl: URL,
-        decoder: JSONDecoder? = nil,
+        decoder: JSONDecoder = JSONDecoder(),
         responseQueue: DispatchQueue? = nil,
         sessionConfiguration: URLSessionConfiguration = .default,
         retryingCount: Int = 1,
@@ -84,7 +84,7 @@ public class Endpoint {
     
     public func execute<T: Request>(_ request: T) -> ExecutionOperation<T> {
         let queue = responseQueue ?? OperationQueue.current?.underlyingQueue ?? .main
-        let decoder = request.decoder ?? self.decoder ?? JSONDecoder()
+        let decoder = request.decoder ?? self.decoder
         let operation = ExecutionOperation<T>(request: request, decoder: decoder, responseQueue: queue, retryingCount: retryingCount)
         
         queue.async {
@@ -100,6 +100,21 @@ public class Endpoint {
     
     public func useAsDefault() {
         type(of: self).default = self
+    }
+    
+    public func cachedResponse<T: Request>(
+        for request: T, 
+        decoder: JSONDecoder? = nil, 
+        converter: ResponseJsonConverter? = nil
+    ) -> T.ResponseObjectType? 
+    {
+        do {
+            let finalDecoder = decoder ?? self.decoder
+            return try requestExecuter.cachedResult(for: request, decoder: finalDecoder, converter: converter)
+        }
+        catch {
+            return nil
+        }
     }
     
     // MARK: - Methods(Private)

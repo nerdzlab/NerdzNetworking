@@ -47,4 +47,14 @@ class RequestExecuter {
         wrappers[key] = wrapper
         wrapper.execute()
     }
+    
+    func cachedResult<RequestType: Request>(for request: RequestType, decoder: JSONDecoder, converter: ResponseJsonConverter? = nil) throws -> RequestType.ResponseObjectType? {
+        
+        let data = try dispatcher.cahcedResponse(for: request)
+        
+        return try Mapper<RequestType.ResponseObjectType>(
+            decoder: decoder, 
+            converter: converter)
+            .map(from: data)
+    }
 }

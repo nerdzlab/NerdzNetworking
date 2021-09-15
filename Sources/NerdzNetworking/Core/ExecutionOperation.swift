@@ -21,6 +21,8 @@ public class ExecutionOperation<T: Request>: DispatchOperation {
     private(set) var responseQueue: DispatchQueue
     private(set) var decoder: JSONDecoder
     private(set) var retryingCount: Int
+    private(set) var shouldCache: Bool
+    private(set) var timeout: TimeInterval?
     
     var willRetryOnFail: Bool {
         retryingCount > 0
@@ -34,11 +36,18 @@ public class ExecutionOperation<T: Request>: DispatchOperation {
     
     private(set) var isValid: Bool = true
     
-    init(request: T, decoder: JSONDecoder = JSONDecoder(), responseQueue: DispatchQueue = OperationQueue.current?.underlyingQueue ?? .main, retryingCount: Int = 1) {
+    init(
+        request         : T, 
+        decoder         : JSONDecoder = JSONDecoder(), 
+        responseQueue   : DispatchQueue = OperationQueue.current?.underlyingQueue ?? .main, 
+        retryingCount   : Int = 1
+    ) {
         self.request = request
         self.decoder = decoder
         self.responseQueue = responseQueue
         self.retryingCount = retryingCount
+        self.shouldCache = request.shouldCache
+        self.timeout = request.timeout
     }
     
     // MARK: - Setup
@@ -88,6 +97,18 @@ public class ExecutionOperation<T: Request>: DispatchOperation {
     @discardableResult
     public func onStart(_ closure: @escaping StartCallback) -> Self {
         onStart.append(closure)
+        return self
+    }
+    
+    @discardableResult
+    public func cache() -> Self {
+        shouldCache = true
+        return self
+    }
+    
+    @discardableResult
+    public func timeout(after value: TimeInterval) -> Self {
+        timeout = value
         return self
     }
     

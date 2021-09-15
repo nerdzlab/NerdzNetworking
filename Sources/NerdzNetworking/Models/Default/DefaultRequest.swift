@@ -8,16 +8,9 @@
 
 import Foundation
 
-public struct DefaultRequest<Response: Decodable, Error: ServerError>: Request {
+public class DefaultRequest<Response: Decodable, Error: ServerError>: DefaultRequestData, Request {
     public typealias ResponseObjectType = Response
     public typealias ErrorType = Error
-    
-    public var path: String
-    public var method: HTTPMethod
-    public var queryParams: [(String, String)] = []
-    public var body: RequestBody? = nil
-    public var headers: [RequestHeaderKey: String] = [:]
-    public var timeout: TimeInterval?
     
     public var decoder: JSONDecoder?
     public var endpoint: Endpoint?
@@ -38,6 +31,8 @@ public struct DefaultRequest<Response: Decodable, Error: ServerError>: Request {
         decoder: JSONDecoder? = nil
     )
     {
+        super.init()
+        
         self.path = path
         self.method = method
         self.queryParams = queryParams

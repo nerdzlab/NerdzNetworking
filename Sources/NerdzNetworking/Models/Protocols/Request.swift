@@ -64,7 +64,7 @@ extension Request {
     
     @discardableResult
     public func execute() -> ExecutionOperation<Self> {
-        if let endpoint = self.endpoint ?? Endpoint.default {
+        if let endpoint = self.endpoint ?? .default {
             return execute(on: endpoint)
         } 
         else {
@@ -78,5 +78,11 @@ extension Request {
             
             return operation
         }
+    }
+    
+    public func cached(decoder: JSONDecoder? = nil, converter: ResponseJsonConverter? = nil) -> ResponseObjectType? {
+        let endpoint = self.endpoint ?? .default
+    
+        return endpoint?.cachedResponse(for: self, decoder: decoder, converter: converter)
     }
 }

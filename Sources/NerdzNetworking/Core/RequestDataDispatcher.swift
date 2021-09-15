@@ -43,7 +43,7 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     
     private var progressClosures: [URLSessionTask: (Double) -> Void] = [:]
     
-    public func dispatch(
+    func dispatch(
         _ requestData   : RequestData, 
         onSuccess       : ((Data?, Int) -> Void)? = nil, 
         onError         : ((Error) -> Void)? = nil,
@@ -78,6 +78,12 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
             }
             
             if let httpUrlResponse = response as? HTTPURLResponse {
+                
+                if let data = data, requestData.shouldCache {
+                    let object = CachedURLResponse(response: httpUrlResponse, data: data)
+                    URLCache.shared.storeCachedResponse(object, for: request)
+                }
+                
                 onSuccess?(data, httpUrlResponse.statusCode)
             }
             else {
@@ -92,6 +98,11 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
         task.resume()
         
         return task
+    }
+    
+    func cahcedResponse(for requestData: RequestData) throws -> Data? {
+        let request = try requestFactory.request(from: requestData)
+        return URLCache.shared.cachedResponse(for: request)?.data
     }
     
     // MARK: - URLSessionDelegate
