@@ -8,8 +8,8 @@
 import Foundation
 
 extension String: MultipartResourceConvertable {
-    public var resourceName: String {
-        URL(string: self)?.lastPathComponent ?? self
+    public var fileName: String? {
+        URL(string: self)?.lastPathComponent
     }
     
     public var stream: InputStream? {

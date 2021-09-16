@@ -8,6 +8,13 @@
 import Foundation
 
 public protocol MultipartResourceConvertable {
-    var resourceName: String { get }
     var stream: InputStream? { get }
+    
+    var fileName: String? { get }
 }
+
+public extension MultipartResourceConvertable {
+    var fileName: String? {
+        nil
+    } 
+} 

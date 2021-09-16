@@ -8,7 +8,7 @@
 import Foundation
 
 extension URL: MultipartResourceConvertable {
-    public var resourceName: String {
+    public var fileName: String? {
         lastPathComponent
     }
     

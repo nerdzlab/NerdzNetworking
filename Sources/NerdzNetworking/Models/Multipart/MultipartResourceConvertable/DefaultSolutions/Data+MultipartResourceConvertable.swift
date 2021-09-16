@@ -8,10 +8,6 @@
 import Foundation
 
 extension Data: MultipartResourceConvertable {
-    public var resourceName: String {
-        "file_\(hashValue)"
-    }
-    
     public var stream: InputStream? {
         InputStream(data: self)
     }

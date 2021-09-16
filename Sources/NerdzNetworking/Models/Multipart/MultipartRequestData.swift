@@ -15,11 +15,12 @@ public protocol MultipartRequestData: RequestData {
 public protocol MultipartFile {
     var resource: MultipartResourceConvertable { get }
     var mime: MimeType { get }
+    var name: String { get }
     var fileName: String { get }
 }
 
 public extension MultipartFile {
-    var fileName: String? {
-        return nil
+    var fileName: String {
+        name
     }
 }

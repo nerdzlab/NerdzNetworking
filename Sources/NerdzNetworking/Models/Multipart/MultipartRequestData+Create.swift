@@ -30,12 +30,8 @@ extension MultipartRequestData {
             streams.append(InputStream(data: parametersData))
         }
         
-        let moreTnenOneFile = files.count > 1
-        
-        for (index, file) in files.enumerated() {
-            let defaultName = moreTnenOneFile ? "file_\(index)" : "file"
-            
-            if let stream = file.inputStream(with: boundary, defaultName: defaultName) {
+        for file in files {
+            if let stream = file.inputStream(with: boundary) {
                 streams.append(stream)
             }
         }
@@ -62,15 +58,15 @@ extension MultipartRequestData {
 }
 
 private extension MultipartFile {
-    func inputStream(with boundary: String, defaultName: String = "file") -> InputStream? {
-        let name = fileName
-        let resourceName = resource.resourceName
+    func inputStream(with boundary: String) -> InputStream? {
+        
+        let fileName = resource.fileName ?? fileName
         
         var prefixData = Data()
         
         let prefixInfo = [
             "--\(boundary)\r\n",
-            "Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(resourceName)\"\r\n",
+            "Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(fileName)\"\r\n",
             "Content-Type: \(mime.value)\r\n\r\n"]
         
         prefixData.append(values: prefixInfo)

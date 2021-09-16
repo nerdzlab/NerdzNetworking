@@ -8,10 +8,6 @@
 import Foundation
 
 extension InputStream: MultipartResourceConvertable {
-    public var resourceName: String {
-        "file"
-    }
-    
     public var stream: InputStream? {
         self
     }
