@@ -16,7 +16,7 @@ public class DefaultRequestData: RequestData {
     public var timeout: TimeInterval?
     public var shouldCache: Bool
     
-    init(
+    public init(
         path        : String = "", 
         method      : HTTPMethod = .get, 
         queryParams : [(String, String)] = [], 
@@ -32,16 +32,5 @@ public class DefaultRequestData: RequestData {
         self.headers = headers
         self.timeout = timeout
         self.shouldCache = shouldCache
-    }
-    
-    convenience init(_ data: RequestData) {
-        self.init(
-            path: data.path, 
-            method: data.method, 
-            queryParams: data.queryParams, 
-            body: data.body, 
-            timeout: data.timeout, 
-            shouldCache: data.shouldCache
-        )
     }
 }

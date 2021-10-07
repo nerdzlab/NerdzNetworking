@@ -23,11 +23,20 @@ class RequestExecutionWrapper<RequestType: Request> {
     func execute() {
         do {
             
-            let defaultData = DefaultRequestData(operation.request.data)
-            defaultData.timeout = operation.timeout
-            defaultData.shouldCache = operation.shouldCache
+            // We are wrapping a data into internal class to be able to modify some properties
+            let wrappedData: DefaultRequestData
             
-            let dispatchOperation = try dispatcher.dispatch(defaultData,
+            if let multipartData = operation.request.data as? MultipartRequestData {
+                wrappedData = InternalMultipartRequestData(multipartData)
+            }
+            else {
+                wrappedData = InternalRequestData(operation.request.data)
+            }
+            
+            wrappedData.timeout = operation.timeout
+            wrappedData.shouldCache = operation.shouldCache
+            
+            let dispatchOperation = try dispatcher.dispatch(wrappedData,
                 
                 onSuccess: { [weak self] (data, statusCode) in
                     self?.handleDispatchingSuccess(with: data, statusCode)
