@@ -10,9 +10,11 @@ import Foundation
 
 public class ObservationManager {
     public typealias MultipleObserverClosure = (_ request: Any, _ result: Any?, _ error: Any?) -> Void
+    public typealias StatusCodeObserverClosure = (_ statusCode: StatusCode, _ request: Any?) -> Void
     
     private var singleRequestObservers: [String: Any] = [:]
     private var multipleRequestsObservers: [String: MultipleRequestsObserver] = [:]
+    private var statusCodeObservers: [String: StatusCodeObserverClosureWrapper] = [:]
 
     @discardableResult
     public func register<RequestType: Request>(_ closure: @escaping (RequestType, RequestType.ResponseObjectType?, ErrorResponse<RequestType.ErrorType>?) -> Void) -> String {
@@ -35,25 +37,43 @@ public class ObservationManager {
         return token
     }
     
-    public func unregisterObserver(with token: String) {
-        singleRequestObservers.removeValue(forKey: token)
-        multipleRequestsObservers.removeValue(forKey: token)
-    }
-    
     @discardableResult
     public func register(_ observer: MultipleRequestsObserver) -> String {
         let token = UUID().uuidString
         multipleRequestsObservers[token] = observer
         return token
     }
+    
+    @discardableResult
+    public func register(for code: StatusCode? = nil, _ closure: @escaping StatusCodeObserverClosure) -> String {
+        let token = UUID().uuidString
+        statusCodeObservers[token] = StatusCodeObserverClosureWrapper(closure: closure, statusCode: code)
+        return token
+    }
+    
+    public func unregisterObserver(with token: String) {
+        singleRequestObservers.removeValue(forKey: token)
+        multipleRequestsObservers.removeValue(forKey: token)
+        statusCodeObservers.removeValue(forKey: token)
+    }
 
-    public func sendResponseNotification<RequestType: Request>(request: RequestType, result: RequestType.ResponseObjectType?, error: ErrorResponse<RequestType.ErrorType>?) {
+    func sendResponseNotification<RequestType: Request>(request: RequestType, result: RequestType.ResponseObjectType?, error: ErrorResponse<RequestType.ErrorType>?) {
         for observer in Array(singleRequestObservers.values) {
             (observer as? SingleRequestObserverClosureWrapper<RequestType>)?.handle(request: request, result: result, error: error)
         }
         
         for observer in Array(multipleRequestsObservers.values) {
             observer.handle(request: request, result: result, error: error)
+        }
+        
+        if case .server(_, let code) = error {
+            for wrapper in Array(statusCodeObservers.values) {
+                guard code == wrapper.statusCode || wrapper.statusCode == nil else {
+                    continue
+                }
+                
+                wrapper.closure(code, request)
+            }
         }
     }
 }
@@ -89,7 +109,7 @@ private class SingleRequestObserverClosureWrapper<RequestType: Request>: SingleR
 
 private class MultipleRequestsObserverClosureWrapper: MultipleRequestsObserver {
     
-    fileprivate let notifyClosure: ObservationManager.MultipleObserverClosure
+    let notifyClosure: ObservationManager.MultipleObserverClosure
 
     init(_ closure: @escaping ObservationManager.MultipleObserverClosure) {
         self.notifyClosure = closure
@@ -97,5 +117,15 @@ private class MultipleRequestsObserverClosureWrapper: MultipleRequestsObserver {
     
     func handle<T>(request: T, result: T.ResponseObjectType?, error: ErrorResponse<T.ErrorType>?) where T : Request {
         notifyClosure(request, result, error)
+    }
+}
+
+private class StatusCodeObserverClosureWrapper {
+    let statusCode: StatusCode?
+    let closure: ObservationManager.StatusCodeObserverClosure
+    
+    init(closure: @escaping ObservationManager.StatusCodeObserverClosure, statusCode: StatusCode? = nil) {
+        self.closure = closure
+        self.statusCode = statusCode
     }
 }
