@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import FileProvider
 
-public enum ErrorResponse<T: ServerError> {
+public enum ErrorResponse<T: ServerError>: Error {
     case server(_ error: T, statusCode: StatusCode)
     case system(_ error: Error)
 
