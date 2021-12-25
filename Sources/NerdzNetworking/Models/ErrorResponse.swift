@@ -12,6 +12,10 @@ import FileProvider
 public enum ErrorResponse<T: ServerError>: Error {
     case server(_ error: T, statusCode: StatusCode)
     case system(_ error: Error)
+    
+    public var localizedDescription: String {
+        message
+    }
 
     public var message: String {
         switch self {
