@@ -82,6 +82,20 @@ public class Endpoint {
     
     // MARK: - Methods(Public)
     
+    @available(iOS 15, *)
+    public func asyncExecute<T: Request>(_ request: T) async throws -> T.ResponseObjectType {
+        try await withCheckedThrowingContinuation { [weak self] continuation in
+            self?.execute(request)
+                .onSuccess {
+                    continuation.resume(with: .success($0))
+                }
+            
+                .onFail {
+                    continuation.resume(with: .failure($0))
+                }
+        }
+    }
+    
     public func execute<T: Request>(_ request: T) -> ExecutionOperation<T> {
         let queue = responseQueue ?? OperationQueue.current?.underlyingQueue ?? .main
         let decoder = request.decoder ?? self.decoder

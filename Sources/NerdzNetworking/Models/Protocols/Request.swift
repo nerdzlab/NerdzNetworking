@@ -56,6 +56,21 @@ extension Request {
     var data: RequestData {
         self
     }
+    
+    @available(iOS 15, *)
+    public func asyncExecute(on endpoint: Endpoint) async throws -> ResponseObjectType {
+        try await endpoint.asyncExecute(self)
+    }
+    
+    @available(iOS 15, *)
+    public func asyncExecute() async throws -> ResponseObjectType {
+        if let endpoint = self.endpoint ?? .default {
+            return try await asyncExecute(on: endpoint)
+        } 
+        else {
+            throw ErrorResponse<ErrorType>.system(RequestInternalError.defaultEndpointIsNotInitialized)
+        }
+    }
 
     @discardableResult
     public func execute(on endpoint: Endpoint) -> ExecutionOperation<Self> {
