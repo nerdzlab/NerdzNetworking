@@ -88,11 +88,11 @@ public class Endpoint {
         try await withCheckedThrowingContinuation { [weak self] continuation in
             self?.execute(request)
                 .onSuccess {
-                    continuation.resume(with: .success($0))
+                    continuation.resume(returning: $0)
                 }
             
                 .onFail {
-                    continuation.resume(with: .failure($0))
+                    continuation.resume(throwing: $0)
                 }
         }
     }
