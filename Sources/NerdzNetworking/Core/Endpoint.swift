@@ -83,6 +83,7 @@ public class Endpoint {
     // MARK: - Methods(Public)
     
     @available(iOS 15, *)
+    @discardableResult
     public func asyncExecute<T: Request>(_ request: T) async throws -> T.ResponseObjectType {
         try await withCheckedThrowingContinuation { [weak self] continuation in
             self?.execute(request)
