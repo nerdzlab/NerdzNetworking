@@ -40,7 +40,7 @@ class Mapper<T: Decodable> {
                 return try decoder.decode(T.self, from: finalData)
             }
         }
-        else if let result = Empty() as? T {
+        else if let result = (T.self as? NoDataMappable.Type)?.noDataObject() as? T {
             return result
         }
         else {
