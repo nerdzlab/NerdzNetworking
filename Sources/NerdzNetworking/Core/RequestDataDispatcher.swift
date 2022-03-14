@@ -79,9 +79,14 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
             
             if let httpUrlResponse = response as? HTTPURLResponse {
                 
-                if let data = data, requestData.shouldCache {
-                    let object = CachedURLResponse(response: httpUrlResponse, data: data)
-                    URLCache.shared.storeCachedResponse(object, for: request)
+                if requestData.shouldCache {
+                    if let data = data {
+                        let object = CachedURLResponse(response: httpUrlResponse, data: data)
+                        URLCache.shared.storeCachedResponse(object, for: request)
+                    }
+                    else {
+                        URLCache.shared.removeCachedResponse(for: request)
+                    }
                 }
                 
                 onSuccess?(data, httpUrlResponse.statusCode)
