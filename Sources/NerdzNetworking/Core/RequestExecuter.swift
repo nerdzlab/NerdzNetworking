@@ -57,4 +57,12 @@ class RequestExecuter {
             converter: converter)
             .map(from: data)
     }
+    
+    func clearCache<RequestType: Request>(for request: RequestType) throws {
+        try dispatcher.clearCachedResponse(for: request)
+    }
+    
+    func clearAllCache() {
+        try dispatcher.clearAllCachedResponses()
+    }
 }

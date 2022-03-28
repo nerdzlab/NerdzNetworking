@@ -132,6 +132,27 @@ public class Endpoint {
         }
     }
     
+    @discardableResult
+    public func clearCache<RequestType: Request>(for request: RequestType) -> Bool {
+        do {
+            try requestExecuter.clearCache(for: request)
+            return true
+        }
+        catch {
+            return false
+        }
+    }
+    @discardableResult
+    public func clearAllCache() -> Bool {
+        do {
+            try requestExecuter.clearAllCache()
+            return true
+        }
+        catch {
+            return false
+        }
+    }
+    
     // MARK: - Methods(Private)
     
     private static func createdRequestExecuter(
