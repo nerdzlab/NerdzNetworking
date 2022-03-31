@@ -51,10 +51,11 @@ class RequestExecuter {
     func cachedResult<RequestType: Request>(for request: RequestType, decoder: JSONDecoder, converter: ResponseJsonConverter? = nil) throws -> RequestType.ResponseObjectType? {
         
         let data = try dispatcher.cahcedResponse(for: request)
+        let finalConverter = converter ?? request.responseConverter
         
         return try Mapper<RequestType.ResponseObjectType>(
             decoder: decoder, 
-            converter: converter)
+            converter: finalConverter)
             .map(from: data)
     }
     
