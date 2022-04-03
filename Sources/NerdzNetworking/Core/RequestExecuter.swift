@@ -64,6 +64,6 @@ class RequestExecuter {
     }
     
     func clearAllCache() {
-        try dispatcher.clearAllCachedResponses()
+        dispatcher.clearAllCachedResponses()
     }
 }

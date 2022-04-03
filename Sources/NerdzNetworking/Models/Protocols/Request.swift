@@ -57,13 +57,13 @@ extension Request {
         self
     }
     
-    @available(iOS 15, *)
+    @available(iOS 13, *)
     @discardableResult
     public func asyncExecute(on endpoint: Endpoint) async throws -> ResponseObjectType {
         try await endpoint.asyncExecute(self)
     }
     
-    @available(iOS 15, *)
+    @available(iOS 13, *)
     @discardableResult
     public func asyncExecute() async throws -> ResponseObjectType {
         if let endpoint = self.endpoint ?? .default {
