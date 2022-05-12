@@ -29,6 +29,8 @@ class Mapper<T: Decodable> {
     
     func map(from data: Data?) throws -> T {
         if let data = data, !data.isEmpty {
+            var finalData = data
+            
             if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
                 let finalJson = try converter?.convertedJson(from: json) ?? json
             
@@ -36,9 +38,12 @@ class Mapper<T: Decodable> {
                     return result
                 }
                 else {
-                    let finalData = try JSONSerialization.data(withJSONObject: finalJson, options: [])
-                    return try decoder.decode(T.self, from: finalData)
+                    finalData = try JSONSerialization.data(withJSONObject: finalJson, options: [])
                 }
+            }
+            
+            if let result = try? decoder.decode(T.self, from: finalData) {
+                return result
             }
             else if let result = (T.self as? DataMappable.Type)?.object(from: data) as? T {
                 return result
