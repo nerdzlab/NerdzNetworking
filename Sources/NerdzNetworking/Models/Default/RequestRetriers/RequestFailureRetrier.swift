@@ -10,7 +10,7 @@ import ObjectiveC
 
 private var retriesCountHandler: UInt = 0
 
-class RequestFailureRetrier: RequestRetrier {
+public class RequestFailureRetrier: RequestRetrier {
     private class WeakRequest {
         
         /// Wrapped object
@@ -26,7 +26,7 @@ class RequestFailureRetrier: RequestRetrier {
     private var requests: [String: WeakRequest] = [:]
     private var atempts: [String: Int] = [:]
     
-    init(retryCount: Int = 1) {
+    public init(retryCount: Int = 1) {
         self.retryCount = retryCount
     }
     
