@@ -32,6 +32,7 @@ public class Endpoint {
     public let sessionConfiguration: URLSessionConfiguration
     public let retryingCount: Int
     public let observation = ObservationManager()
+    
     public let requestRetrying = RequestRetryingManager()
     
     public var trustKit: TrustKit? {
@@ -78,6 +79,8 @@ public class Endpoint {
             headers                 : headers,
             observation             : observation,
             requestRetryingManager  : requestRetrying)
+        
+        requestRetrying.endpoint = self
     }
     
     // MARK: - Methods(Public)

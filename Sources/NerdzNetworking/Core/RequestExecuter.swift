@@ -36,12 +36,12 @@ class RequestExecuter {
             self?.observationManager.sendResponseNotification(request: wrapper.operation.request, result: result, error: error)
         }
         
-        wrapper.onNeedRetrier = { [weak self, weak wrapper] error in
+        wrapper.onRetry = { [weak self, weak wrapper] error in
             guard let wrapper = wrapper else {
                 return nil
             }
             
-            return self?.requestRetryingManager.retrier(for: error, from: wrapper.operation.request)
+            return await self?.requestRetryingManager.retries(for: error, from: wrapper.operation.request)
         }
         
         wrappers[key] = wrapper
