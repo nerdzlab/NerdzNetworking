@@ -30,13 +30,13 @@ public class RequestFailureRetrier: RequestRetrier {
         self.retryCount = retryCount
     }
     
-    func canHandleError<T>(_ error: ErrorResponse<T.ErrorType>, for request: T) -> Bool where T : Request {
+    public func canHandleError<T>(_ error: ErrorResponse<T.ErrorType>, for request: T) -> Bool where T : Request {
         let retryCount = (objc_getAssociatedObject(request, &retriesCountHandler) as? Int) ?? 0
         
         return retryCount < self.retryCount
     }
     
-    func handleError<T: Request>(_ error: ErrorResponse<T.ErrorType>, for request: T, on endpoint: Endpoint) async -> T? {
+    public func handleError<T: Request>(_ error: ErrorResponse<T.ErrorType>, for request: T, on endpoint: Endpoint) async -> T? {
         let retryCount = (objc_getAssociatedObject(request, &retriesCountHandler) as? Int) ?? 0
         
         guard retryCount < self.retryCount else {
