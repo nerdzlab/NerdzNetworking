@@ -46,24 +46,5 @@ public class RequestFailureRetrier: RequestRetrier {
         objc_setAssociatedObject(request, &retriesCountHandler, retryCount + 1, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         
         return request
-        
-//        let pastRequestKey: String
-//        
-//        if let objectRequest = request as? Any {
-//            pastRequestKey = requests.first(where: { ($0.value.object as? Any) === request })?.key ?? UUID().uuidString
-//        }
-//        
-//        
-//        let atemptsCount = atempts[pastRequestKey] ?? 0
-//        
-//        if atemptsCount < retryCount {
-//            atempts[pastRequestKey] = atemptsCount + 1
-//            requests[pastRequestKey] = WeakRequest(request)
-//            
-//            return request
-//        }
-//        else {
-//            return nil
-//        }
     }
 }

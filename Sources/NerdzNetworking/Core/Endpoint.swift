@@ -23,6 +23,10 @@ public class Endpoint {
     
     public static var `default`: Endpoint?
     
+    // MARK: - Completions
+    
+    var onNewTokenAutoSet: ((AuthToken?) -> Void)?
+    
     // MARK: - Configuration
     
     public let decoder: JSONDecoder
@@ -80,7 +84,7 @@ public class Endpoint {
             observation             : observation,
             requestRetryingManager  : requestRetrying)
         
-        requestRetrying.endpoint = self
+        setupComponents()
     }
     
     // MARK: - Methods(Public)
@@ -147,13 +151,16 @@ public class Endpoint {
     }
     @discardableResult
     public func clearAllCache() -> Bool {
-        do {
-            try requestExecuter.clearAllCache()
-            return true
-        }
-        catch {
-            return false
-        }
+        
+        requestExecuter.clearAllCache()
+        return true
+    }
+    
+    // MARK: - Methonds(Internal)
+    
+    func setNewAuthToken(_ token: AuthToken?) {
+        headers.authToken = token
+        onNewTokenAutoSet?(token)
     }
     
     // MARK: - Methods(Private)
@@ -212,5 +219,13 @@ public class Endpoint {
         -> RequestFactory 
     {
         RequestFactory(baseUrl: baseUrl, headers: headers)
+    }
+    
+    private func setupComponents() {
+        requestRetrying.endpoint = self
+        
+        requestExecuter.onNewTokenReceived = { [weak self] token in
+            self?.setNewAuthToken(token)
+        }
     }
 }

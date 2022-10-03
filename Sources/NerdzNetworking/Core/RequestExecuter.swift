@@ -10,6 +10,8 @@ import Foundation
 
 class RequestExecuter {
     
+    var onNewTokenReceived: ((AuthToken?) -> Void)?
+    
     let dispatcher: RequestDataDispatcher
     let observationManager: ObservationManager
     
@@ -33,7 +35,7 @@ class RequestExecuter {
             }
             
             self?.wrappers.removeValue(forKey: key)
-            self?.observationManager.sendResponseNotification(request: wrapper.operation.request, result: result, error: error)
+            self?.handleExecutionFinish(for: wrapper, result: result, error: error)
         }
         
         wrapper.onRetry = { [weak self, weak wrapper] error in
@@ -65,5 +67,14 @@ class RequestExecuter {
     
     func clearAllCache() {
         dispatcher.clearAllCachedResponses()
+    }
+    
+    private func handleExecutionFinish<T: Request>(for wrapper: RequestExecutionWrapper<T>, result: T.ResponseObjectType?, error: ErrorResponse<T.ErrorType>?) {
+        
+        if let tokenContainer = result as? TokenContainer? {
+            onNewTokenReceived?(tokenContainer?.token)
+        }
+        
+        observationManager.sendResponseNotification(request: wrapper.operation.request, result: result, error: error)
     }
 }
