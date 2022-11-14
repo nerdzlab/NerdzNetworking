@@ -44,11 +44,13 @@ class Mapper<T: Decodable> {
                 }
             }
             
-            if let result = (T.self as? DataMappable.Type)?.object(from: data) as? T {
-                returnResult = result
-            }
-            else {
-                returnResult = try decoder.decode(T.self, from: finalData)
+            if returnResult == nil {
+                if let result = (T.self as? DataMappable.Type)?.object(from: data) as? T {
+                    returnResult = result
+                }
+                else {
+                    returnResult = try decoder.decode(T.self, from: finalData)
+                }
             }
         }
         else if let result = (T.self as? NoDataMappable.Type)?.noDataObject() as? T {
