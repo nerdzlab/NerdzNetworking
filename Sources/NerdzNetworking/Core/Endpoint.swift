@@ -25,7 +25,7 @@ public class Endpoint {
     
     // MARK: - Completions
     
-    var onNewTokenAutoSet: ((AuthToken?) -> Void)?
+    public var onNewTokenAutoSet: ((AuthToken?) -> Void)?
     
     // MARK: - Configuration
     

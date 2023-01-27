@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol TokenContainer {
-    var token: AuthToken? { get set }
+    var token: AuthToken? { get }
 }
