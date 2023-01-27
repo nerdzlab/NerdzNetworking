@@ -16,6 +16,10 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
     
     public var onNeedRefreshRequest: RefreshRequestAction?
     
+    public init() {
+        
+    }
+    
     public func handleError<T>(_ error: ErrorResponse<T.ErrorType>, for request: T, on endpoint: Endpoint) async -> T? where T : Request {
         guard let refreshRequest = onNeedRefreshRequest?() else {
             return nil
