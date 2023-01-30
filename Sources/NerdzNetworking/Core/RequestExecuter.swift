@@ -10,7 +10,7 @@ import Foundation
 
 class RequestExecuter {
     
-    var onNewTokenReceived: ((AuthToken?) -> Void)?
+    var onNewTokenReceived: ((TokenContainer) -> Void)?
     
     let dispatcher: RequestDataDispatcher
     let observationManager: ObservationManager
@@ -72,7 +72,7 @@ class RequestExecuter {
     private func handleExecutionFinish<T: Request>(for wrapper: RequestExecutionWrapper<T>, result: T.ResponseObjectType?, error: ErrorResponse<T.ErrorType>?) {
         
         if let tokenContainer = result as? TokenContainer {
-            onNewTokenReceived?(tokenContainer.token)
+            onNewTokenReceived?(tokenContainer)
         }
         
         observationManager.sendResponseNotification(request: wrapper.operation.request, result: result, error: error)

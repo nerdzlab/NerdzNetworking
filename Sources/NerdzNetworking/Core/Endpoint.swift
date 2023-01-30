@@ -25,7 +25,7 @@ public class Endpoint {
     
     // MARK: - Completions
     
-    public var onNewTokenAutoSet: ((AuthToken?) -> Void)?
+    public var onNewTokenAutoSet: ((TokenContainer?) -> Void)?
     
     // MARK: - Configuration
     
@@ -158,9 +158,9 @@ public class Endpoint {
     
     // MARK: - Methonds(Internal)
     
-    func setNewAuthToken(_ token: AuthToken?) {
-        headers.authToken = token
-        onNewTokenAutoSet?(token)
+    func setNewAuthToken(_ tokenContainer: TokenContainer?) {
+        headers.authToken = tokenContainer?.token
+        onNewTokenAutoSet?(tokenContainer)
     }
     
     // MARK: - Methods(Private)
@@ -224,8 +224,8 @@ public class Endpoint {
     private func setupComponents() {
         requestRetrying.endpoint = self
         
-        requestExecuter.onNewTokenReceived = { [weak self] token in
-            self?.setNewAuthToken(token)
+        requestExecuter.onNewTokenReceived = { [weak self] tokenContainer in
+            self?.setNewAuthToken(tokenContainer)
         }
     }
 }

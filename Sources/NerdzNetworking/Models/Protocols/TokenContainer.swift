@@ -9,4 +9,5 @@ import Foundation
 
 public protocol TokenContainer {
     var token: AuthToken? { get }
+    var refreshToken: String? { get }
 }
