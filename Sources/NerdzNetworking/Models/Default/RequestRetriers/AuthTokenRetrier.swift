@@ -26,7 +26,7 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
         }
         
         if let response = try? await endpoint.asyncExecute(refreshRequest) {
-            endpoint.setNewAuthToken(response.token)
+            endpoint.setNewAuthToken(response)
             return request
         }
         else {
