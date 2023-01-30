@@ -8,20 +8,19 @@
 import Foundation
 
 public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier where RequestType.ResponseObjectType: TokenContainer {
-    public typealias RefreshRequestAction = () -> RequestType?
     
     public var codes: [StatusCode] {
         [.unauthorized, .forbidden]
     }
     
-    public var onNeedRefreshRequest: RefreshRequestAction?
+    public var onNeedRefreshRequest: RequestType?
     
     public init() {
         
     }
     
     public func handleError<T>(_ error: ErrorResponse<T.ErrorType>, for request: T, on endpoint: Endpoint) async -> T? where T : Request {
-        guard let refreshRequest = onNeedRefreshRequest?() else {
+        guard let refreshRequest = onNeedRefreshRequest else {
             return nil
         }
         
