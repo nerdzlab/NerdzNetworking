@@ -41,5 +41,9 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
         else {
             return nil
         }
+        
+        defer {
+            pendingRefreshRequest = nil
+        }
     }
 }
