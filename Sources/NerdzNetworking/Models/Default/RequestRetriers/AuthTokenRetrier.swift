@@ -44,10 +44,6 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
         
         pendingRefreshRequest = refreshRequest
         
-        defer {
-            pendingRefreshRequest = nil
-        }
-        
         do {
             let response = try await endpoint.asyncExecute(refreshRequest)
             endpoint.setNewAuthToken(response)
@@ -61,6 +57,10 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
         }
         catch {
             print(error)
+        }
+        
+        defer {
+            pendingRefreshRequest = nil
         }
         
         if let response = try? await endpoint.asyncExecute(refreshRequest) {
