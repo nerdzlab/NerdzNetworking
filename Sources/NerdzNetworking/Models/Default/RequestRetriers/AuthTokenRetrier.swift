@@ -34,7 +34,7 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
             canBeExecutedByParrent = false
         }
         
-        return canBeExecutedByParrent && (pendingRefreshRequest as AnyObject) !== (request as AnyObject)
+        return canBeExecutedByParrent && pendingRefreshRequest?.path != request.path
     }
     
     public func handleError<T>(_ error: ErrorResponse<T.ErrorType>, for request: T, on endpoint: Endpoint) async -> T? where T : Request {
