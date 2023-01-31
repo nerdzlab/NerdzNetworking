@@ -18,11 +18,7 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
     public var onNeedRefreshRequest: GetRefreshRequestAction?
     public var onRefreshFailed: RefreshFailedAction?
     
-    private var pendingRefreshRequest: RequestType? {
-        didSet {
-            print("++++ \(pendingRefreshRequest as AnyObject)")
-        }
-    }
+    private var pendingRefreshRequest: RequestType?
     
     public init() {
         
@@ -38,9 +34,7 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
             canBeExecutedByParrent = false
         }
         
-        print("---- \(pendingRefreshRequest as AnyObject)")
-        print("---- \(request as AnyObject)")
-        return canBeExecutedByParrent && (pendingRefreshRequest as AnyObject) !== (request.path as AnyObject)
+        return canBeExecutedByParrent && pendingRefreshRequest?.path != request.path
     }
     
     public func handleError<T>(_ error: ErrorResponse<T.ErrorType>, for request: T, on endpoint: Endpoint) async -> T? where T : Request {
@@ -49,6 +43,10 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
         }
         
         pendingRefreshRequest = refreshRequest
+        
+        defer {
+            pendingRefreshRequest = nil
+        }
         
         do {
             let response = try await endpoint.asyncExecute(refreshRequest)
