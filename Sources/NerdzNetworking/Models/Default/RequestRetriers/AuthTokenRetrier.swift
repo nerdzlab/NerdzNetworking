@@ -63,12 +63,6 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
             print(error)
         }
         
-        if let response = try? await endpoint.asyncExecute(refreshRequest) {
-            endpoint.setNewAuthToken(response)
-            return request
-        }
-        else {
-            return nil
-        }
+        return nil
     }
 }
