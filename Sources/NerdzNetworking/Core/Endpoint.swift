@@ -158,7 +158,10 @@ public class Endpoint {
     
     // MARK: - Methonds(Internal)
     
+    var test: TokenContainer?
+    
     func setNewAuthToken(_ tokenContainer: TokenContainer?) {
+        test = tokenContainer
         headers.authToken = tokenContainer?.token
         onNewTokenAutoSet?(tokenContainer)
     }
