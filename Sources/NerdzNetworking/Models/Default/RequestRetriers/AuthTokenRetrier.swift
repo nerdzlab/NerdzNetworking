@@ -8,12 +8,15 @@
 import Foundation
 
 public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier where RequestType.ResponseObjectType: TokenContainer {
+    public typealias GetRefreshRequestAction = () -> RequestType?
+    public typealias RefreshFailedAction = (ErrorResponse<RequestType.ErrorType>) -> Void
     
     public var codes: [StatusCode] {
         [.unauthorized, .forbidden]
     }
     
-    public var onNeedRefreshRequest: RequestType?
+    public var onNeedRefreshRequest: GetRefreshRequestAction?
+    public var onRefreshFailed: RefreshFailedAction?
     
     private var pendingRefreshRequest: RequestType?
     
@@ -35,11 +38,30 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
     }
     
     public func handleError<T>(_ error: ErrorResponse<T.ErrorType>, for request: T, on endpoint: Endpoint) async -> T? where T : Request {
-        guard let refreshRequest = onNeedRefreshRequest else {
+        guard let refreshRequest = onNeedRefreshRequest?() else {
             return nil
         }
         
         pendingRefreshRequest = refreshRequest
+        
+        defer {
+            pendingRefreshRequest = nil
+        }
+        
+        do {
+            let response = try await endpoint.asyncExecute(refreshRequest)
+            endpoint.setNewAuthToken(response)
+            return request
+        }
+        catch ErrorResponse<RequestType.ErrorType>.server(let error, statusCode: let code) {
+            onRefreshFailed?(.server(error, statusCode: code))
+        }
+        catch ErrorResponse<RequestType.ErrorType>.system(let error) {
+            onRefreshFailed?(.system(error))
+        }
+        catch {
+            print(error)
+        }
         
         if let response = try? await endpoint.asyncExecute(refreshRequest) {
             endpoint.setNewAuthToken(response)
@@ -47,10 +69,6 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
         }
         else {
             return nil
-        }
-        
-        defer {
-            pendingRefreshRequest = nil
         }
     }
 }
