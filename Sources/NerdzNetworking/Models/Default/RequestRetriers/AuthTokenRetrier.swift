@@ -22,9 +22,16 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
     }
     
     public func canHandleError<T>(_ error: ErrorResponse<T.ErrorType>, for request: T) -> Bool where T : Request {
-        let canBeExecutedByParrent = (self as OnStatusCodesRequestRetrier).canHandleError(error, for: request)
+        let canBeExecutedByParrent: Bool
         
-        return canBeExecutedByParrent && (pendingRefreshRequest as AnyObject) === (request as AnyObject)
+        if case .server(_, let statusCode) = error {
+            canBeExecutedByParrent = codes.contains(statusCode)
+        }
+        else {
+            canBeExecutedByParrent = false
+        }
+        
+        return canBeExecutedByParrent && (pendingRefreshRequest as AnyObject) !== (request as AnyObject)
     }
     
     public func handleError<T>(_ error: ErrorResponse<T.ErrorType>, for request: T, on endpoint: Endpoint) async -> T? where T : Request {
