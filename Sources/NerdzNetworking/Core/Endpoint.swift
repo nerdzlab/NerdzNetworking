@@ -160,12 +160,14 @@ public class Endpoint {
     
     var test: TokenContainer?
     
-    func setNewAuthToken(_ tokenContainer: TokenContainer?) {        
-        if headers.authToken != tokenContainer?.token {
-            headers.authToken = tokenContainer?.token
-        }
-       
-        onNewTokenAutoSet?(tokenContainer)
+    func setNewAuthToken(_ tokenContainer: TokenContainer?) {   
+        DispatchQueue.main.async {
+            if self.headers.authToken != tokenContainer?.token {
+                self.headers.authToken = tokenContainer?.token
+            }
+           
+            self.onNewTokenAutoSet?(tokenContainer)
+        }   
     }
     
     // MARK: - Methods(Private)
