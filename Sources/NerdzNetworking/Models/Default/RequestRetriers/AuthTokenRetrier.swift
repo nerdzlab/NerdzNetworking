@@ -18,7 +18,11 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
     public var onNeedRefreshRequest: GetRefreshRequestAction?
     public var onRefreshFailed: RefreshFailedAction?
     
-    private var pendingRefreshRequest: RequestType?
+    private var pendingRefreshRequest: RequestType? {
+        didSet {
+            print("++++ \(pendingRefreshRequest as AnyObject)")
+        }
+    }
     
     public init() {
         
@@ -34,8 +38,8 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
             canBeExecutedByParrent = false
         }
         
-        print(pendingRefreshRequest)
-        print(request)
+        print("---- \(pendingRefreshRequest as AnyObject)")
+        print("---- \(request as AnyObject)")
         return canBeExecutedByParrent && (pendingRefreshRequest as AnyObject) !== (request.path as AnyObject)
     }
     
