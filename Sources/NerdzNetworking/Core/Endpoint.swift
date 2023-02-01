@@ -162,10 +162,7 @@ public class Endpoint {
     
     func setNewAuthToken(_ tokenContainer: TokenContainer?) {   
         DispatchQueue.main.async {
-            if self.headers.authToken != tokenContainer?.token {
-                self.headers.authToken = tokenContainer?.token
-            }
-           
+            self.headers.authToken = tokenContainer?.token
             self.onNewTokenAutoSet?(tokenContainer)
         }   
     }
