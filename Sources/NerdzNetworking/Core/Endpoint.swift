@@ -161,6 +161,7 @@ public class Endpoint {
     var test: TokenContainer?
     
     func setNewAuthToken(_ tokenContainer: TokenContainer?) {   
+        // TODO: workaround to dispatch
         DispatchQueue.main.async {
             self.headers.authToken = tokenContainer?.token
             self.onNewTokenAutoSet?(tokenContainer)

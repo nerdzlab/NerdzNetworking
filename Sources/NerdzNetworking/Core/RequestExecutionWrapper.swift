@@ -87,6 +87,9 @@ class RequestExecutionWrapper<RequestType: Request> {
                 }
             }
         }
+        catch let error as DescriptiveDecodingError {
+            self.callError(with: .decoding(error))
+        }
         catch {
             self.callError(with: .system(error))
         }
