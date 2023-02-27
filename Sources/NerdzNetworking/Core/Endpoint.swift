@@ -23,6 +23,10 @@ public class Endpoint {
     
     public static var `default`: Endpoint?
     
+    // MARK: - Completions
+    
+    public var onNewTokenAutoSet: ((TokenContainer?) -> Void)?
+    
     // MARK: - Configuration
     
     public let decoder: JSONDecoder
@@ -32,6 +36,7 @@ public class Endpoint {
     public let sessionConfiguration: URLSessionConfiguration
     public let retryingCount: Int
     public let observation = ObservationManager()
+    
     public let requestRetrying = RequestRetryingManager()
     
     public var trustKit: TrustKit? {
@@ -78,6 +83,8 @@ public class Endpoint {
             headers                 : headers,
             observation             : observation,
             requestRetryingManager  : requestRetrying)
+        
+        setupComponents()
     }
     
     // MARK: - Methods(Public)
@@ -144,13 +151,21 @@ public class Endpoint {
     }
     @discardableResult
     public func clearAllCache() -> Bool {
-        do {
-            try requestExecuter.clearAllCache()
-            return true
-        }
-        catch {
-            return false
-        }
+        
+        requestExecuter.clearAllCache()
+        return true
+    }
+    
+    // MARK: - Methonds(Internal)
+    
+    var test: TokenContainer?
+    
+    func setNewAuthToken(_ tokenContainer: TokenContainer?) {   
+        // TODO: workaround to dispatch
+        DispatchQueue.main.async {
+            self.headers.authToken = tokenContainer?.token
+            self.onNewTokenAutoSet?(tokenContainer)
+        }   
     }
     
     // MARK: - Methods(Private)
@@ -209,5 +224,13 @@ public class Endpoint {
         -> RequestFactory 
     {
         RequestFactory(baseUrl: baseUrl, headers: headers)
+    }
+    
+    private func setupComponents() {
+        requestRetrying.endpoint = self
+        
+        requestExecuter.onNewTokenReceived = { [weak self] tokenContainer in
+            self?.setNewAuthToken(tokenContainer)
+        }
     }
 }

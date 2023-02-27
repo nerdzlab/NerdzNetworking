@@ -9,7 +9,7 @@ import Foundation
 
 class RequestExecutionWrapper<RequestType: Request> {
     
-    var onNeedRetrier: ((_ error: ErrorResponse<RequestType.ErrorType>) -> RequestRetrier?)?
+    var onRetry: ((_ error: ErrorResponse<RequestType.ErrorType>) async -> RequestType?)?
     var onFinish: ((_ result: RequestType.ResponseObjectType?, _ error: ErrorResponse<RequestType.ErrorType>?) -> Void)?
     
     let operation: ExecutionOperation<RequestType>
@@ -81,8 +81,14 @@ class RequestExecutionWrapper<RequestType: Request> {
                     .map(from: response)
                 
                 let error: ErrorResponse<RequestType.ErrorType> = .server(result, statusCode: statusCode)
-                retryIfNeededOrCall(for: error)
+                
+                Task {
+                    await self.retryIfNeededOrCall(for: error)
+                }
             }
+        }
+        catch let error as DescriptiveDecodingError {
+            self.callError(with: .decoding(error))
         }
         catch {
             self.callError(with: .system(error))
@@ -91,22 +97,16 @@ class RequestExecutionWrapper<RequestType: Request> {
     
     private func handleDispatchingError(with error: Error) {
         let error: ErrorResponse<RequestType.ErrorType> = .system(error)
-        retryIfNeededOrCall(for: error)
+        
+        Task {
+            await self.retryIfNeededOrCall(for: error)
+        }
     }
     
-    private func retryIfNeededOrCall(for error: ErrorResponse<RequestType.ErrorType>) {
-        if let retrier = onNeedRetrier?(error), operation.willRetryOnFail {
-            operation.handleRetryOnFailActionMade()
-            
-            retrier.handleError(error, for: operation.request) { [weak self] newRequest in
-                if let request = newRequest {
-                    self?.operation.request = request
-                    self?.execute()
-                }
-                else {
-                    self?.retryIfNeededOrCall(for: error)
-                }
-            }
+    private func retryIfNeededOrCall(for error: ErrorResponse<RequestType.ErrorType>) async {
+        if let newRequest = await onRetry?(error) {
+            operation.request = newRequest
+            execute()
         }
         else {
             callError(with: error)
