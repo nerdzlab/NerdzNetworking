@@ -8,7 +8,7 @@
 import Foundation
 import TrustKit
 
-public class Endpoint {
+open class Endpoint {
     
     private enum Constants {
         static let defaultHeaders: [RequestHeaderKey: String] = {
