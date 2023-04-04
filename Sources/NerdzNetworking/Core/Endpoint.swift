@@ -21,7 +21,7 @@ open class Endpoint {
     
     // MARK: - Singleton
     
-    open static var `default`: Endpoint?
+    public static var `default`: Endpoint?
     
     // MARK: - Completions
     
@@ -29,15 +29,15 @@ open class Endpoint {
     
     // MARK: - Configuration
     
-    open let decoder: JSONDecoder
-    open let responseQueue: DispatchQueue?
+    public let decoder: JSONDecoder
+    public let responseQueue: DispatchQueue?
     
-    open let baseUrl: URL
-    open let sessionConfiguration: URLSessionConfiguration
-    open let retryingCount: Int
-    open let observation = ObservationManager()
+    public let baseUrl: URL
+    public let sessionConfiguration: URLSessionConfiguration
+    public let retryingCount: Int
+    public let observation = ObservationManager()
     
-    open let requestRetrying = RequestRetryingManager()
+    public let requestRetrying = RequestRetryingManager()
     
     open var trustKit: TrustKit? {
         didSet {
@@ -61,7 +61,7 @@ open class Endpoint {
     
     // MARK: - Initialization
     
-    open init(
+    public init(
         baseUrl: URL,
         decoder: JSONDecoder = JSONDecoder(),
         responseQueue: DispatchQueue? = nil,
