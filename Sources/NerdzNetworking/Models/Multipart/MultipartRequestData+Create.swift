@@ -16,24 +16,34 @@ extension MultipartRequestData {
         
         var streams: [InputStream] = []
         
+        for file in files {
+            if let stream = file.inputStream(with: boundary) {
+                streams.append(stream)
+            }
+        }
+        
         if case .params(let bodyParams) = body {
             var parametersData = Data()
             
-            for (key, value) in bodyParams {
-                let values = ["--\(boundary)\r\n",
-                    "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n",
-                    "\(value)\r\n"]
+            let orderedParameters: [(key: String, value: Any)] = bodyParams.map { ($0.key, $0.value) }
+            
+            for (index, parameter) in orderedParameters.enumerated() {
+                var valueString = "\(parameter.value)"
+                
+                if index != orderedParameters.count - 1 {
+                    valueString += "\r\n"
+                }
+                
+                let values = [
+                    "--\(boundary)\r\n",
+                    "Content-Disposition: form-data; name=\"\(parameter.key)\"\r\n\r\n",
+                    valueString
+                ]
                 
                 parametersData.append(values: values)
             }
             
             streams.append(InputStream(data: parametersData))
-        }
-        
-        for file in files {
-            if let stream = file.inputStream(with: boundary) {
-                streams.append(stream)
-            }
         }
         
         if let postfixData = "\r\n--\(boundary)--\r\n".data(using: .utf8) {
