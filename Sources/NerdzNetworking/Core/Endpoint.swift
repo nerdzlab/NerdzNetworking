@@ -8,7 +8,7 @@
 import Foundation
 import TrustKit
 
-public class Endpoint {
+open class Endpoint {
     
     private enum Constants {
         static let defaultHeaders: [RequestHeaderKey: String] = {
@@ -25,7 +25,7 @@ public class Endpoint {
     
     // MARK: - Completions
     
-    public var onNewTokenAutoSet: ((TokenContainer?) -> Void)?
+    open var onNewTokenAutoSet: ((TokenContainer?) -> Void)?
     
     // MARK: - Configuration
     
@@ -39,13 +39,13 @@ public class Endpoint {
     
     public let requestRetrying = RequestRetryingManager()
     
-    public var trustKit: TrustKit? {
+    open var trustKit: TrustKit? {
         didSet {
             requestDispatcher.trustKit = trustKit
         }
     }
     
-    public var headers: [RequestHeaderKey: String] {
+    open var headers: [RequestHeaderKey: String] {
         didSet { requestFactory.headers = headers }
     }
 
@@ -91,7 +91,7 @@ public class Endpoint {
     
     @available(iOS 13, *)
     @discardableResult
-    public func asyncExecute<T: Request>(_ request: T) async throws -> T.ResponseObjectType {
+    open func asyncExecute<T: Request>(_ request: T) async throws -> T.ResponseObjectType {
         try await withCheckedThrowingContinuation { [weak self] continuation in
             self?.execute(request)
                 .onSuccess {
@@ -104,7 +104,7 @@ public class Endpoint {
         }
     }
     
-    public func execute<T: Request>(_ request: T) -> ExecutionOperation<T> {
+    open func execute<T: Request>(_ request: T) -> ExecutionOperation<T> {
         let queue = responseQueue ?? OperationQueue.current?.underlyingQueue ?? .main
         let decoder = request.decoder ?? self.decoder
         let operation = ExecutionOperation<T>(request: request, decoder: decoder, responseQueue: queue, retryingCount: retryingCount)
@@ -116,15 +116,15 @@ public class Endpoint {
         return operation
     }
     
-    public func cURL<T: Request>(for request: T) throws -> String {
+    open func cURL<T: Request>(for request: T) throws -> String {
         try requestFactory.request(from: request).cURL
     }
     
-    public func useAsDefault() {
+    open func useAsDefault() {
         type(of: self).default = self
     }
     
-    public func cachedResponse<T: Request>(
+    open func cachedResponse<T: Request>(
         for request: T, 
         decoder: JSONDecoder? = nil, 
         converter: ResponseJsonConverter? = nil
@@ -140,7 +140,7 @@ public class Endpoint {
     }
     
     @discardableResult
-    public func clearCache<RequestType: Request>(for request: RequestType) -> Bool {
+    open func clearCache<RequestType: Request>(for request: RequestType) -> Bool {
         do {
             try requestExecuter.clearCache(for: request)
             return true
@@ -150,7 +150,7 @@ public class Endpoint {
         }
     }
     @discardableResult
-    public func clearAllCache() -> Bool {
+    open func clearAllCache() -> Bool {
         
         requestExecuter.clearAllCache()
         return true
