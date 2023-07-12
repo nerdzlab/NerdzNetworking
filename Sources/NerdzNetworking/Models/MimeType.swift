@@ -22,7 +22,7 @@ public struct MimeType {
             return nil
         }
         
-        let components = string.components(separatedBy: "/;=")
+        let components = string.components(separatedBy: ["/", ";","="])
         
         guard components.count >= 2 else {
             return nil

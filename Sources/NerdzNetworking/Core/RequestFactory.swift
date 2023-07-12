@@ -61,9 +61,8 @@ class RequestFactory {
             urlRequest.setHeader(.contentType, with: mime.value)
             urlRequest.httpBodyStream = streamData.stream
         }
-        else {
-            urlRequest.httpBody = try requestData.body?.generateBodyData()
-        }
+        
+        urlRequest.httpBody = try requestData.body?.generateBodyData()
 
         return urlRequest
     }
