@@ -9,12 +9,12 @@
 import Foundation
 
 class RequestFactory {
-    private enum RequestFactoryError: Error {
+    private enum RequestFactoryError: LocalizedError {
         case unsiutableMultipartParameters
         case invalidUrl
         case noBaseUrl
         
-        var localizedDescription: String {
+        var errorDescription: String? {
             switch self {
             case .noBaseUrl: 
                 return "No base url provided to create a request"

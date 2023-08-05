@@ -11,10 +11,10 @@ import Foundation
 public class ClosureResponseConverter: ResponseJsonConverter {
     public typealias Closure = (Any) -> Any?
     
-    private enum ClosureResponseConverterError: Error {
+    private enum ClosureResponseConverterError: LocalizedError {
         case unableToConvert
         
-        var localizedDescription: String {
+        var errorDescription: String? {
             switch self {
             case .unableToConvert: 
                 return "Unable to convert response json by closure"

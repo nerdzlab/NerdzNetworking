@@ -9,10 +9,10 @@
 import Foundation
 
 public class KeyPathResponseConverter: ResponseJsonConverter {
-    enum InternalError: Error {
+    enum InternalError: LocalizedError {
         case invalidPath(_ path: String)
         
-        var localizedDescription: String {
+        var errorDescription: String? {
             switch self {
             case .invalidPath(let path): 
                 return "Invalid json convertation path: `\(path)`"

@@ -9,10 +9,10 @@
 import Foundation
 
 public struct Status: Decodable {
-    private enum StatusError: Error {
+    private enum StatusError: LocalizedError {
         case unableToMap
         
-        var localizedDescription: String {
+        var errorDescription: String? {
             switch self {
             case .unableToMap: return "Unable to map status response from given JSON"
             }
