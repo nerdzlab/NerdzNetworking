@@ -8,10 +8,10 @@
 
 import Foundation
 
-fileprivate enum RequestInternalError: Error {
+fileprivate enum RequestInternalError: LocalizedError {
     case defaultEndpointIsNotInitialized
 
-    var localizedDescription: String {
+    var errorDescription: String? {
         switch self {
         case .defaultEndpointIsNotInitialized: 
             return "Default endpoint is not initialized"

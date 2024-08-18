@@ -39,6 +39,12 @@ open class Endpoint {
     
     public let requestRetrying = RequestRetryingManager()
     
+    public var handleAppMoveToBackground: Bool = false {
+        didSet {
+            requestExecuter.handleAppMoveToBackground = handleAppMoveToBackground
+        }
+    }
+    
     open var trustKit: TrustKit? {
         didSet {
             requestDispatcher.trustKit = trustKit

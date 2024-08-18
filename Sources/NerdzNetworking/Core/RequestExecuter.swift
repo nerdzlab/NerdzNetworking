@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class RequestExecuter {
     
@@ -14,10 +15,12 @@ class RequestExecuter {
     
     let dispatcher: RequestDataDispatcher
     let observationManager: ObservationManager
-    
     let requestRetryingManager: RequestRetryingManager
     
+    var handleAppMoveToBackground: Bool = false
+    
     private(set) var wrappers: [String: Any] = [:]
+    private var backgroundTasks: [String: UIBackgroundTaskIdentifier] = [:]
     
     init(dispatcher: RequestDataDispatcher, observationManager: ObservationManager, requestRetryingManager: RequestRetryingManager) {
         self.dispatcher = dispatcher
@@ -29,6 +32,14 @@ class RequestExecuter {
         let wrapper = RequestExecutionWrapper(operation: operation, dispatcher: dispatcher)
         let key = UUID().uuidString
         
+        if handleAppMoveToBackground {
+            let taskId = UIApplication.shared.beginBackgroundTask(withName: key) { [weak self] in
+                self?.endBackgroundTask(for: key)
+            }
+            
+            backgroundTasks[key] = taskId
+        }
+        
         wrapper.onFinish = { [weak self, weak wrapper] result, error in
             guard let wrapper = wrapper else {
                 return
@@ -36,6 +47,7 @@ class RequestExecuter {
             
             self?.wrappers.removeValue(forKey: key)
             self?.handleExecutionFinish(for: wrapper, result: result, error: error)
+            self?.endBackgroundTask(for: key)
         }
         
         wrapper.onRetry = { [weak self, weak wrapper] error in
@@ -76,5 +88,13 @@ class RequestExecuter {
         }
         
         observationManager.sendResponseNotification(request: wrapper.operation.request, result: result, error: error)
+    }
+    
+    private func endBackgroundTask(for key: String) {
+        guard let id = backgroundTasks.removeValue(forKey: key) else {
+            return
+        }
+        
+        UIApplication.shared.endBackgroundTask(id)
     }
 }

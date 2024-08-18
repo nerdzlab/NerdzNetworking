@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum DescriptiveDecodingError: Error, CustomStringConvertible {
+public enum DescriptiveDecodingError: LocalizedError {
     
     case dataCorrupted(_ message: String)
     case keyNotFound(_ message: String)
@@ -16,7 +16,7 @@ public enum DescriptiveDecodingError: Error, CustomStringConvertible {
     case unableToMap(_ type: String)
     case any(_ error: Error)
     
-    public var description: String {
+    public var errorDescription: String? {
         switch self {
         case let .dataCorrupted(message),
             let .keyNotFound(message),

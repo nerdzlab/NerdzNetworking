@@ -12,10 +12,10 @@ import TrustKit
 class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     // MARK: - Errors
     
-    private enum RequestDataDispatcher: Error {
+    private enum RequestDataDispatcher: LocalizedError {
         case invalidResponse
         
-        var localizedDescription: String {
+        var errorDescription: String? {
             switch self {
             case .invalidResponse: 
                 return "Response is invalid"
