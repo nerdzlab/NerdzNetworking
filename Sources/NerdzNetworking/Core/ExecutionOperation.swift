@@ -10,7 +10,7 @@ import Foundation
 public class ExecutionOperation<T: Request>: DispatchOperation {
     public typealias ResponseSuccessCallback = (T.ResponseObjectType) -> Void
     public typealias FailCallback = (ErrorResponse<T.ErrorType>) -> Void
-    public typealias ProgressCallback = (Double) -> Void
+    public typealias ProgressCallback = (Progress) -> Void
     public typealias DebugCallback = (DebugInfo) -> Void
     public typealias StartCallback = () -> Void
     
@@ -139,7 +139,7 @@ public class ExecutionOperation<T: Request>: DispatchOperation {
         }
     }
     
-    func callOnProgress(with progress: Double, completion: (() -> Void)? = nil) {
+    func callOnProgress(with progress: Progress, completion: (() -> Void)? = nil) {
         responseQueue.async { [weak self] in
             for closure in self?.onProgress ?? [] {
                 closure(progress)
