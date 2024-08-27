@@ -41,7 +41,7 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     
     // MARK: - Properties(Private)
     
-    private var progressClosures: [URLSessionTask: (Double) -> Void] = [:]
+    private var progressClosures: [URLSessionTask: (Progress) -> Void] = [:]
     
     private let cache: URLCache = .shared
     
@@ -49,11 +49,9 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
         _ requestData   : RequestData, 
         onSuccess       : ((Data?, Int) -> Void)? = nil, 
         onError         : ((Error) -> Void)? = nil,
-        onProgress      : ((Double) -> Void)? = nil,
-        onDebug         : ((DebugInfo) -> Void)? = nil) throws 
-        
-        -> DispatchOperation 
-    {
+        onProgress      : ((Progress) -> Void)? = nil,
+        onDebug         : ((DebugInfo) -> Void)? = nil
+    ) throws -> DispatchOperation {
         let request = try requestFactory.request(from: requestData)
         
         let requestStartDate = Date()
@@ -70,7 +68,8 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
                 urlResponse         : response as? HTTPURLResponse, 
                 errorResponse       : error, 
                 requestDuration     : Date().timeIntervalSince(requestStartDate),
-                cURL                : request.cURL)
+                cURL                : request.cURL
+            )
             
             onDebug?(debugInfo)
             
@@ -125,8 +124,7 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
         if let closure = progressClosures[task] {
-            let progress = Double(totalBytesSent) / Double(totalBytesExpectedToSend)
-            closure(progress)
+            closure(task.progress)
         }
     }
     
