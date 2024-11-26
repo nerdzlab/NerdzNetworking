@@ -8,6 +8,18 @@
 import Foundation
 
 public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier where RequestType.ResponseObjectType: TokenContainer {
+    
+    public enum Errors: LocalizedError {
+        case noRequest
+        
+        public var errorDescription: String {
+            switch self {
+            case .noRequest:
+                return "No refresh request provided"
+            }
+        }
+    }
+    
     public typealias GetRefreshRequestAction = () -> RequestType?
     public typealias RefreshFailedAction = (ErrorResponse<RequestType.ErrorType>) -> Void
     
@@ -48,6 +60,7 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
         }
         
         guard let refreshRequest = onNeedRefreshRequest?() else {
+            onRefreshFailed?(.system(Errors.noRequest))
             return nil
         }
         
