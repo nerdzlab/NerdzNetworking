@@ -11,11 +11,15 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
     
     public enum Errors: LocalizedError {
         case noRequest
+        case failedRefresh
         
         public var errorDescription: String {
             switch self {
             case .noRequest:
                 return "No refresh request provided"
+                
+            case .failedRefresh:
+                return "Failed to refresh token"
             }
         }
     }
@@ -30,7 +34,7 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
     public var onNeedRefreshRequest: GetRefreshRequestAction?
     public var onRefreshFailed: RefreshFailedAction?
     
-    private var pendingRefreshRequest: RequestType?
+    private var isRefreshing: SyncPropertyActor<Bool> = SyncPropertyActor(false)
     private var pendingFinishContinuations: [CheckedContinuation<Bool, Never>] = []
     
     public init() {
@@ -47,64 +51,70 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
             canBeExecutedByParrent = false
         }
         
-        return canBeExecutedByParrent && pendingRefreshRequest?.path != request.path
+        return canBeExecutedByParrent
     }
     
     public func handleError<T>(_ error: ErrorResponse<T.ErrorType>, for request: T, on endpoint: Endpoint) async -> T? where T : Request {
+        return await handleErrorTest(error, for: request, on: endpoint)
+    }
+    
+    func handleErrorTest<T>(_ error: ErrorResponse<T.ErrorType>, for request: T, on endpoint: Endpoint) async -> T? where T : Request {
         
-        /// Handling rthe case when one request already started token refresh process. In this case all othher requests just need to wait untill token refresh process will finish instead of starting its own process
-        let refreshHapenned = await waitUntilRefreshFinished()
+        let isRefreshing = await isRefreshing.value
         
-        guard !refreshHapenned else {
-            return request
+        if isRefreshing {
+            let tokenSuccessfullyUpdated = await withCheckedContinuation { [weak self] continuation in
+                self?.pendingFinishContinuations.append(continuation)
+            }
+            
+            return tokenSuccessfullyUpdated ? request : nil
         }
+        
+        await self.isRefreshing.setNewValue(true)
         
         guard let refreshRequest = onNeedRefreshRequest?() else {
             onRefreshFailed?(.system(Errors.noRequest))
             return nil
         }
         
-        pendingRefreshRequest = refreshRequest
-        
-        defer {
-            pendingRefreshRequest = nil
+        guard refreshRequest.path == request.path else {
+            onRefreshFailed?(.system(Errors.failedRefresh))
+            return nil
         }
         
         do {
             let response = try await endpoint.asyncExecute(refreshRequest)
-            endpoint.setNewAuthToken(response)
+            endpoint.headers.authToken = response.token
             
-            /// After refrersh finish we call all pending continuations to specify that refresh finished and no new refresh need to be happenning
-            for continuation in pendingFinishContinuations {
-                continuation.resume(returning: true)
-            }
+            
+            await finishRefreshing(with: true)
             
             return request
         }
         catch ErrorResponse<RequestType.ErrorType>.server(let error, statusCode: let code) {
             onRefreshFailed?(.server(error, statusCode: code))
+            
+            await finishRefreshing(with: false)
         }
         catch ErrorResponse<RequestType.ErrorType>.system(let error) {
             onRefreshFailed?(.system(error))
+            
+            await finishRefreshing(with: false)
         }
         catch {
             print(error)
+            
+            await finishRefreshing(with: false)
         }
         
         return nil
     }
-    
-    /// Retrurning true if process of refreshing is finished and not nedded to be performed
-    private func waitUntilRefreshFinished() async -> Bool {
-        return await withCheckedContinuation { [weak self] continuation in
-            /// If we do not have pending refresh request we return false to specify that refresh need to be happenned
-            if self?.pendingRefreshRequest == nil {
-                continuation.resume(returning: false)
-            }
-            /// In onther case we save continuation to be used after refresh finish
-            else {
-                self?.pendingFinishContinuations.append(continuation)
-            }
+    private func finishRefreshing(with status: Bool) async {
+        for continuation in pendingFinishContinuations {
+            continuation.resume(returning: status)
         }
+        
+        await self.isRefreshing.setNewValue(false)
+        pendingFinishContinuations.removeAll()
     }
 }
