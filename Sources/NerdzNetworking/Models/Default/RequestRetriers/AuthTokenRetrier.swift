@@ -55,11 +55,6 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
     }
     
     public func handleError<T>(_ error: ErrorResponse<T.ErrorType>, for request: T, on endpoint: Endpoint) async -> T? where T : Request {
-        return await handleErrorTest(error, for: request, on: endpoint)
-    }
-    
-    func handleErrorTest<T>(_ error: ErrorResponse<T.ErrorType>, for request: T, on endpoint: Endpoint) async -> T? where T : Request {
-        
         let isRefreshing = await isRefreshing.value
         
         if isRefreshing {
@@ -77,7 +72,7 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
             return nil
         }
         
-        guard refreshRequest.path == request.path else {
+        guard refreshRequest.path != request.path else {
             onRefreshFailed?(.system(Errors.failedRefresh))
             return nil
         }
