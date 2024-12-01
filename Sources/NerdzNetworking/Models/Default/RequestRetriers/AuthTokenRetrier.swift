@@ -55,7 +55,6 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
     }
     
     public func handleError<T>(_ error: ErrorResponse<T.ErrorType>, for request: T, on endpoint: Endpoint) async -> T? where T : Request {
-        
         guard let refreshRequest = onNeedRefreshRequest?() else {
             onRefreshFailed?(.system(Errors.noRequest))
             return nil
@@ -98,7 +97,7 @@ public class AuthTokenRetrier<RequestType: Request>: OnStatusCodesRequestRetrier
             await finishRefreshing(with: false)
         }
         catch {
-            print(error)
+            onRefreshFailed?(.system(error))
             
             await finishRefreshing(with: false)
         }
