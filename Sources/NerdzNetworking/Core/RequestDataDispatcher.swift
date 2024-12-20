@@ -41,7 +41,7 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     
     // MARK: - Properties(Private)
     
-    private var progressClosures: [URLSessionTask: (Progress) -> Void] = [:]
+    private var progressClosures = SyncPropertyActor<[URLSessionTask: (Progress) -> Void]>([:])
     
     private let cache: URLCache = .shared
     
@@ -98,7 +98,11 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
         }
         
         if let progressClosure = onProgress {
-            progressClosures[task] = progressClosure
+            Task {
+                await self.progressClosures.modify {
+                    $0[task] = progressClosure
+                }
+            }
         }
         
         task.resume()
@@ -123,8 +127,10 @@ class RequestDataDispatcher: NSObject, URLSessionDataDelegate {
     // MARK: - URLSessionDelegate
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
-        if let closure = progressClosures[task] {
-            closure(task.progress)
+        Task {
+            if let closure = await progressClosures.value[task] {
+                closure(task.progress)
+            }
         }
     }
     
