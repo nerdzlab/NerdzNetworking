@@ -10,6 +10,11 @@ import Foundation
 import UIKit
 
 class RequestExecuter {
+    private struct ExecutionInfo {
+        let isExecuted: Bool
+        let backgroundTask: UIBackgroundTaskIdentifier?
+        let wrapper: Any
+    }
     
     var onNewTokenReceived: ((TokenContainer) -> Void)?
     
@@ -19,8 +24,7 @@ class RequestExecuter {
     
     var handleAppMoveToBackground: Bool = false
     
-    private(set) var wrappers: [String: Any] = [:]
-    private var backgroundTasks: [String: UIBackgroundTaskIdentifier] = [:]
+    private var wrappers: [String: ExecutionInfo] = [:]
     
     init(dispatcher: RequestDataDispatcher, observationManager: ObservationManager, requestRetryingManager: RequestRetryingManager) {
         self.dispatcher = dispatcher
@@ -32,12 +36,12 @@ class RequestExecuter {
         let wrapper = RequestExecutionWrapper(operation: operation, dispatcher: dispatcher)
         let key = UUID().uuidString
         
+        var backgroundTask: UIBackgroundTaskIdentifier?
+        
         if handleAppMoveToBackground {
-            let taskId = UIApplication.shared.beginBackgroundTask(withName: key) { [weak self] in
-                self?.endBackgroundTask(for: key)
+            backgroundTask = UIApplication.shared.beginBackgroundTask(withName: key) { [weak self] in
+                self?.endBackgroundTask(for: self?.wrappers[key]?.backgroundTask)
             }
-            
-            backgroundTasks[key] = taskId
         }
         
         wrapper.onFinish = { [weak self, weak wrapper] result, error in
@@ -45,9 +49,13 @@ class RequestExecuter {
                 return
             }
             
-            self?.wrappers.removeValue(forKey: key)
+            let info = self?.wrappers.removeValue(forKey: key)
             self?.handleExecutionFinish(for: wrapper, result: result, error: error)
-            self?.endBackgroundTask(for: key)
+            self?.endBackgroundTask(for: info?.backgroundTask)
+            
+            if info?.isExecuted == true {
+                self?.handlePendingExecutionInfo(wrapper: wrapper, result: result, error: error)
+            }
         }
         
         wrapper.onRetry = { [weak self, weak wrapper] error in
@@ -58,8 +66,22 @@ class RequestExecuter {
             return await self?.requestRetryingManager.retries(for: error, from: wrapper.operation.request)
         }
         
-        wrappers[key] = wrapper
-        wrapper.execute()
+        if operation.request.method == .get {
+            /// Checking if same request is being executed at the moment to avoid making similar GET requests in parallel
+            let executingSameRequest = wrappers.contains(where: { info in
+                type(of: info.value.wrapper) == type(of: wrapper)
+            })
+            
+            wrappers[key] = ExecutionInfo(isExecuted: !executingSameRequest, backgroundTask: backgroundTask, wrapper: wrapper)
+            
+            if !executingSameRequest {
+                wrapper.execute()
+            }
+        }
+        else {
+            wrappers[key] = ExecutionInfo(isExecuted: true, backgroundTask: backgroundTask, wrapper: wrapper)
+            wrapper.execute()
+        }
     }
     
     func cachedResult<RequestType: Request>(for request: RequestType, decoder: JSONDecoder, converter: ResponseJsonConverter? = nil) throws -> RequestType.ResponseObjectType? {
@@ -90,11 +112,23 @@ class RequestExecuter {
         observationManager.sendResponseNotification(request: wrapper.operation.request, result: result, error: error)
     }
     
-    private func endBackgroundTask(for key: String) {
-        guard let id = backgroundTasks.removeValue(forKey: key) else {
+    private func endBackgroundTask(for id: UIBackgroundTaskIdentifier?) {
+        guard let id else {
             return
         }
         
         UIApplication.shared.endBackgroundTask(id)
+    }
+    
+    private func handlePendingExecutionInfo<RequestType: Request>(wrapper: RequestExecutionWrapper<RequestType>, result: RequestType.ResponseObjectType?, error: ErrorResponse<RequestType.ErrorType>?) {
+        
+        for (key, value) in wrappers {
+            guard let pendingWrapper = value.wrapper as? RequestExecutionWrapper<RequestType>, !value.isExecuted else {
+                continue
+            }
+            
+            pendingWrapper.onFinish?(result, error)
+            wrappers.removeValue(forKey: key)
+        }
     }
 }
