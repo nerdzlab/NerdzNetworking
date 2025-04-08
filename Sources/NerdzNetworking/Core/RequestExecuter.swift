@@ -66,10 +66,18 @@ class RequestExecuter {
             return await self?.requestRetryingManager.retries(for: error, from: wrapper.operation.request)
         }
         
-        if operation.request.method == .get {
+        if operation.request.supportParallelExecution {
+            wrappers[key] = ExecutionInfo(isExecuted: true, backgroundTask: backgroundTask, wrapper: wrapper)
+            wrapper.execute()
+        }
+        else {
             /// Checking if same request is being executed at the moment to avoid making similar GET requests in parallel
             let executingSameRequest = wrappers.contains(where: { info in
-                type(of: info.value.wrapper) == type(of: wrapper)
+                guard let storedWrapper = info.value.wrapper as? RequestExecutionWrapper<T> else {
+                    return false
+                }
+                
+                return wrapper.operation.request.isEqual(to: storedWrapper.operation.request) && info.value.isExecuted
             })
             
             wrappers[key] = ExecutionInfo(isExecuted: !executingSameRequest, backgroundTask: backgroundTask, wrapper: wrapper)
@@ -77,10 +85,6 @@ class RequestExecuter {
             if !executingSameRequest {
                 wrapper.execute()
             }
-        }
-        else {
-            wrappers[key] = ExecutionInfo(isExecuted: true, backgroundTask: backgroundTask, wrapper: wrapper)
-            wrapper.execute()
         }
     }
     
@@ -123,8 +127,16 @@ class RequestExecuter {
     private func handlePendingExecutionInfo<RequestType: Request>(wrapper: RequestExecutionWrapper<RequestType>, result: RequestType.ResponseObjectType?, error: ErrorResponse<RequestType.ErrorType>?) {
         
         for (key, value) in wrappers {
-            guard let pendingWrapper = value.wrapper as? RequestExecutionWrapper<RequestType>, !value.isExecuted else {
+            guard !value.isExecuted else {
+                return
+            }
+            
+            guard let pendingWrapper = value.wrapper as? RequestExecutionWrapper<RequestType> else {
                 continue
+            }
+            
+            guard pendingWrapper.operation.request.isEqual(to: wrapper.operation.request) else {
+                return
             }
             
             pendingWrapper.onFinish?(result, error)
